@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.user.hairstyle;
+package com.wirednest.apps.hairstyle;
 
 import android.content.Context;
 import android.util.AttributeSet;

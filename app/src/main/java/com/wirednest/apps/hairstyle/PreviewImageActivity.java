@@ -1,22 +1,31 @@
-package com.example.user.hairstyle;
+package com.wirednest.apps.hairstyle;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
-public class camera_sample extends AppCompatActivity {
+public class PreviewImageActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.takepic_sample);
+        setContentView(R.layout.activity_preview_image_sample);
+        findViewById(R.id.savePic).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PreviewImageActivity.this, EditImageActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_camera_sample, menu);
+        getMenuInflater().inflate(R.menu.menu_preview_image, menu);
         return true;
     }
 

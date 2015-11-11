@@ -7,12 +7,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 
-import com.example.user.hairstyle.CameraActivity;
-import com.example.user.hairstyle.R;
-import com.example.user.hairstyle.ViewPhotoActivity;
+import com.wirednest.apps.hairstyle.CameraActivity;
+import com.wirednest.apps.hairstyle.R;
 
 
 /**
