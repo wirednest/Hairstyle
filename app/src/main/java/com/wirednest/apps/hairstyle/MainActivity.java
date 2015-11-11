@@ -1,6 +1,6 @@
-package com.example.user.hairstyle;
+package com.wirednest.apps.hairstyle;
 
-import android.app.Activity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,16 +8,25 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-public class AlbumActivity extends AppCompatActivity {
+import com.wirednest.apps.hairstyle.activity.AlbumActivity;
+
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.album);
-        findViewById(R.id.addAlbum).setOnClickListener(new View.OnClickListener() {
+        setContentView(R.layout.homescreen);
+        findViewById(R.id.albumButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AlbumActivity.this,ViewPhotoActivity.class);
+                Intent intent = new Intent(MainActivity.this, AlbumActivity.class);
+                startActivity(intent);
+            }
+        });
+        findViewById(R.id.funButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,CameraActivity.class);
                 startActivity(intent);
             }
         });
@@ -26,7 +35,7 @@ public class AlbumActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_album, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 

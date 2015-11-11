@@ -1,4 +1,4 @@
-package com.example.user.hairstyle;
+package com.wirednest.apps.hairstyle;
 
 
 import android.os.Bundle;

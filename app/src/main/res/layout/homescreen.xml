@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/Main">
 
@@ -22,23 +25,37 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal|bottom"
             android:layout_marginTop="150dp"
             android:layout_gravity="center_horizontal">
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ImageButton
+                android:layout_height="match_parent"
+                android:weightSum="1"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+                <com.dd.ShadowLayout
+                    android:layout_marginTop="16dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/albumButton"
-                    android:src="@drawable/album"
-                    android:background="@android:color/transparent" />
+                    app:sl_shadowRadius="4dp"
+                    app:sl_shadowColor="#AA000000"
+                    app:sl_dx="0dp"
+                    app:sl_dy="2dp"
+                    app:sl_cornerRadius="56dp">
 
+                    <ImageButton
+                        android:id="@+id/albumButton"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/ic_image_white_48dp"
+                        android:background="@drawable/fab_selector"
+                        tools:ignore="ContentDescription"/>
+
+                </com.dd.ShadowLayout>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -54,14 +71,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" >
 
-                <ImageButton
+                <com.dd.ShadowLayout
+                    android:layout_marginTop="16dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/funButton"
-                    android:src="@drawable/fun"
-                    android:background="@android:color/transparent"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginRight="40dp" />
+                    app:sl_shadowRadius="4dp"
+                    app:sl_shadowColor="#AA000000"
+                    app:sl_dx="0dp"
+                    app:sl_dy="2dp"
+                    app:sl_cornerRadius="56dp">
+
+                    <ImageButton
+                        android:id="@+id/funButton"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/ic_insert_emoticon_white_48dp"
+                        android:background="@drawable/fab_selector"
+                        tools:ignore="ContentDescription"/>
+
+                </com.dd.ShadowLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -77,14 +105,30 @@
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
 
-                <ImageButton
+                <com.dd.ShadowLayout
+                    android:layout_marginTop="16dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/settingButton3"
-                    android:src="@drawable/setting"
-                    android:background="@android:color/transparent" />
+                    app:sl_shadowRadius="4dp"
+                    app:sl_shadowColor="#AA000000"
+                    app:sl_dx="0dp"
+                    app:sl_dy="2dp"
+                    app:sl_cornerRadius="56dp">
+
+                    <ImageButton
+                        android:id="@+id/settingButton"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/ic_settings_white_48dp"
+                        android:background="@drawable/fab_selector"
+                        tools:ignore="ContentDescription"/>
+
+                </com.dd.ShadowLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
