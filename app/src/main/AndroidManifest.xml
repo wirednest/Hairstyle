@@ -34,7 +34,7 @@
             android:label="@string/title_activity_album" >
         </activity>
         <activity
-            android:name="com.wirednest.apps.hairstyle.CameraActivity"
+            android:name="com.wirednest.apps.hairstyle.activity.CameraActivity"
             android:label="@string/title_activity_camera" >
         </activity>
         <activity
@@ -44,10 +44,6 @@
         <activity
             android:name="com.wirednest.apps.hairstyle.ViewPhotoActivity"
             android:label="@string/title_activity_view_photo" >
-        </activity>
-        <activity
-            android:name="com.wirednest.apps.hairstyle.camera_sample"
-            android:label="@string/title_activity_camera_sample" >
         </activity>
         <activity
             android:name="com.wirednest.apps.hairstyle.preview_image_sample"
