@@ -3,38 +3,34 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginTop="20dp"
     android:id="@+id/cv">
-    <RelativeLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:padding="16dp"
-        >
+        android:layout_height="200dp">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/person_photo"
+            android:layout_width="fill_parent"
+            android:layout_height="200dp"
+            android:id="@+id/album_image"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginRight="16dp"
-            />
+            android:foreground="@drawable/bob"
+            android:scaleType="centerCrop" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/person_name"
-            android:layout_toRightOf="@+id/person_photo"
+            android:id="@+id/album_name"
+            android:layout_toRightOf="@+id/album_image"
             android:layout_alignParentTop="true"
             android:textSize="30sp"
-            />
+            android:text="Album 1"
+            android:layout_gravity="center_vertical|bottom"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/person_age"
-            android:layout_toRightOf="@+id/person_photo"
-            android:layout_below="@+id/person_name"
-            />
-
-    </RelativeLayout>
+    </FrameLayout>
 </android.support.v7.widget.CardView>

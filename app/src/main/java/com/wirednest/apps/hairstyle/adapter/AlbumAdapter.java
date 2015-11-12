@@ -31,9 +31,10 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.PersonViewHo
         PersonViewHolder(View itemView) {
             super(itemView);
             cv = (CardView)itemView.findViewById(R.id.cv);
-            personName = (TextView)itemView.findViewById(R.id.person_name);
-            personAge = (TextView)itemView.findViewById(R.id.person_age);
-            personPhoto = (ImageView)itemView.findViewById(R.id.person_photo);
+            cv.setPreventCornerOverlap(false);
+            personName = (TextView)itemView.findViewById(R.id.album_name);
+
+            personPhoto = (ImageView)itemView.findViewById(R.id.album_image);
         }
     }
     @Override
@@ -49,7 +50,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.PersonViewHo
     @Override
     public void onBindViewHolder(PersonViewHolder personViewHolder, int i) {
         personViewHolder.personName.setText(categories.get(i).category_name);
-        personViewHolder.personAge.setText(categories.get(i).description);
+
         personViewHolder.personPhoto.setImageResource(categories.get(i).image);
     }
     @Override

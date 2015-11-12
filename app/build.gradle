@@ -29,4 +29,5 @@ dependencies {
     compile 'com.melnykov:floatingactionbutton:1.3.0'
     compile 'com.github.dmytrodanylyk.shadow-layout:library:1.0.3'
     compile project(':sugarorm:library')
+    compile 'net.bozho.easycamera:easycamera:0.0.1:aar@aar'
 }

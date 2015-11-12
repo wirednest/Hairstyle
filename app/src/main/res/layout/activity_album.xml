@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/rv"
-    xmlns:android="http://schemas.android.com/apk/res/android" />
+<FrameLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto">
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rv"
+        android:background="@drawable/homescreen_background"/>
+    <com.melnykov.fab.FloatingActionButton
+        android:id="@+id/addAlbum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_add_white_18dp"
+        fab:fab_colorNormal="#e91e62"
+        fab:fab_colorPressed="#ba0c50"
+        fab:fab_colorRipple="#ba0c50"
+        android:orientation="horizontal" />
+</FrameLayout>
+
