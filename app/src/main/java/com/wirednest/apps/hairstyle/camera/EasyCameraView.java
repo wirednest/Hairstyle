@@ -1,6 +1,11 @@
 package com.wirednest.apps.hairstyle.camera;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.drawable.Drawable;
 import android.hardware.Camera;
 import android.os.Environment;
 import android.util.Log;
@@ -8,6 +13,8 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Toast;
+
+import com.wirednest.apps.hairstyle.R;
 
 import net.bozho.easycamera.EasyCamera;
 import net.bozho.easycamera.EasyCamera.*;
@@ -35,7 +42,6 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
     @SuppressWarnings("deprecation")
     public EasyCameraView(Context context, EasyCamera camera) {
         super(context);
-        final Context context1=getContext();
         mCamera = camera;
         mCamera.setDisplayOrientation(90);
 
@@ -58,7 +64,24 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
                     Log.d("Log", "Can't create directory to save image.");
                     return;
                 }
+                Bitmap cameraBitmap = BitmapFactory.decodeByteArray
+                        (data, 0, data.length);
 
+                //set overlay
+                int wid = cameraBitmap.getWidth();
+                int hgt = cameraBitmap.getHeight();
+                Matrix matrix = new Matrix();
+                matrix.postRotate(90);
+                Bitmap newImage = Bitmap.createBitmap(wid, hgt, Bitmap.Config.ARGB_8888);
+                Canvas canvas = new Canvas(newImage);
+
+                canvas.drawBitmap(cameraBitmap, 0f, 0f, null);
+
+                Drawable drawable = getResources().getDrawable
+                        (R.drawable.fun);
+                drawable.setBounds(20, 30, drawable.getIntrinsicWidth() + 20, drawable.getIntrinsicHeight() + 30);
+                drawable.draw(canvas);
+                //end
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
                 String date = dateFormat.format(new Date());
                 String photoFile = "Picture_" + date + ".jpg";
@@ -69,10 +92,10 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
 
                 try {
                     FileOutputStream fos = new FileOutputStream(pictureFile);
+                    newImage.compress(Bitmap.CompressFormat.JPEG, 80, fos);
                     fos.write(data);
                     fos.close();
-                    Toast.makeText(context1, "New Image saved:" + filename,
-                            Toast.LENGTH_LONG).show();
+                    newImage.recycle();
                     Log.d("Log", "New Image saved:" + filename);
                 } catch (Exception error) {
                     Log.d("Log", "File" + filename + "not saved: "
