@@ -2,18 +2,24 @@ package com.wirednest.apps.hairstyle.camera;
 
 import android.content.Context;
 import android.hardware.Camera;
+import android.os.Environment;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.Toast;
 
 import net.bozho.easycamera.EasyCamera;
 import net.bozho.easycamera.EasyCamera.*;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
-public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callback{
+public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callback {
     private SurfaceHolder mHolder;
     private EasyCamera mCamera;
 
@@ -22,19 +28,19 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
     public List<Camera.Size> mSupportedPreviewSizes;
     private Camera.Size mPreviewSize;
 
-    private EasyCamera.CameraActions actions ;
+    private EasyCamera.CameraActions actions;
     private PictureCallback callback;
 
 
     @SuppressWarnings("deprecation")
-    public EasyCameraView(Context context, EasyCamera camera){
+    public EasyCameraView(Context context, EasyCamera camera) {
         super(context);
 
         mCamera = camera;
         mCamera.setDisplayOrientation(90);
 
         mSupportedPreviewSizes = mCamera.getParameters().getSupportedPreviewSizes();
-        for(Camera.Size str: mSupportedPreviewSizes)
+        for (Camera.Size str : mSupportedPreviewSizes)
             Log.e(TAG, str.width + "/" + str.height);
 
         //get the holder and set this class as the callback, so we can get camera data here
@@ -46,16 +52,47 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
         callback = new PictureCallback() {
             public void onPictureTaken(byte[] data, EasyCamera.CameraActions actions) {
                 Log.d("Log", "onPictureTaken - wrote bytes: " + data.length);
+                File pictureFileDir = getDir();
+                if (!pictureFileDir.exists() && !pictureFileDir.mkdirs()) {
+
+                    Log.d("Log", "Can't create directory to save image.");
+                    return;
+                }
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
+                String date = dateFormat.format(new Date());
+                String photoFile = "Picture_" + date + ".jpg";
+
+                String filename = pictureFileDir.getPath() + File.separator + photoFile;
+
+                File pictureFile = new File(filename);
+
+                try {
+                    FileOutputStream fos = new FileOutputStream(pictureFile);
+                    fos.write(data);
+                    fos.close();
+                    Log.d("Log", "New Image saved:" + filename);
+                } catch (Exception error) {
+                    Log.d("Log", "File" + filename + "not saved: "
+                            + error.getMessage());
+                }
             }
         };
 
     }
-    public void captureImage(View v ) throws IOException{
+
+    private File getDir() {
+        File sdDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        return new File(sdDir, "Hairstyle");
+    }
+
+    public void captureImage(View v) throws IOException {
         actions.takePicture(EasyCamera.Callbacks.create().withJpegCallback(callback));
     }
+
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
-        try{
+        try {
             //when the surface is created, we can set the camera to draw images in this surfaceholder
             actions = mCamera.startPreview(mHolder);
         } catch (IOException e) {
@@ -67,17 +104,17 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
     public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i2, int i3) {
         Log.e("ok", "surfaceChanged => w=" + i2 + ", h=" + i3);
         //before changing the application orientation, you need to stop the preview, rotate and then start it again
-        if(surfaceHolder.getSurface() == null)//check if the surface is ready to receive camera data
+        if (surfaceHolder.getSurface() == null)//check if the surface is ready to receive camera data
             return;
 
-        try{
+        try {
             mCamera.stopPreview();
-        } catch (Exception e){
+        } catch (Exception e) {
             //this will happen when you are trying the camera if it's not running
         }
 
         //now, recreate the camera preview
-        try{
+        try {
 
             Camera.Parameters parameters = mCamera.getParameters();
             List<String> focusModes = parameters.getSupportedFocusModes();
@@ -100,6 +137,7 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
         mCamera.stopPreview();
         mCamera.close();
     }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
@@ -111,7 +149,7 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
         }
 
         float ratio;
-        if(mPreviewSize.height >= mPreviewSize.width)
+        if (mPreviewSize.height >= mPreviewSize.width)
             ratio = (float) mPreviewSize.height / (float) mPreviewSize.width;
         else
             ratio = (float) mPreviewSize.width / (float) mPreviewSize.height;
