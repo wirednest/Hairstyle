@@ -1,0 +1,2 @@
+insert into ALBUMS (ALBUM_NAME,ALBUM_PASSWORD,ALBUM_TYPE,DESCRIPTION,DATETIME) values ("Public Hairstyle","","public","Album for public",CURRENT_TIMESTAMP)
+insert into ALBUMS (ALBUM_NAME,ALBUM_PASSWORD,ALBUM_TYPE,DESCRIPTION,DATETIME) values ("Pending Hairstyle","","hidden","Album for pending",CURRENT_TIMESTAMP)

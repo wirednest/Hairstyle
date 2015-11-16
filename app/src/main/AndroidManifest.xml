@@ -18,7 +18,7 @@
         <meta-data android:name="DATABASE" android:value="hairstyle.db" />
         <meta-data android:name="VERSION" android:value="1" />
         <meta-data android:name="QUERY_LOG" android:value="true" />
-        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.example.user" />
+        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.wirednest.apps" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -34,7 +34,11 @@
             android:label="@string/title_activity_album" >
         </activity>
         <activity
-            android:name="com.wirednest.apps.hairstyle.CameraActivity"
+            android:name=".activity.CaptureActivity"
+            android:label="@string/title_activity_camera" >
+        </activity>
+        <activity
+            android:name="com.wirednest.apps.hairstyle.activity.CameraActivity"
             android:label="@string/title_activity_camera" >
         </activity>
         <activity
@@ -44,10 +48,6 @@
         <activity
             android:name="com.wirednest.apps.hairstyle.ViewPhotoActivity"
             android:label="@string/title_activity_view_photo" >
-        </activity>
-        <activity
-            android:name="com.wirednest.apps.hairstyle.camera_sample"
-            android:label="@string/title_activity_camera_sample" >
         </activity>
         <activity
             android:name="com.wirednest.apps.hairstyle.preview_image_sample"

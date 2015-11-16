@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.wirednest.apps.hairstyle.CameraActivity;
+import com.wirednest.apps.hairstyle.activity.CameraActivity;
 import com.wirednest.apps.hairstyle.R;
 
 

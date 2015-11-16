@@ -1,22 +1,61 @@
-<?xml version="1.0" encoding="utf-8"?><!--
- Copyright 2014 The Android Open Source Project
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
-     http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
--->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000"
-    tools:context="com.wirednest.android.camera2basic.CameraActivity" />
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    tools:context=".MainActivity">
+
+    <FrameLayout
+        android:id="@+id/camera_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
+
+    <!--<ImageButton-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/imgClose"-->
+        <!--android:layout_gravity="center_vertical|right"-->
+        <!--android:background="@android:drawable/ic_menu_close_clear_cancel"-->
+        <!--android:padding="20dp"/>-->
+    <!--<ImageButton-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/imgCapture"-->
+        <!--android:layout_gravity="center_vertical|right"-->
+        <!--android:background="@android:drawable/ic_menu_camera"-->
+        <!--android:padding="20dp"-->
+        <!--android:layout_marginBottom="50dp" />-->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|right">
+
+        <!--<com.melnykov.fab.FloatingActionButton-->
+            <!--android:id="@+id/picCatergories"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_margin="20dp"-->
+            <!--android:src="@drawable/ic_menu_white_36dp"-->
+            <!--fab:fab_colorNormal="#e91e62"-->
+            <!--fab:fab_colorPressed="#ba0c50"-->
+            <!--fab:fab_colorRipple="#ba0c50"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:layout_gravity="center" />-->
+
+        <com.melnykov.fab.FloatingActionButton
+            android:id="@+id/imgCapture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:src="@drawable/ic_photo_camera_white_18dp"
+            fab:fab_colorNormal="#e91e62"
+            fab:fab_colorPressed="#ba0c50"
+            fab:fab_colorRipple="#ba0c50"
+            android:orientation="horizontal"
+            android:layout_gravity="center" />
+    </LinearLayout>
+
+</FrameLayout>

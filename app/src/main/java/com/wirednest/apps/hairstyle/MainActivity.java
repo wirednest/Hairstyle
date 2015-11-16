@@ -9,6 +9,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.wirednest.apps.hairstyle.activity.AlbumActivity;
+import com.wirednest.apps.hairstyle.activity.CameraActivity;
+import com.wirednest.apps.hairstyle.activity.CaptureActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.funButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,CameraActivity.class);
+                Intent intent = new Intent(MainActivity.this,CaptureActivity.class);
                 startActivity(intent);
             }
         });
