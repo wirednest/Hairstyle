@@ -35,7 +35,7 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
     @SuppressWarnings("deprecation")
     public EasyCameraView(Context context, EasyCamera camera) {
         super(context);
-
+        final Context context1=getContext();
         mCamera = camera;
         mCamera.setDisplayOrientation(90);
 
@@ -71,6 +71,8 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
                     FileOutputStream fos = new FileOutputStream(pictureFile);
                     fos.write(data);
                     fos.close();
+                    Toast.makeText(context1, "New Image saved:" + filename,
+                            Toast.LENGTH_LONG).show();
                     Log.d("Log", "New Image saved:" + filename);
                 } catch (Exception error) {
                     Log.d("Log", "File" + filename + "not saved: "
