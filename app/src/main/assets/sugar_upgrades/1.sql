@@ -1,3 +1,2 @@
-insert into Categories(idserver,categoryname,description,image) values(1,"Bob Hair Style","Description",2130837567);
-insert into Categories(idserver,categoryname,description,image) values(2,"Bob Hair Style","Description",2130837567);
-insert into Categories(idserver,categoryname,description,image) values(3,"Bob Hair Style","Description",2130837567);
+insert into ALBUMS (ALBUM_NAME,ALBUM_PASSWORD,ALBUM_TYPE,DESCRIPTION,DATETIME) values ("Public Hairstyle","","public","Album for public",CURRENT_TIMESTAMP)
+insert into ALBUMS (ALBUM_NAME,ALBUM_PASSWORD,ALBUM_TYPE,DESCRIPTION,DATETIME) values ("Pending Hairstyle","","hidden","Album for pending",CURRENT_TIMESTAMP)

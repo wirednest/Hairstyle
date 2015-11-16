@@ -10,6 +10,7 @@ import android.view.View;
 import com.wirednest.apps.hairstyle.R;
 import com.wirednest.apps.hairstyle.ViewPhotoActivity;
 import com.wirednest.apps.hairstyle.adapter.AlbumAdapter;
+import com.wirednest.apps.hairstyle.db.Albums;
 import com.wirednest.apps.hairstyle.db.Categories;
 
 import java.util.ArrayList;
@@ -33,11 +34,8 @@ public class AlbumActivity extends AppCompatActivity {
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        //Categories data = new Categories(3,"Emma Wilson", "23 years old", R.drawable.bob);
-        //data.save();
-        // specify an adapter (see also next example)
-        mAdapter = new AlbumAdapter(Categories.listAll(Categories.class));
-        //mAdapter = new AlbumAdapter(persons);
+
+        mAdapter = new AlbumAdapter(Albums.find(Albums.class,"ALBUM_TYPE != ?","hidden"));
         mRecyclerView.setAdapter(mAdapter);
     }
     /*@Override

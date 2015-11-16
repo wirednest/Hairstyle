@@ -89,7 +89,7 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
     }
 
     public void captureImage(View v) throws IOException {
-        actions.takePicture(EasyCamera.Callbacks.create().withJpegCallback(callback));
+        actions.takePicture(EasyCamera.Callbacks.create().withJpegCallback(callback).withRestartPreviewAfterCallbacks(true));
     }
 
     @Override

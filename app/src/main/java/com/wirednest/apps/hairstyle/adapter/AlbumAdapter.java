@@ -10,36 +10,34 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wirednest.apps.hairstyle.R;
-import com.wirednest.apps.hairstyle.db.Categories;
+import com.wirednest.apps.hairstyle.db.Albums;
 
 import java.util.List;
 
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.PersonViewHolder>{
 
-    List<Categories> categories;
+    List<Albums> albums;
 
-    public AlbumAdapter(List<Categories> categories){
-        this.categories = categories;
+    public AlbumAdapter(List<Albums> albums){
+        this.albums = albums;
     }
 
     public static class PersonViewHolder extends RecyclerView.ViewHolder {
         CardView cv;
-        ImageView personPhoto;
-        TextView personName;
-        TextView personAge;
+        ImageView albumImage;
+        TextView albumName;
 
         PersonViewHolder(View itemView) {
             super(itemView);
             cv = (CardView)itemView.findViewById(R.id.cv);
             cv.setPreventCornerOverlap(false);
-            personName = (TextView)itemView.findViewById(R.id.album_name);
-
-            personPhoto = (ImageView)itemView.findViewById(R.id.album_image);
+            albumName = (TextView)itemView.findViewById(R.id.album_name);
+            albumImage = (ImageView)itemView.findViewById(R.id.album_image);
         }
     }
     @Override
     public int getItemCount() {
-        return categories.size();
+        return albums.size();
     }
     @Override
     public PersonViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -49,9 +47,8 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.PersonViewHo
     }
     @Override
     public void onBindViewHolder(PersonViewHolder personViewHolder, int i) {
-        personViewHolder.personName.setText(categories.get(i).category_name);
-
-        personViewHolder.personPhoto.setImageResource(categories.get(i).image);
+        personViewHolder.albumName.setText(albums.get(i).albumName);
+        //personViewHolder.albumImage.setImageResource(albums.get(i).image);
     }
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
