@@ -1,9 +1,11 @@
 package com.wirednest.apps.hairstyle;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 public class HairStyleCategoriesActivity extends AppCompatActivity {
 
@@ -11,6 +13,15 @@ public class HairStyleCategoriesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hair_style_categories);
+        findViewById(R.id.hairstyle_1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent result = new Intent();
+                result.putExtra("ID_BUKOT",R.id.hairstyle_1);
+                setResult(RESULT_OK,result);
+                finish();
+            }
+        });
     }
 
     @Override

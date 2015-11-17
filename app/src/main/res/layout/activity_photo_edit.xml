@@ -1,9 +1,40 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.wirednest.apps.hairstyle.PhotoEditActivity">
 
-</RelativeLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/photo" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/hair"
+            android:src="@drawable/hairstyle_1" />
+
+        <com.melnykov.fab.FloatingActionButton
+            android:id="@+id/chooseHair"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:src="@android:drawable/ic_menu_agenda"
+            fab:fab_colorNormal="#e91e62"
+            fab:fab_colorPressed="#ba0c50"
+            fab:fab_colorRipple="#ba0c50"
+            android:orientation="horizontal"
+            android:layout_gravity="center|right"
+            android:onClick="captureImage"/>
+
+    </FrameLayout>
+</LinearLayout>

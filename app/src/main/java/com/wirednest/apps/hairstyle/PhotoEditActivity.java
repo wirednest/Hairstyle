@@ -1,9 +1,13 @@
 package com.wirednest.apps.hairstyle;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 public class PhotoEditActivity extends Activity {
 
@@ -11,6 +15,29 @@ public class PhotoEditActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_edit);
+        String filename = getIntent().getStringExtra("FILE_AVAGA");
+        ImageView photo = (ImageView) findViewById(R.id.photo);
+        photo.setImageURI(Uri.parse(filename));
+        findViewById(R.id.chooseHair).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PhotoEditActivity.this, HairStyleCategoriesActivity.class);
+                startActivityForResult(intent, 14045);
+            }
+        });
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 14045 && resultCode == RESULT_OK){
+            int idGambiran = data.getIntExtra("ID_BUKOT",-1);
+            if(idGambiran != -1) {
+                ImageView imagine = (ImageView) findViewById(R.id.hair);
+                imagine.setImageResource(idGambiran);
+            }
+        }
     }
 
     @Override

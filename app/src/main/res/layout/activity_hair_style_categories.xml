@@ -7,15 +7,68 @@
     tools:context="com.wirednest.apps.hairstyle.HairStyleCategoriesActivity"
     android:orientation="vertical">
 
-    <FrameLayout
+    <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0">
+        android:layout_height="match_parent">
 
-        <ImageView
+        <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/imageView8"
-            android:src="@drawable/categoriessample" />
-    </FrameLayout>
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+
+
+                android:id="@+id/hairstyle_1"
+                android:src="@drawable/hairstyle_1"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="1" />
+
+            <ImageView
+
+                android:id="@+id/hairstyle_2"
+                android:src="@drawable/hairstyle_2"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="1" />
+
+            <ImageView
+
+
+                android:id="@+id/hairstyle_3"
+                android:src="@drawable/hairstyle_3"
+                android:layout_height="fill_parent"
+                android:layout_width="wrap_content"
+                android:layout_weight="1" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/hairstyle_4"
+                android:src="@drawable/hairstyle_4"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/hairstyle_5"
+                android:src="@drawable/hairstyle_5"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/hairstyle_6"
+                android:src="@drawable/hairstyle_6"
+                android:layout_height="fill_parent"
+                android:layout_width="wrap_content"
+                android:layout_weight="1" />
+        </TableRow>
+
+    </TableLayout>
 </LinearLayout>

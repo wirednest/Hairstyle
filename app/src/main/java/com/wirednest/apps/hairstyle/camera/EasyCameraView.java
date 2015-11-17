@@ -1,6 +1,7 @@
 package com.wirednest.apps.hairstyle.camera;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -14,6 +15,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Toast;
 
+import com.wirednest.apps.hairstyle.PhotoEditActivity;
 import com.wirednest.apps.hairstyle.R;
 
 import net.bozho.easycamera.EasyCamera;
@@ -67,20 +69,23 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
                 Bitmap cameraBitmap = BitmapFactory.decodeByteArray
                         (data, 0, data.length);
 
-                //set overlay
-                int wid = cameraBitmap.getWidth();
-                int hgt = cameraBitmap.getHeight();
                 Matrix matrix = new Matrix();
                 matrix.postRotate(90);
+
+                Bitmap rotatedBitmap = Bitmap.createBitmap(cameraBitmap, 0, 0, cameraBitmap.getWidth(), cameraBitmap.getHeight(), matrix, true);
+
+                //set overlay
+                int wid = rotatedBitmap.getWidth();
+                int hgt = rotatedBitmap.getHeight();
                 Bitmap newImage = Bitmap.createBitmap(wid, hgt, Bitmap.Config.ARGB_8888);
                 Canvas canvas = new Canvas(newImage);
 
-                canvas.drawBitmap(cameraBitmap, 0f, 0f, null);
+                canvas.drawBitmap(rotatedBitmap, 0f, 0f, null);
 
-                Drawable drawable = getResources().getDrawable
+         /*       Drawable drawable = getResources().getDrawable
                         (R.drawable.fun);
                 drawable.setBounds(20, 30, drawable.getIntrinsicWidth() + 20, drawable.getIntrinsicHeight() + 30);
-                drawable.draw(canvas);
+                drawable.draw(canvas);*/
                 //end
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
                 String date = dateFormat.format(new Date());
@@ -101,6 +106,10 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
                     Log.d("Log", "File" + filename + "not saved: "
                             + error.getMessage());
                 }
+
+                Intent i = new Intent(getContext(), PhotoEditActivity.class);
+                i.putExtra("FILE_AVAGA", filename);
+                getContext().startActivity(i);
             }
         };
 
