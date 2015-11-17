@@ -33,6 +33,11 @@
             android:label="@string/title_activity_album" >
         </activity>
         <activity
+            android:name=".activity.AlbumPhotoActivity"
+            android:label="@string/title_activity_album" >
+        </activity>
+        <activity android:name=".activity.AlbumAddActivity" android:theme="@style/AppThemeDragger" />
+        <activity
             android:name=".activity.CaptureActivity"
             android:label="@string/title_activity_camera"
             android:screenOrientation="portrait">

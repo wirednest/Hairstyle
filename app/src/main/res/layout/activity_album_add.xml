@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.github.ppamorim.dragger.DraggerView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dragger_layout="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dragger_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    dragger_layout:drag_view_id="@+id/drag_view"
+    dragger_layout:shadow_view_id="@+id/shadow_view">
+
+    <FrameLayout
+        android:id="@+id/shadow_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/trans"
+        android:visibility="invisible"/>
+
+    <LinearLayout
+        android:id="@+id/drag_view"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:paddingTop="56dp"
+        android:background="@drawable/homescreen_background">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Add new album"
+            android:id="@+id/textView4"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@android:color/white" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText android:id="@+id/input_albumName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:hint="@string/hint_albumAdd_albumName"
+                android:textColorHint="@android:color/white"
+                android:textColor="@android:color/white" />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText android:id="@+id/input_albumDescription"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:hint="@string/hint_albumAdd_albumDescription"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white" />
+        </android.support.design.widget.TextInputLayout>
+        <com.rey.material.widget.CheckBox
+            style="@style/Material.Drawable.CheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="Private Album"
+            android:layout_marginTop="16dp"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
+
+</com.github.ppamorim.dragger.DraggerView>
+

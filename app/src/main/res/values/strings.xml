@@ -21,4 +21,7 @@
     <string name="title_activity_preview_image">PreviewImageActivity</string>
     <string name="title_activity_edit_image">EditImageActivity</string>
     <string name="title_activity_hair_stle_categories">HairStleCategoriesActivity</string>
+    <!--Album Add-->
+    <string name="hint_albumAdd_albumName">Name</string>
+    <string name="hint_albumAdd_albumDescription">Small Description</string>
 </resources>
