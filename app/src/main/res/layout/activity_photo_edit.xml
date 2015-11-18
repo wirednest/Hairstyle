@@ -18,7 +18,6 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:id="@+id/hair"
-            android:src="@drawable/hairstyle_1"
             android:scaleType="matrix"/>
 
         <com.melnykov.fab.FloatingActionButton

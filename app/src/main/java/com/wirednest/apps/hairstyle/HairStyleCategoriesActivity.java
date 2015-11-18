@@ -17,11 +17,57 @@ public class HairStyleCategoriesActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent result = new Intent();
-                result.putExtra("ID_BUKOT",R.id.hairstyle_1);
-                setResult(RESULT_OK,result);
+                result.putExtra("ID_BUKOT", R.drawable.hairstyle_1);
+                setResult(RESULT_OK, result);
                 finish();
             }
         });
+        findViewById(R.id.hairstyle_2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent result = new Intent();
+                result.putExtra("ID_BUKOT", R.drawable.hairstyle_2);
+                setResult(RESULT_OK, result);
+                finish();
+            }
+        });
+        findViewById(R.id.hairstyle_3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent result = new Intent();
+                result.putExtra("ID_BUKOT", R.drawable.hairstyle_3);
+                setResult(RESULT_OK, result);
+                finish();
+            }
+        });
+        findViewById(R.id.hairstyle_4).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent result = new Intent();
+                result.putExtra("ID_BUKOT", R.drawable.hairstyle_4);
+                setResult(RESULT_OK, result);
+                finish();
+            }
+        });
+        findViewById(R.id.hairstyle_5).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent result = new Intent();
+                result.putExtra("ID_BUKOT", R.drawable.hairstyle_5);
+                setResult(RESULT_OK, result);
+                finish();
+            }
+        });
+        findViewById(R.id.hairstyle_6).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent result = new Intent();
+                result.putExtra("ID_BUKOT", R.drawable.hairstyle_6);
+                setResult(RESULT_OK, result);
+                finish();
+            }
+        });
+
     }
 
     @Override

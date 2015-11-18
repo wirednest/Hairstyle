@@ -2,16 +2,32 @@ package com.wirednest.apps.hairstyle;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.PointF;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class PhotoEditActivity extends Activity implements View.OnTouchListener {
     // these matrices will be used to move and zoom image
@@ -30,13 +46,14 @@ public class PhotoEditActivity extends Activity implements View.OnTouchListener 
     private float newRot = 0f;
     private float[] lastEvent = null;
 
-
+    //image s
+    private int idGambiran=-1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_edit);
 
-        String filename = getIntent().getStringExtra("FILE_AVAGA");
+        final String filename = getIntent().getStringExtra("FILE_AVAGA");
         ImageView photo = (ImageView) findViewById(R.id.photo);
         photo.setImageURI(Uri.parse(filename));
         findViewById(R.id.chooseHair).setOnClickListener(new View.OnClickListener() {
@@ -54,22 +71,74 @@ public class PhotoEditActivity extends Activity implements View.OnTouchListener 
         findViewById(R.id.savePic2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                File pictureFileDir = getDir();
+                if (!pictureFileDir.exists() && !pictureFileDir.mkdirs()) {
 
-                Log.d("Log", ""+matrix);
+                    Log.d("Log", "Can't create directory to save image.");
+                    return;
+                }
+
+                String filepath = getIntent().getStringExtra("FILE_AVAGA");
+                File image = new File(filepath);
+                BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+                Bitmap bitmap = BitmapFactory.decodeFile(image.getAbsolutePath(), bmOptions);
+
+                DisplayMetrics metrics = getBaseContext().getResources().getDisplayMetrics();
+                int w = metrics.widthPixels;
+                int h = metrics.heightPixels;
+
+                Bitmap newImage = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);//empty
+                Canvas canvas = new Canvas(newImage);//create canvas
+                canvas.drawBitmap(bitmap,new Rect(0,0,newImage.getWidth(),newImage.getHeight()),new Rect(0,0,newImage.getWidth(),newImage.getHeight()),new Paint(Paint.FILTER_BITMAP_FLAG));//gambar background
+
+                Drawable overlay = getResources().getDrawable (idGambiran);//gabar rambut
+                Bitmap ovrlyBitmap = ((BitmapDrawable) overlay).getBitmap();
+                Matrix sizedMatrix = new Matrix(matrix);
+                sizedMatrix.setScale(0.25f,0.25f);
+
+                Bitmap matrixedOverlay = Bitmap.createBitmap(ovrlyBitmap,0,0,ovrlyBitmap.getWidth(), ovrlyBitmap.getHeight(),matrix,true);//rambut with matrix
+                canvas.drawBitmap(matrixedOverlay,new Rect(0,0,matrixedOverlay.getWidth(),matrixedOverlay.getHeight()),new Rect(0,0,matrixedOverlay.getWidth(),matrixedOverlay.getHeight()),new Paint(Paint.FILTER_BITMAP_FLAG));
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
+                String date = dateFormat.format(new Date());
+                String photoFile = "Picture_" + date + ".jpg";
+
+                String filename = pictureFileDir.getPath() + File.separator + photoFile;
+
+                File pictureFile = new File(filename);
+
+                try {
+                    FileOutputStream fos = new FileOutputStream(pictureFile);
+                    newImage.compress(Bitmap.CompressFormat.JPEG, 80, fos);
+                    fos.flush();
+                    fos.close();
+                    Log.d("Log", "New Image saved:" + filename);
+                } catch (Exception error) {
+                    Log.d("Log", "File" + filename + "not saved: "
+                            + error.getMessage());
+                }
+
+
+                Log.d("Log", "" + matrix);
             }
         });
+    }
+
+    private File getDir() {
+        File sdDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        return new File(sdDir, "Hairstyle");
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 14045 && resultCode == RESULT_OK) {
-            int idGambiran = data.getIntExtra("ID_BUKOT", -1);
+             idGambiran = data.getIntExtra("ID_BUKOT", -1);
 
             if (idGambiran != -1) {
                 ImageView imagine = (ImageView) findViewById(R.id.hair);
-//                Picasso.with(this).load(idGambiran).into(imagine);
-//                imagine.setImageDrawable(getResources().getDrawable(idGambiran));
+                Picasso.with(this).load(idGambiran).into(imagine);
+                imagine.setImageDrawable(getResources().getDrawable(idGambiran));
             }
         }
     }
