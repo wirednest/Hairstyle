@@ -6,13 +6,12 @@ import android.graphics.Matrix;
 import android.graphics.PointF;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
-
-import com.squareup.picasso.Picasso;
 
 public class PhotoEditActivity extends Activity implements View.OnTouchListener {
     // these matrices will be used to move and zoom image
@@ -36,6 +35,7 @@ public class PhotoEditActivity extends Activity implements View.OnTouchListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_edit);
+
         String filename = getIntent().getStringExtra("FILE_AVAGA");
         ImageView photo = (ImageView) findViewById(R.id.photo);
         photo.setImageURI(Uri.parse(filename));
@@ -46,8 +46,18 @@ public class PhotoEditActivity extends Activity implements View.OnTouchListener 
                 startActivityForResult(intent, 14045);
             }
         });
+
+
         ImageView view = (ImageView) findViewById(R.id.hair);
         view.setOnTouchListener(this);
+
+        findViewById(R.id.savePic2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Log.d("Log", ""+matrix);
+            }
+        });
     }
 
     @Override
@@ -58,7 +68,7 @@ public class PhotoEditActivity extends Activity implements View.OnTouchListener 
 
             if (idGambiran != -1) {
                 ImageView imagine = (ImageView) findViewById(R.id.hair);
-                Picasso.with(this).load(idGambiran).into(imagine);
+//                Picasso.with(this).load(idGambiran).into(imagine);
 //                imagine.setImageDrawable(getResources().getDrawable(idGambiran));
             }
         }
