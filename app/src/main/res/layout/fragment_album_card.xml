@@ -3,22 +3,27 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="20dp"
-    android:layout_marginTop="20dp"
-    android:id="@+id/cv">
+    xmlns:app="http://schemas.android.com/tools"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    android:layout_marginTop="16dp"
+    android:id="@+id/cv"
+    app:cardUseCompatPadding="true">
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="200dp">
-
-        <ImageView
+        <com.daimajia.slider.library.SliderLayout
+            android:id="@+id/slider"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            />
+        <!--ImageView
             android:layout_width="fill_parent"
             android:layout_height="200dp"
             android:id="@+id/album_image"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
             android:foreground="@drawable/bob"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop" /-->
 
         <TextView
             android:layout_width="wrap_content"
@@ -26,7 +31,7 @@
             android:id="@+id/album_name"
             android:layout_toRightOf="@+id/album_image"
             android:layout_alignParentTop="true"
-            android:textSize="30sp"
+            android:textSize="24sp"
             android:text="Album 1"
             android:layout_gravity="center_vertical|bottom"
             android:layout_marginLeft="10dp"

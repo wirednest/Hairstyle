@@ -30,13 +30,18 @@
         </activity>
         <activity
             android:name=".activity.AlbumActivity"
+            android:theme="@style/AppThemeDragger"
             android:label="@string/title_activity_album" >
         </activity>
         <activity
             android:name=".activity.AlbumPhotoActivity"
+            android:theme="@style/AppThemeDragger"
             android:label="@string/title_activity_album" >
         </activity>
-        <activity android:name=".activity.AlbumAddActivity" android:theme="@style/AppThemeDragger" />
+        <activity
+            android:name=".activity.AlbumAddActivity"
+            android:theme="@style/AppThemeDragger"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity
             android:name=".activity.CaptureActivity"
             android:label="@string/title_activity_camera"

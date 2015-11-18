@@ -6,5 +6,10 @@
     <color name="pink">#C1185B</color>
     <color name="background">#ff333333</color>
     <color name="shadow">#AA000000</color>
-    <color name="trans">#00000000 </color>.
+    <color name="black">#000000</color>
+    <color name="black_grey">#212121</color>
+    <color name="gray">#EAEAEA</color>
+    <color name="white">#FFFFFF</color>
+    <color name="trans">#BF000000</color>
+    <color name="secondary_text">@android:color/white</color>
 </resources>

@@ -17,13 +17,13 @@ public class Albums extends SugarRecord{
     * */
     public String albumName;
     public String description;
-    public int datetime;
+    public long datetime;
     public String albumType;
     public String albumPassword;
 
     public Albums() { }
 
-    public Albums(String albumName, String description, int datetime, String albumType, String albumPassword) {
+    public Albums(String albumName, String description, long datetime, String albumType, String albumPassword) {
         this.albumName = albumName;
         this.description = description;
         this.datetime = datetime;
