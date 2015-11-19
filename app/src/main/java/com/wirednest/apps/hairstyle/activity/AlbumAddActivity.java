@@ -45,6 +45,7 @@ public class AlbumAddActivity extends SwipeBackActivity {
                 String albumType = Albums.PUBLIC_TYPE;
                 Long tsLong = System.currentTimeMillis()/1000;
                 if(privateAlbum.isChecked()) albumType = Albums.PRIVATE_TYPE;
+
                 Albums newAlbum = new Albums(
                         albumName.getText().toString(),
                         albumDescription.getText().toString(),
@@ -52,6 +53,7 @@ public class AlbumAddActivity extends SwipeBackActivity {
                         albumType,
                         ""
                 );
+
                 newAlbum.save();
 
                 Log.d("Hairstyle.DB", "New Album Saved");

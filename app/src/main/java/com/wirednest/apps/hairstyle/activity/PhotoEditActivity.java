@@ -20,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
@@ -113,9 +114,11 @@ public class PhotoEditActivity extends Activity implements View.OnTouchListener 
 
                 File pictureFile = new File(filename);
 
+                Bitmap saveImage = loadBitmapFromView((FrameLayout)findViewById(R.id.saveImage));
+
                 try {
                     FileOutputStream fos = new FileOutputStream(pictureFile);
-                    newImage.compress(Bitmap.CompressFormat.JPEG, 80, fos);
+                    saveImage.compress(Bitmap.CompressFormat.JPEG, 80, fos);
                     fos.flush();
                     fos.close();
                     Log.d("Log", "New Image saved:" + filename);
@@ -128,7 +131,12 @@ public class PhotoEditActivity extends Activity implements View.OnTouchListener 
             }
         });
     }
-
+    public static Bitmap loadBitmapFromView(View v) {
+        v.setDrawingCacheEnabled(true);
+        Bitmap b = Bitmap.createBitmap(v.getDrawingCache(true));
+        v.setDrawingCacheEnabled(false); // clear drawing cache
+        return b;
+    }
     private File getDir() {
         File sdDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         return new File(sdDir, "Hairstyle");

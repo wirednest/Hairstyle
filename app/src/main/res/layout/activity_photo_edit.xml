@@ -9,16 +9,22 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/photo" />
-        <ImageView
+        <FrameLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:id="@+id/hair"
-            android:scaleType="matrix"/>
+            android:id="@+id/saveImage">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:id="@+id/photo" />
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/hair"
+                android:scaleType="matrix"/>
+
+        </FrameLayout>
 
         <com.melnykov.fab.FloatingActionButton
             android:id="@+id/chooseHair"

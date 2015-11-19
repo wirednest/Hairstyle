@@ -75,33 +75,6 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.PersonViewHo
                 });
 
         personViewHolder.sliderShow.addSlider(textSliderView);
-        personViewHolder.sliderShow.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        Intent intent = new Intent(context, AlbumPhotoActivity.class);
-                        intent.putExtra("ALBUMID", albums.get(i).getId());
-                        context.startActivity(intent);
-                        Log.d("Album", "Album Clicked " + albums.get(i).albumName);
-                        break;
-
-                    case MotionEvent.ACTION_UP:
-
-                        break;
-                }
-
-                return false;
-            }
-//        ClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(context, AlbumPhotoActivity.class);
-//                intent.putExtra("ALBUMID", albums.get(i).getId());
-//                context.startActivity(intent);
-//                Log.d("Album", "Album Clicked " + albums.get(i).albumName);
-//            }
-        });
         //personViewHolder.albumImage.setImageResource(albums.get(i).image);
     }
     @Override
