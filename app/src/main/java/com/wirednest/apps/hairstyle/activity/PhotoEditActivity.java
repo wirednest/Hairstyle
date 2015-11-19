@@ -14,7 +14,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,7 +28,6 @@ import com.wirednest.apps.hairstyle.R;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -57,9 +55,10 @@ public class PhotoEditActivity extends Activity implements View.OnTouchListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_edit);
 
-        final String filename = getIntent().getStringExtra("FILE_AVAGA");
+        final String pathImage1 = getIntent().getStringExtra("FILE_AVAGA");
+        final String Image1Name = getIntent().getStringExtra("Image1Name");
         ImageView photo = (ImageView) findViewById(R.id.photo);
-        photo.setImageURI(Uri.parse(filename));
+        photo.setImageURI(Uri.parse(pathImage1));
         findViewById(R.id.chooseHair).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,20 +86,14 @@ public class PhotoEditActivity extends Activity implements View.OnTouchListener 
                 BitmapFactory.Options bmOptions = new BitmapFactory.Options();
                 Bitmap bitmap = BitmapFactory.decodeFile(image.getAbsolutePath(), bmOptions);
 
-                DisplayMetrics metrics = getBaseContext().getResources().getDisplayMetrics();
-                int w = metrics.widthPixels;
-                int h = metrics.heightPixels;
-
                 //empty canvas
                 Bitmap newImage = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
                 Canvas canvas = new Canvas(newImage);//create canvas
                 canvas.drawBitmap(bitmap,new Rect(0,0,newImage.getWidth(),newImage.getHeight()),new Rect(0,0,newImage.getWidth(),newImage.getHeight()),new Paint(Paint.FILTER_BITMAP_FLAG));//gambar background
 
                 //hairstyle overlay
-                Drawable overlay = getResources().getDrawable (idGambiran);
+                Drawable overlay = getResources().getDrawable(idGambiran);
                 Bitmap ovrlyBitmap = ((BitmapDrawable) overlay).getBitmap();
-                Matrix sizedMatrix = new Matrix(matrix);
-                sizedMatrix.setScale(0.25f,0.25f);
 
                 //hairstyle with matrix
                 Bitmap matrixedOverlay = Bitmap.createBitmap(ovrlyBitmap,0,0,ovrlyBitmap.getWidth(), ovrlyBitmap.getHeight(),matrix,true);
@@ -127,7 +120,10 @@ public class PhotoEditActivity extends Activity implements View.OnTouchListener 
                     Log.d("Log", "File" + filename + "not saved: "
                             + error.getMessage());
                 }
-                Log.d("Log", "" + matrix);
+                Intent intent = new Intent(PhotoEditActivity.this, FormPicActivity.class);
+                intent.putExtra("Image1Name", Image1Name);
+                intent.putExtra("Image2Name", photoFile);
+                startActivity(intent);
             }
         });
     }

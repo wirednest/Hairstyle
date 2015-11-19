@@ -30,11 +30,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
-            <EditText android:id="@+id/input_albumName"
+            <EditText android:id="@+id/input_picName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:hint="@string/hint_albumAdd_albumName"
+                android:hint="@string/hint_savingPic_captureName"
                 android:textColorHint="@android:color/white"
                 android:textColor="@android:color/white" />
         </android.support.design.widget.TextInputLayout>
@@ -43,11 +43,39 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
-            <EditText android:id="@+id/input_albumDescription"
+            <EditText android:id="@+id/input_picDescription"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:hint="@string/hint_albumAdd_albumDescription"
+                android:hint="@string/hint_savingPic_captureDescription"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText android:id="@+id/input_picPerson"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:hint="@string/hint_savingPic_person"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText android:id="@+id/input_picPassword"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:hint="@string/hint_savingPic_capturePassword"
                 android:textColor="@android:color/white"
                 android:textColorHint="@android:color/white" />
         </android.support.design.widget.TextInputLayout>
@@ -61,7 +89,7 @@
             app:rd_enable="true"
             android:background="@color/pink_dark"
             android:textColor="@android:color/white"
-            android:id="@+id/saveAlbum" />
+            android:id="@+id/savePicForm" />
     </LinearLayout>
 </FrameLayout>
 

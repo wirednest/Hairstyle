@@ -20,9 +20,14 @@
     <string name="title_activity_preview_image_sample">preview_image_sample</string>
     <string name="title_activity_preview_image">PreviewImageActivity</string>
     <string name="title_activity_edit_image">EditImageActivity</string>
-    <string name="title_activity_hair_stle_categories">HairStleCategoriesActivity</string>
+    <string name="title_activity_hair_style_categories">HairStyleCategoriesActivity</string>
     <!--Album Add-->
     <string name="hint_albumAdd_albumName">Name</string>
     <string name="hint_albumAdd_albumDescription">Small Description</string>
+    <!--Saving Pic-->
+    <string name="hint_savingPic_captureName">Name</string>
+    <string name="hint_savingPic_captureDescription">Small Description</string>
+    <string name="hint_savingPic_person">Person</string>
+    <string name="hint_savingPic_capturePassword">Password</string>
     <string name="title_activity_form_pic">FormPicActivity</string>
 </resources>

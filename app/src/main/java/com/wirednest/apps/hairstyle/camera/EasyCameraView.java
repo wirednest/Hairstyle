@@ -1,6 +1,5 @@
 package com.wirednest.apps.hairstyle.camera;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -9,15 +8,12 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.RectF;
 import android.hardware.Camera;
-import android.os.CountDownTimer;
 import android.os.Environment;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.widget.TextView;
 
-import com.wirednest.apps.hairstyle.R;
 import com.wirednest.apps.hairstyle.activity.PhotoEditActivity;
 
 import net.bozho.easycamera.EasyCamera;
@@ -84,11 +80,6 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
 
                 canvas.drawBitmap(rotatedBitmap, 0f, 0f, null);
 
-         /*       Drawable drawable = getResources().getDrawable
-                        (R.drawable.fun);
-                drawable.setBounds(20, 30, drawable.getIntrinsicWidth() + 20, drawable.getIntrinsicHeight() + 30);
-                drawable.draw(canvas);*/
-                //end
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
                 String date = dateFormat.format(new Date());
                 String photoFile = "Picture_" + date + ".jpg";
@@ -111,6 +102,7 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
 
                 Intent i = new Intent(getContext(), PhotoEditActivity.class);
                 i.putExtra("FILE_AVAGA", filename);
+                i.putExtra("Image1Name", photoFile);
                 getContext().startActivity(i);
             }
         };
@@ -154,17 +146,17 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
     }
 
     public void captureImage(View v) throws IOException {
-        new CountDownTimer(10000, 1000) {
-
-            public void onTick(long millisUntilFinished) {
-                TextView txtView = (TextView) ((Activity)getContext()).findViewById(R.id.cooldown);
-                txtView.setText(""+millisUntilFinished / 1000);
-            }
-
-            public void onFinish() {
+//        new CountDownTimer(10000, 1000) {
+//
+//            public void onTick(long millisUntilFinished) {
+//                TextView txtView = (TextView) ((Activity)getContext()).findViewById(R.id.cooldown);
+//                txtView.setText(""+millisUntilFinished / 1000);
+//            }
+//
+//            public void onFinish() {
                 actions.takePicture(EasyCamera.Callbacks.create().withJpegCallback(callback).withRestartPreviewAfterCallbacks(true));
-            }
-        }.start();
+//            }
+//        }.start();
     }
 
     @Override
