@@ -1,4 +1,4 @@
-package com.wirednest.apps.hairstyle;
+package com.wirednest.apps.hairstyle.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -23,9 +23,12 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
+import com.wirednest.apps.hairstyle.HairStyleCategoriesActivity;
+import com.wirednest.apps.hairstyle.R;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -87,16 +90,19 @@ public class PhotoEditActivity extends Activity implements View.OnTouchListener 
                 int w = metrics.widthPixels;
                 int h = metrics.heightPixels;
 
-                Bitmap newImage = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);//empty
+                //empty canvas
+                Bitmap newImage = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
                 Canvas canvas = new Canvas(newImage);//create canvas
                 canvas.drawBitmap(bitmap,new Rect(0,0,newImage.getWidth(),newImage.getHeight()),new Rect(0,0,newImage.getWidth(),newImage.getHeight()),new Paint(Paint.FILTER_BITMAP_FLAG));//gambar background
 
-                Drawable overlay = getResources().getDrawable (idGambiran);//gabar rambut
+                //hairstyle overlay
+                Drawable overlay = getResources().getDrawable (idGambiran);
                 Bitmap ovrlyBitmap = ((BitmapDrawable) overlay).getBitmap();
                 Matrix sizedMatrix = new Matrix(matrix);
                 sizedMatrix.setScale(0.25f,0.25f);
 
-                Bitmap matrixedOverlay = Bitmap.createBitmap(ovrlyBitmap,0,0,ovrlyBitmap.getWidth(), ovrlyBitmap.getHeight(),matrix,true);//rambut with matrix
+                //hairstyle with matrix
+                Bitmap matrixedOverlay = Bitmap.createBitmap(ovrlyBitmap,0,0,ovrlyBitmap.getWidth(), ovrlyBitmap.getHeight(),matrix,true);
                 canvas.drawBitmap(matrixedOverlay,new Rect(0,0,matrixedOverlay.getWidth(),matrixedOverlay.getHeight()),new Rect(0,0,matrixedOverlay.getWidth(),matrixedOverlay.getHeight()),new Paint(Paint.FILTER_BITMAP_FLAG));
 
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
@@ -113,12 +119,11 @@ public class PhotoEditActivity extends Activity implements View.OnTouchListener 
                     fos.flush();
                     fos.close();
                     Log.d("Log", "New Image saved:" + filename);
+
                 } catch (Exception error) {
                     Log.d("Log", "File" + filename + "not saved: "
                             + error.getMessage());
                 }
-
-
                 Log.d("Log", "" + matrix);
             }
         });

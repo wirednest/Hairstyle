@@ -6,17 +6,15 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
-import android.graphics.drawable.Drawable;
 import android.hardware.Camera;
+import android.os.CountDownTimer;
 import android.os.Environment;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.widget.Toast;
 
-import com.wirednest.apps.hairstyle.PhotoEditActivity;
-import com.wirednest.apps.hairstyle.R;
+import com.wirednest.apps.hairstyle.activity.PhotoEditActivity;
 
 import net.bozho.easycamera.EasyCamera;
 import net.bozho.easycamera.EasyCamera.*;
@@ -121,7 +119,16 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
     }
 
     public void captureImage(View v) throws IOException {
-        actions.takePicture(EasyCamera.Callbacks.create().withJpegCallback(callback).withRestartPreviewAfterCallbacks(true));
+        new CountDownTimer(10000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                Log.d("Log", "seconds remaining: " + millisUntilFinished / 1000);
+            }
+
+            public void onFinish() {
+                actions.takePicture(EasyCamera.Callbacks.create().withJpegCallback(callback).withRestartPreviewAfterCallbacks(true));
+            }
+        }.start();
     }
 
     @Override

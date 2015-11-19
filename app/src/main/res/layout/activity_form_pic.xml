@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dragger_layout="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingLeft="24dp"
+    android:paddingRight="24dp"
+    android:background="@drawable/homescreen_background">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Saving Picture"
+            android:id="@+id/textView4"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="16dp" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText android:id="@+id/input_albumName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:hint="@string/hint_albumAdd_albumName"
+                android:textColorHint="@android:color/white"
+                android:textColor="@android:color/white" />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText android:id="@+id/input_albumDescription"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:hint="@string/hint_albumAdd_albumDescription"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white" />
+        </android.support.design.widget.TextInputLayout>
+
+        <com.rey.material.widget.Button
+            style="@style/Material.Drawable.Ripple.Wave"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Save"
+            app:rd_enable="true"
+            android:background="@color/pink_dark"
+            android:textColor="@android:color/white"
+            android:id="@+id/saveAlbum" />
+    </LinearLayout>
+</FrameLayout>
+

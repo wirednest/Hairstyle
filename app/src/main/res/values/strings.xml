@@ -24,4 +24,5 @@
     <!--Album Add-->
     <string name="hint_albumAdd_albumName">Name</string>
     <string name="hint_albumAdd_albumDescription">Small Description</string>
+    <string name="title_activity_form_pic">FormPicActivity</string>
 </resources>

@@ -1,12 +1,14 @@
 package com.wirednest.apps.hairstyle.activity;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.wirednest.apps.hairstyle.R;
 import com.wirednest.apps.hairstyle.camera.EasyCameraView;
@@ -41,6 +43,19 @@ public class CaptureActivity extends AppCompatActivity {
 
             camera_view.addView(mCameraView);//add the SurfaceView to the layout
         }
+
+//        final TextView timer = (TextView) findViewById(R.id.cooldown);
+//
+//        new CountDownTimer(5000, 1000) {
+//
+//            public void onTick(long millisUntilFinished) {
+//                timer.setText("seconds remaining: " + millisUntilFinished / 1000);
+//            }
+//
+//            public void onFinish() {
+//                timer.setText("done!");
+//            }
+//        }.start();
 
 //        if (camera != null) {
 //            mCameraView = new EasyCameraView(this, camera);//create a SurfaceView to show camera data
