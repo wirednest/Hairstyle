@@ -43,8 +43,6 @@ public class CaptureActivity extends AppCompatActivity {
 
             camera_view.addView(mCameraView);//add the SurfaceView to the layout
         }
-
-//        final TextView timer = (TextView) findViewById(R.id.cooldown);
 //
 //        new CountDownTimer(5000, 1000) {
 //

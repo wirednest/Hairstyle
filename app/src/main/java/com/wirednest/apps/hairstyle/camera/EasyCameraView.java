@@ -1,5 +1,6 @@
 package com.wirednest.apps.hairstyle.camera;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -13,7 +14,9 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.TextView;
 
+import com.wirednest.apps.hairstyle.R;
 import com.wirednest.apps.hairstyle.activity.PhotoEditActivity;
 
 import net.bozho.easycamera.EasyCamera;
@@ -122,7 +125,8 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
         new CountDownTimer(10000, 1000) {
 
             public void onTick(long millisUntilFinished) {
-                Log.d("Log", "seconds remaining: " + millisUntilFinished / 1000);
+                TextView txtView = (TextView) ((Activity)getContext()).findViewById(R.id.cooldown);
+                txtView.setText(""+millisUntilFinished / 1000);
             }
 
             public void onFinish() {
