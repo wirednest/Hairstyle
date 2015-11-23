@@ -44,9 +44,9 @@ public class ViewPhotoActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch(position){
                 case 0 :
-//                    return FullImageFragment.newInstance(R.drawable.sample1);
+                    return FullImageFragment.newInstance(R.drawable.sample1);
                 case 1:
-//                    return FullImageFragment.newInstance(R.drawable.sample2);
+                    return FullImageFragment.newInstance(R.drawable.sample2);
                 case 2:
                     return new OneButtonFragment();
                 default:

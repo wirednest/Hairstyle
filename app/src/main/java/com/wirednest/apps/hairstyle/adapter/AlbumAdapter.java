@@ -17,6 +17,7 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.wirednest.apps.hairstyle.R;
+import com.wirednest.apps.hairstyle.ViewPhotoActivity;
 import com.wirednest.apps.hairstyle.activity.AlbumPhotoActivity;
 import com.wirednest.apps.hairstyle.db.Albums;
 
@@ -24,6 +25,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import fragments.FullImageFragment;
 
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.PersonViewHolder>{
     private Context context;
@@ -67,7 +69,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.PersonViewHo
                 .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
                     @Override
                     public void onSliderClick(BaseSliderView baseSliderView) {
-                        Intent intent = new Intent(context, AlbumPhotoActivity.class);
+                        Intent intent = new Intent(context, ViewPhotoActivity.class);
                         intent.putExtra("ALBUMID", albums.get(i).getId());
                         context.startActivity(intent);
                         Log.d("Album", "Album Clicked " + albums.get(i).albumName);
