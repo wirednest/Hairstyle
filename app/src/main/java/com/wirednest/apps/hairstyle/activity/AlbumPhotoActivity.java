@@ -49,7 +49,7 @@ public class AlbumPhotoActivity extends SwipeBackActivity{
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new AlbumPhotoAdapter(Captures.find(Captures.class, "ALBUM = ?", String.valueOf(albumId)));
+        mAdapter = new AlbumPhotoAdapter(this,Captures.find(Captures.class, "ALBUM = ?", String.valueOf(albumId)));
         mRecyclerView.setAdapter(mAdapter);
 
         addAlbumPhoto.setOnClickListener(new View.OnClickListener() {
