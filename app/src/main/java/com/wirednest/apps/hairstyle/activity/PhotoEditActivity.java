@@ -48,8 +48,12 @@ public class PhotoEditActivity extends Activity implements View.OnTouchListener 
     private float d = 0f;
     private float newRot = 0f;
     private float[] lastEvent = null;
-    //image s
-    private int idGambiran=-1;
+    //call image hair
+    private int idGambiran = -1;
+
+    //button
+    boolean fliped;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,43 +74,61 @@ public class PhotoEditActivity extends Activity implements View.OnTouchListener 
         final ImageView view = (ImageView) findViewById(R.id.hair);
         view.setOnTouchListener(this);
 
-        View.OnClickListener onClick= new View.OnClickListener() {
+        View.OnClickListener onClick = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 float dx = view.getX();
                 float dy = view.getY();
+
                 int value = 10;
-                switch (v.getId()){
+                switch (v.getId()) {
                     case R.id.upImg:
                         savedMatrix.set(matrix);
-                        matrix.postTranslate(dx, dy-value);
+                        matrix.postTranslate(dx, dy - value);
                         break;
                     case R.id.downImg:
                         savedMatrix.set(matrix);
-                        matrix.postTranslate(dx, dy+value);
+                        matrix.postTranslate(dx, dy + value);
                         break;
                     case R.id.leftImg:
                         savedMatrix.set(matrix);
-                        matrix.postTranslate(dx-value, dy);
+                        if (fliped) {
+                            matrix.postTranslate(dx + value, dy);
+                        }else{
+                        matrix.postTranslate(dx - value, dy);}
                         break;
                     case R.id.rightImg:
                         savedMatrix.set(matrix);
-                        matrix.postTranslate(dx+value, dy);
+                        if (fliped) {
+                            matrix.postTranslate(dx - value, dy);
+                        }else{
+                        matrix.postTranslate(dx + value, dy);}
                         break;
 
                     case R.id.increaseImg:
                         savedMatrix.set(matrix);
-                        matrix.postScale(view.getScaleX()+0.1f, view.getScaleY()+0.1f, mid.x, mid.y);
+                        if (fliped) {
+                            matrix.postScale((view.getScaleX()*-1) + 0.1f, view.getScaleY() + 0.1f, mid.x, mid.y);
+                        } else {
+                            matrix.postScale(view.getScaleX() + 0.1f, view.getScaleY() + 0.1f, mid.x, mid.y);
+                        }
                         break;
                     case R.id.decreaseImg:
                         savedMatrix.set(matrix);
-                        matrix.postScale(view.getScaleX()-0.1f, view.getScaleY()-0.1f, mid.x, mid.y);
+                        if (fliped) {
+                            matrix.postScale((view.getScaleX()*-1) - 0.1f, view.getScaleY() - 0.1f, mid.x, mid.y);
+                        } else {
+                        matrix.postScale(view.getScaleX() - 0.1f, view.getScaleY() - 0.1f, mid.x, mid.y);
+                        }
                         break;
                     case R.id.flipImg:
-                        if (view.getScaleX()!=-1){
+                        if (view.getScaleX() != -1) {
                             view.setScaleX(-1);
-                        }else
+                            fliped=true;
+                        } else {
                             view.setScaleX(1);
+                            fliped=false;
+                        }
                         break;
                     case R.id.rotateLeftImg:
                         float[] values = new float[9];
@@ -121,15 +143,16 @@ public class PhotoEditActivity extends Activity implements View.OnTouchListener 
                     case R.id.rotateRightImg:
                         values = new float[9];
                         matrix.getValues(values);
-                         tx = values[2];
-                         ty = values[5];
-                         sx = values[0];
-                         xc = (view.getWidth() / 2) * sx;
-                         yc = (view.getHeight() / 2) * sx;
+                        tx = values[2];
+                        ty = values[5];
+                        sx = values[0];
+                        xc = (view.getWidth() / 2) * sx;
+                        yc = (view.getHeight() / 2) * sx;
                         matrix.postRotate(2f, tx + xc, ty + yc);
                         break;
                 }
-                Log.d("matrix button",""+matrix);
+                Log.d("matrix button", "" + matrix);
+                Log.d("x", "" + view.getScaleX());
                 view.setImageMatrix(matrix);
             }
         };
@@ -200,12 +223,14 @@ public class PhotoEditActivity extends Activity implements View.OnTouchListener 
             }
         });
     }
+
     public static Bitmap loadBitmapFromView(View v) {
         v.setDrawingCacheEnabled(true);
         Bitmap b = Bitmap.createBitmap(v.getDrawingCache(true));
         v.setDrawingCacheEnabled(false); // clear drawing cache
         return b;
     }
+
     private File getDir() {
         File sdDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         return new File(sdDir, "Hairstyle");
@@ -215,7 +240,7 @@ public class PhotoEditActivity extends Activity implements View.OnTouchListener 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 14045 && resultCode == RESULT_OK) {
-             idGambiran = data.getIntExtra("ID_BUKOT", -1);
+            idGambiran = data.getIntExtra("ID_BUKOT", -1);
 
             if (idGambiran != -1) {
                 ImageView imagine = (ImageView) findViewById(R.id.hair);
@@ -305,7 +330,7 @@ public class PhotoEditActivity extends Activity implements View.OnTouchListener 
                 }
                 break;
         }
-        Log.d("matrix touch",""+matrix);
+        Log.d("matrix touch", "" + matrix);
         view.setImageMatrix(matrix);
         return true;
     }
