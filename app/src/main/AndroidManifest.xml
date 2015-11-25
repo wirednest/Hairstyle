@@ -70,15 +70,6 @@
             android:label="@string/title_activity_view_photo" >
         </activity>
         <activity
-            android:name=".preview_image_sample"
-            android:label="@string/title_activity_preview_image_sample" >
-        </activity>
-        <activity
-            android:name=".PreviewImageActivity"
-            android:label="@string/title_activity_preview_image"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
-        </activity>
-        <activity
             android:name=".EditImageActivity"
             android:label="@string/title_activity_edit_image"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" >

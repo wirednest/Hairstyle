@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
@@ -47,7 +48,6 @@ public class PhotoEditActivity extends Activity implements View.OnTouchListener 
     private float d = 0f;
     private float newRot = 0f;
     private float[] lastEvent = null;
-
     //image s
     private int idGambiran=-1;
     @Override
@@ -67,9 +67,82 @@ public class PhotoEditActivity extends Activity implements View.OnTouchListener 
             }
         });
 
-
-        ImageView view = (ImageView) findViewById(R.id.hair);
+        final ImageView view = (ImageView) findViewById(R.id.hair);
         view.setOnTouchListener(this);
+
+        View.OnClickListener onClick= new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                float dx = view.getX();
+                float dy = view.getY();
+                int value = 10;
+                switch (v.getId()){
+                    case R.id.upImg:
+                        savedMatrix.set(matrix);
+                        matrix.postTranslate(dx, dy-value);
+                        break;
+                    case R.id.downImg:
+                        savedMatrix.set(matrix);
+                        matrix.postTranslate(dx, dy+value);
+                        break;
+                    case R.id.leftImg:
+                        savedMatrix.set(matrix);
+                        matrix.postTranslate(dx-value, dy);
+                        break;
+                    case R.id.rightImg:
+                        savedMatrix.set(matrix);
+                        matrix.postTranslate(dx+value, dy);
+                        break;
+
+                    case R.id.increaseImg:
+                        savedMatrix.set(matrix);
+                        matrix.postScale(view.getScaleX()+0.1f, view.getScaleY()+0.1f, mid.x, mid.y);
+                        break;
+                    case R.id.decreaseImg:
+                        savedMatrix.set(matrix);
+                        matrix.postScale(view.getScaleX()-0.1f, view.getScaleY()-0.1f, mid.x, mid.y);
+                        break;
+                    case R.id.flipImg:
+                        if (view.getScaleX()!=-1){
+                            view.setScaleX(-1);
+                        }else
+                            view.setScaleX(1);
+                        break;
+                    case R.id.rotateLeftImg:
+                        float[] values = new float[9];
+                        matrix.getValues(values);
+                        float tx = values[2];
+                        float ty = values[5];
+                        float sx = values[0];
+                        float xc = (view.getWidth() / 2) * sx;
+                        float yc = (view.getHeight() / 2) * sx;
+                        matrix.postRotate(-2f, tx + xc, ty + yc);
+                        break;
+                    case R.id.rotateRightImg:
+                        values = new float[9];
+                        matrix.getValues(values);
+                         tx = values[2];
+                         ty = values[5];
+                         sx = values[0];
+                         xc = (view.getWidth() / 2) * sx;
+                         yc = (view.getHeight() / 2) * sx;
+                        matrix.postRotate(2f, tx + xc, ty + yc);
+                        break;
+                }
+                Log.d("matrix button",""+matrix);
+                view.setImageMatrix(matrix);
+            }
+        };
+
+        findViewById(R.id.upImg).setOnClickListener(onClick);
+        findViewById(R.id.downImg).setOnClickListener(onClick);
+        findViewById(R.id.leftImg).setOnClickListener(onClick);
+        findViewById(R.id.rightImg).setOnClickListener(onClick);
+        findViewById(R.id.increaseImg).setOnClickListener(onClick);
+        findViewById(R.id.decreaseImg).setOnClickListener(onClick);
+        findViewById(R.id.flipImg).setOnClickListener(onClick);
+        findViewById(R.id.rotateLeftImg).setOnClickListener(onClick);
+        findViewById(R.id.rotateRightImg).setOnClickListener(onClick);
 
         findViewById(R.id.savePic2).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,15 +162,15 @@ public class PhotoEditActivity extends Activity implements View.OnTouchListener 
                 //empty canvas
                 Bitmap newImage = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
                 Canvas canvas = new Canvas(newImage);//create canvas
-                canvas.drawBitmap(bitmap,new Rect(0,0,newImage.getWidth(),newImage.getHeight()),new Rect(0,0,newImage.getWidth(),newImage.getHeight()),new Paint(Paint.FILTER_BITMAP_FLAG));//gambar background
+                canvas.drawBitmap(bitmap, new Rect(0, 0, newImage.getWidth(), newImage.getHeight()), new Rect(0, 0, newImage.getWidth(), newImage.getHeight()), new Paint(Paint.FILTER_BITMAP_FLAG));//gambar background
 
                 //hairstyle overlay
                 Drawable overlay = getResources().getDrawable(idGambiran);
                 Bitmap ovrlyBitmap = ((BitmapDrawable) overlay).getBitmap();
 
                 //hairstyle with matrix
-                Bitmap matrixedOverlay = Bitmap.createBitmap(ovrlyBitmap,0,0,ovrlyBitmap.getWidth(), ovrlyBitmap.getHeight(),matrix,true);
-                canvas.drawBitmap(matrixedOverlay,new Rect(0,0,matrixedOverlay.getWidth(),matrixedOverlay.getHeight()),new Rect(0,0,matrixedOverlay.getWidth(),matrixedOverlay.getHeight()),new Paint(Paint.FILTER_BITMAP_FLAG));
+                Bitmap matrixedOverlay = Bitmap.createBitmap(ovrlyBitmap, 0, 0, ovrlyBitmap.getWidth(), ovrlyBitmap.getHeight(), matrix, true);
+                canvas.drawBitmap(matrixedOverlay, new Rect(0, 0, matrixedOverlay.getWidth(), matrixedOverlay.getHeight()), new Rect(0, 0, matrixedOverlay.getWidth(), matrixedOverlay.getHeight()), new Paint(Paint.FILTER_BITMAP_FLAG));
 
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
                 String date = dateFormat.format(new Date());
@@ -107,7 +180,7 @@ public class PhotoEditActivity extends Activity implements View.OnTouchListener 
 
                 File pictureFile = new File(filename);
 
-                Bitmap saveImage = loadBitmapFromView((FrameLayout)findViewById(R.id.saveImage));
+                Bitmap saveImage = loadBitmapFromView((FrameLayout) findViewById(R.id.saveImage));
 
                 try {
                     FileOutputStream fos = new FileOutputStream(pictureFile);
@@ -232,7 +305,7 @@ public class PhotoEditActivity extends Activity implements View.OnTouchListener 
                 }
                 break;
         }
-
+        Log.d("matrix touch",""+matrix);
         view.setImageMatrix(matrix);
         return true;
     }
@@ -267,4 +340,5 @@ public class PhotoEditActivity extends Activity implements View.OnTouchListener 
         double radians = Math.atan2(delta_y, delta_x);
         return (float) Math.toDegrees(radians);
     }
+
 }
