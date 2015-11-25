@@ -19,7 +19,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
@@ -168,6 +167,7 @@ public class PhotoEditActivity extends Activity implements View.OnTouchListener 
         findViewById(R.id.flipImg).setOnClickListener(onClick);
         findViewById(R.id.rotateLeftImg).setOnClickListener(onClick);
         findViewById(R.id.rotateRightImg).setOnClickListener(onClick);
+
 
         findViewById(R.id.savePic2).setOnClickListener(new View.OnClickListener() {
             @Override

@@ -91,6 +91,10 @@
             android:name=".activity.FormPicActivity"
             android:label="@string/title_activity_form_pic" >
         </activity>
+        <activity
+            android:name=".activity.PreviewActivity"
+            android:label="@string/title_activity_preview" >
+        </activity>
     </application>
 
 </manifest>
