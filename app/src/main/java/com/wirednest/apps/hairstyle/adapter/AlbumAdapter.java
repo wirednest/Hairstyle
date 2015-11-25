@@ -69,7 +69,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.PersonViewHo
                 .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
                     @Override
                     public void onSliderClick(BaseSliderView baseSliderView) {
-                        Intent intent = new Intent(context, ViewPhotoActivity.class);
+                        Intent intent = new Intent(context, AlbumPhotoActivity.class);
                         intent.putExtra("ALBUMID", albums.get(i).getId());
                         context.startActivity(intent);
                         Log.d("Album", "Album Clicked " + albums.get(i).albumName);
