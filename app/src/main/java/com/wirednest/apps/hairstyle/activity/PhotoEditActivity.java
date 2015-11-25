@@ -94,21 +94,23 @@ public class PhotoEditActivity extends Activity implements View.OnTouchListener 
                         savedMatrix.set(matrix);
                         if (fliped) {
                             matrix.postTranslate(dx + value, dy);
-                        }else{
-                        matrix.postTranslate(dx - value, dy);}
+                        } else {
+                            matrix.postTranslate(dx - value, dy);
+                        }
                         break;
                     case R.id.rightImg:
                         savedMatrix.set(matrix);
                         if (fliped) {
                             matrix.postTranslate(dx - value, dy);
-                        }else{
-                        matrix.postTranslate(dx + value, dy);}
+                        } else {
+                            matrix.postTranslate(dx + value, dy);
+                        }
                         break;
 
                     case R.id.increaseImg:
                         savedMatrix.set(matrix);
                         if (fliped) {
-                            matrix.postScale((view.getScaleX()*-1) + 0.1f, view.getScaleY() + 0.1f, mid.x, mid.y);
+                            matrix.postScale((view.getScaleX() * -1) + 0.1f, view.getScaleY() + 0.1f, mid.x, mid.y);
                         } else {
                             matrix.postScale(view.getScaleX() + 0.1f, view.getScaleY() + 0.1f, mid.x, mid.y);
                         }
@@ -116,18 +118,18 @@ public class PhotoEditActivity extends Activity implements View.OnTouchListener 
                     case R.id.decreaseImg:
                         savedMatrix.set(matrix);
                         if (fliped) {
-                            matrix.postScale((view.getScaleX()*-1) - 0.1f, view.getScaleY() - 0.1f, mid.x, mid.y);
+                            matrix.postScale((view.getScaleX() * -1) - 0.1f, view.getScaleY() - 0.1f, mid.x, mid.y);
                         } else {
-                        matrix.postScale(view.getScaleX() - 0.1f, view.getScaleY() - 0.1f, mid.x, mid.y);
+                            matrix.postScale(view.getScaleX() - 0.1f, view.getScaleY() - 0.1f, mid.x, mid.y);
                         }
                         break;
                     case R.id.flipImg:
                         if (view.getScaleX() != -1) {
                             view.setScaleX(-1);
-                            fliped=true;
+                            fliped = true;
                         } else {
                             view.setScaleX(1);
-                            fliped=false;
+                            fliped = false;
                         }
                         break;
                     case R.id.rotateLeftImg:
