@@ -2,6 +2,7 @@ package com.wirednest.apps.hairstyle.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.support.v8.renderscript.RenderScript;
 import android.support.v8.renderscript.ScriptIntrinsicBlur;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.wirednest.apps.hairstyle.R;
@@ -66,11 +68,29 @@ public class PreviewImageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preview_image);
-        ImageView backgroud = (ImageView) findViewById(R.id.previewImageBackground);
+        ImageView background = (ImageView) findViewById(R.id.previewImageBackground);
         Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.sample1);
         Bitmap blurred = blurRenderScript(this, largeIcon, 25);
 //second parametre is radius
-        backgroud.setImageBitmap(blurred);
+        background.setImageBitmap(blurred);
+
+        findViewById(R.id.previewImage1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent image1 = new Intent(PreviewImageActivity.this, FullScreenActivity.class);
+                image1.putExtra("image", R.drawable.sample1);
+                startActivity(image1);
+            }
+        });
+
+        findViewById(R.id.previewImage2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent image2 = new Intent(PreviewImageActivity.this , FullScreenActivity.class);
+                image2.putExtra("image",R.drawable.sample2);
+                startActivity(image2);
+            }
+        });
 
     }
 

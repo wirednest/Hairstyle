@@ -34,4 +34,5 @@
     <string name="title1">title1</string>
     <string name="title2">title2</string>
     <string name="title_activity_preview_full_screen">PreviewFullScreenActivity</string>
+    <string name="title_activity_full_screen">FullScreenActivity</string>
 </resources>
