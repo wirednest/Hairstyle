@@ -31,4 +31,6 @@
     <string name="hint_savingPic_capturePassword">Password</string>
     <string name="title_activity_form_pic">FormPicActivity</string>
     <string name="title_activity_preview">PreviewActivity</string>
+    <string name="title1">title1</string>
+    <string name="title2">title2</string>
 </resources>

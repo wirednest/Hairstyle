@@ -79,11 +79,6 @@
             android:label="@string/title_activity_view_photo" >
         </activity>
         <activity
-            android:name=".EditImageActivity"
-            android:label="@string/title_activity_edit_image"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
-        </activity>
-        <activity
             android:name=".HairStyleCategoriesActivity"
             android:label="@string/title_activity_hair_style_categories" >
         </activity>

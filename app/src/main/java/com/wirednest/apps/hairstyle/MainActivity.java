@@ -11,6 +11,7 @@ import android.view.View;
 import com.wirednest.apps.hairstyle.activity.AlbumActivity;
 import com.wirednest.apps.hairstyle.activity.CameraActivity;
 import com.wirednest.apps.hairstyle.activity.CaptureActivity;
+import com.wirednest.apps.hairstyle.activity.PreviewActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,6 +30,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this,CaptureActivity.class);
+                startActivity(intent);
+            }
+        });
+        findViewById(R.id.settingButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,PreviewActivity.class);
                 startActivity(intent);
             }
         });
