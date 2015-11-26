@@ -1,8 +1,12 @@
 package com.wirednest.apps.hairstyle.adapter;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Environment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -10,12 +14,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.model.SharePhoto;
+import com.facebook.share.model.SharePhotoContent;
+import com.facebook.share.widget.ShareDialog;
+import com.wirednest.apps.hairstyle.MainActivity;
 import com.wirednest.apps.hairstyle.R;
 import com.wirednest.apps.hairstyle.ViewPhotoActivity;
 import com.wirednest.apps.hairstyle.db.Captures;
@@ -27,10 +37,10 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class AlbumPhotoAdapter extends RecyclerView.Adapter<AlbumPhotoAdapter.ViewHolder>{
-    private Context context;
+    private Activity context;
     List<Captures> captures;
 
-    public AlbumPhotoAdapter(Context context,List<Captures> captures){
+    public AlbumPhotoAdapter(Activity context,List<Captures> captures){
         this.context = context;
         this.captures = captures;
     }
@@ -39,6 +49,10 @@ public class AlbumPhotoAdapter extends RecyclerView.Adapter<AlbumPhotoAdapter.Vi
         @Bind(R.id.cv) CardView cv;
         @Bind(R.id.slider)
         SliderLayout sliderShow;
+        @Bind(R.id.photoName) TextView photoName;
+        @Bind(R.id.photoPerson) TextView photoPerson;
+        @Bind(R.id.buttonView) Button buttonView;
+        @Bind(R.id.buttonShare) Button buttonShare;
         //@Bind(R.id.album_name) TextView albumName;
 
         ViewHolder(View itemView) {
@@ -59,20 +73,60 @@ public class AlbumPhotoAdapter extends RecyclerView.Adapter<AlbumPhotoAdapter.Vi
         return pvh;
     }
     @Override
-    public void onBindViewHolder(final ViewHolder personViewHolder,final int i) {
-        personViewHolder.cv.setOnClickListener(new View.OnClickListener(){
+    public void onBindViewHolder(final ViewHolder viewHolder,final int i) {
+
+        final File imageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),"Hairstyle");
+
+        viewHolder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("Album","Album Clicked "+captures.get(i).captureName);
+                Log.d("Album", "Album Clicked " + captures.get(i).captureName);
             }
         });
-        DefaultSliderView textSliderView = new DefaultSliderView(context);
-        File imageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),"Hairstyle");
-        textSliderView
-                .image(new File(imageDir.getPath() + File.separator + captures.get(i).image2))
+        viewHolder.buttonShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("Album", "Facebook" + captures.get(i).captureName);
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+                Bitmap bitmap = BitmapFactory.decodeFile(imageDir.getPath() + File.separator + captures.get(i).image2, options);
+
+                SharePhoto photo = new SharePhoto.Builder()
+                        .setBitmap(bitmap)
+                        .build();
+                SharePhotoContent content = new SharePhotoContent.Builder()
+                        .addPhoto(photo)
+                        .build();
+                ShareDialog.show(context,content);
+
+            }
+        });
+
+
+        DefaultSliderView image1 = new DefaultSliderView(context);
+        image1
+            .image(new File(imageDir.getPath() + File.separator + captures.get(i).image1))
+            .setScaleType(BaseSliderView.ScaleType.CenterCrop);
+
+        viewHolder.sliderShow.addSlider(image1);
+
+        DefaultSliderView image2 = new DefaultSliderView(context);
+        image2
+            .image(new File(imageDir.getPath() + File.separator + captures.get(i).image2))
+            .setScaleType(BaseSliderView.ScaleType.CenterCrop);
+
+        viewHolder.sliderShow.addSlider(image2);
+
+        if(captures.get(i).image3 != null && !captures.get(i).image3.isEmpty()) {
+            DefaultSliderView image3 = new DefaultSliderView(context);
+            image3
+                .image(new File(imageDir.getPath() + File.separator + captures.get(i).image3))
                 .setScaleType(BaseSliderView.ScaleType.CenterCrop);
 
-        personViewHolder.sliderShow.addSlider(textSliderView);
+            viewHolder.sliderShow.addSlider(image3);
+        }
+        viewHolder.photoName.setText(captures.get(i).captureName);
+        viewHolder.photoPerson.setText("by "+captures.get(i).person);
         //personViewHolder.captureImage.setImageResource(captures.get(i).captureImage);
     }
     @Override

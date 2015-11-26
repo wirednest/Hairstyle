@@ -8,12 +8,26 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 import com.wirednest.apps.hairstyle.activity.AlbumActivity;
 import com.wirednest.apps.hairstyle.activity.CameraActivity;
 import com.wirednest.apps.hairstyle.activity.CaptureActivity;
 import com.wirednest.apps.hairstyle.activity.PreviewActivity;
 
 public class MainActivity extends AppCompatActivity {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        AppEventsLogger.activateApp(this);
+        FacebookSdk.sdkInitialize(getApplicationContext());
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        AppEventsLogger.deactivateApp(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

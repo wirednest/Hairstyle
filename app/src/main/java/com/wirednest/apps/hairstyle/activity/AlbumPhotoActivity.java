@@ -7,11 +7,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.FrameLayout;
 
+import com.facebook.share.widget.ShareDialog;
 import com.melnykov.fab.FloatingActionButton;
 import com.wirednest.apps.hairstyle.R;
 import com.wirednest.apps.hairstyle.adapter.AlbumPhotoAdapter;
 import com.wirednest.apps.hairstyle.db.Captures;
+import com.wirednest.apps.hairstyle.util.HidingScrollListener;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -23,7 +28,7 @@ public class AlbumPhotoActivity extends SwipeBackActivity{
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private SwipeBackLayout mSwipeBackLayout;
-
+    public ShareDialog shareDialog;
     private long albumId;
 
     @Bind(R.id.addAlbumPhoto)
@@ -35,7 +40,7 @@ public class AlbumPhotoActivity extends SwipeBackActivity{
 
         setContentView(R.layout.activity_album_photo);
         ButterKnife.bind(this);
-
+        shareDialog = new ShareDialog(this);
         mSwipeBackLayout = getSwipeBackLayout();
         mSwipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT);
 
@@ -51,7 +56,17 @@ public class AlbumPhotoActivity extends SwipeBackActivity{
 
         mAdapter = new AlbumPhotoAdapter(this,Captures.find(Captures.class, "ALBUM = ?", String.valueOf(albumId)));
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setOnScrollListener(new HidingScrollListener() {
+            @Override
+            public void onHide() {
+                hideViews();
+            }
 
+            @Override
+            public void onShow() {
+                showViews();
+            }
+        });
         addAlbumPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,5 +74,14 @@ public class AlbumPhotoActivity extends SwipeBackActivity{
                 startActivity(intent);
             }
         });
+    }
+    private void hideViews() {
+        FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) addAlbumPhoto.getLayoutParams();
+        int fabBottomMargin = lp.bottomMargin;
+        addAlbumPhoto.animate().translationY(addAlbumPhoto.getHeight()+fabBottomMargin).setInterpolator(new AccelerateInterpolator(2)).start();
+    }
+
+    private void showViews() {
+        addAlbumPhoto.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
     }
 }
