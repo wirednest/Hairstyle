@@ -92,6 +92,16 @@ public class PreviewImageActivity extends AppCompatActivity {
             }
         });
 
+
+        findViewById(R.id.takeLastPic).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent takeLastPic = new Intent(PreviewImageActivity.this , CaptureActivity.class);
+                takeLastPic.putExtra("takepicLast", true);
+                startActivity(takeLastPic);
+            }
+        });
+
     }
 
     @Override

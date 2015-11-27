@@ -1,5 +1,6 @@
 package com.wirednest.apps.hairstyle.camera;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -13,8 +14,11 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.ImageView;
 
+import com.wirednest.apps.hairstyle.R;
 import com.wirednest.apps.hairstyle.activity.PhotoEditActivity;
+import com.wirednest.apps.hairstyle.activity.PreviewImageActivity;
 
 import net.bozho.easycamera.EasyCamera;
 import net.bozho.easycamera.EasyCamera.*;
@@ -100,10 +104,18 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
                             + error.getMessage());
                 }
 
-                Intent i = new Intent(getContext(), PhotoEditActivity.class);
-                i.putExtra("FILE_AVAGA", filename);
-                i.putExtra("Image1Name", photoFile);
-                getContext().startActivity(i);
+                Intent intent = ((Activity) getContext()).getIntent();
+                boolean takePicCondition = intent.getExtras().getBoolean("takepicLast");
+                if (takePicCondition){
+                    Intent i = new Intent(getContext(), PreviewImageActivity.class);
+                    getContext().startActivity(i);
+                }
+                else {
+                    Intent i = new Intent(getContext(), PhotoEditActivity.class);
+                    i.putExtra("FILE_AVAGA", filename);
+                    i.putExtra("Image1Name", photoFile);
+                    getContext().startActivity(i);
+                }
             }
         };
 
