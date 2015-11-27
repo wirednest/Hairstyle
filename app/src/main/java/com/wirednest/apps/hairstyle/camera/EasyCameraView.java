@@ -105,12 +105,11 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
                 }
 
                 Intent intent = ((Activity) getContext()).getIntent();
-                boolean takePicCondition = intent.getExtras().getBoolean("takepicLast");
-                if (takePicCondition){
+                if (intent.hasExtra("takepicLast")) {
+                    boolean takePicCondition = intent.getExtras().getBoolean("takepicLast");
                     Intent i = new Intent(getContext(), PreviewImageActivity.class);
                     getContext().startActivity(i);
-                }
-                else {
+                } else {
                     Intent i = new Intent(getContext(), PhotoEditActivity.class);
                     i.putExtra("FILE_AVAGA", filename);
                     i.putExtra("Image1Name", photoFile);
@@ -120,6 +119,7 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
         };
 
     }
+
     public Bitmap scaleCenterCrop(Bitmap source, int newHeight, int newWidth) {
         int sourceWidth = source.getWidth();
         int sourceHeight = source.getHeight();
@@ -152,6 +152,7 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
 
         return dest;
     }
+
     private File getDir() {
         File sdDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         return new File(sdDir, "Hairstyle");
@@ -166,7 +167,7 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
 //            }
 //
 //            public void onFinish() {
-                actions.takePicture(EasyCamera.Callbacks.create().withJpegCallback(callback).withRestartPreviewAfterCallbacks(true));
+        actions.takePicture(EasyCamera.Callbacks.create().withJpegCallback(callback).withRestartPreviewAfterCallbacks(true));
 //            }
 //        }.start();
     }
