@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
+    android:padding="10dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_margin="10dp">
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/previewImage1"
+            android:src="@drawable/sample1"
+            android:layout_weight="1"
+            android:scaleType="centerCrop"
+            android:layout_marginRight="5dp" />
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/previewImage2"
+            android:src="@drawable/sample2"
+            android:layout_weight="1"
+            android:scaleType="centerCrop"
+            android:layout_marginLeft="5dp" />
+
+    </LinearLayout>
+
+    <com.rey.material.widget.Button
+        style="@style/Material.Drawable.Ripple.Wave"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:text="Take Picture "
+        app:rd_enable="true"
+        android:background="@color/pink_dark"
+        android:textColor="@android:color/white"
+        android:id="@+id/takeLastPic"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp" />
+</LinearLayout>
