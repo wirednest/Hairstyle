@@ -13,7 +13,7 @@ public class FullScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_full_screen);
+        setContentView(R.layout.activity_fullscreen);
         int idimage =getIntent().getIntExtra("image",-1);
         ImageView imageview = (ImageView) findViewById(R.id.fullscreen);
         imageview.setImageResource(idimage);
