@@ -110,10 +110,6 @@
             android:label="@string/title_activity_preview_image" >
         </activity>
         <activity
-            android:name=".activity.PreviewFullScreenActivity"
-            android:label="@string/title_activity_preview_full_screen" >
-        </activity>
-        <activity
             android:name=".activity.FullScreenActivity"
             android:label="@string/title_activity_full_screen" >
         </activity>
