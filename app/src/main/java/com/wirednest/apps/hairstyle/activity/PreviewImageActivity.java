@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import com.wirednest.apps.hairstyle.R;
 import com.wirednest.apps.hairstyle.db.Captures;
 import com.wirednest.apps.hairstyle.fragment.Preview2PictureFragment;
+import com.wirednest.apps.hairstyle.fragment.Preview3PictureFragment;
 
 import java.io.File;
 
@@ -105,10 +106,18 @@ public class PreviewImageActivity extends FragmentActivity {
             if (savedInstanceState != null) {
                 return;
             }
-            Preview2PictureFragment dsFragment =  new Preview2PictureFragment(getBaseContext());
-            dsFragment.setArguments(getIntent().getExtras());
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_container, dsFragment).commit();
+            if(capture.image3 != null && !capture.image3.isEmpty()){
+                Preview3PictureFragment dsFragment =  new Preview3PictureFragment(getBaseContext());
+                dsFragment.setArguments(getIntent().getExtras());
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.fragment_container, dsFragment).commit();
+            }else{
+                Preview2PictureFragment dsFragment =  new Preview2PictureFragment(getBaseContext());
+                dsFragment.setArguments(getIntent().getExtras());
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.fragment_container, dsFragment).commit();
+            }
+
         }
 
     }
