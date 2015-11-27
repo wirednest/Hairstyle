@@ -1,6 +1,7 @@
 package com.wirednest.apps.hairstyle.activity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -31,6 +32,8 @@ import butterknife.ButterKnife;
 
 
 public class PreviewImageActivity extends FragmentActivity {
+
+    private final int LAST_PICK_CODE = 21;
 
     @Bind(R.id.fragment_container)
     FrameLayout fragmentContainer;
@@ -108,6 +111,16 @@ public class PreviewImageActivity extends FragmentActivity {
                     .add(R.id.fragment_container, dsFragment).commit();
         }
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == LAST_PICK_CODE){
+            if(resultCode == Activity.RESULT_OK){
+                Log.d("LastFromFragment",data.getStringExtra("lastPictImage"));
+            }
+        }
     }
 
     @Override

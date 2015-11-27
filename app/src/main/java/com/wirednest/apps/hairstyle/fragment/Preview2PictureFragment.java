@@ -2,6 +2,7 @@ package com.wirednest.apps.hairstyle.fragment;
 
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -10,13 +11,16 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.rey.material.widget.Button;
 import com.wirednest.apps.hairstyle.R;
+import com.wirednest.apps.hairstyle.activity.CaptureActivity;
 import com.wirednest.apps.hairstyle.activity.FullScreenActivity;
 import com.wirednest.apps.hairstyle.db.Captures;
 
@@ -27,10 +31,15 @@ import butterknife.ButterKnife;
 
 public class Preview2PictureFragment extends Fragment{
 
+    private final int LAST_PICK_CODE = 21;
+
     @Bind(R.id.previewImage1)
     ImageView previewImage1;
     @Bind(R.id.previewImage2)
     ImageView previewImage2;
+    @Bind(R.id.takeLastPic)
+    Button takeLastPic;
+
 
     Context ctx;
     private long captureId;
@@ -74,7 +83,25 @@ public class Preview2PictureFragment extends Fragment{
                 startActivity(image2);
             }
         });
-
+        takeLastPic.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent takeLastPic = new Intent(ctx, CaptureActivity.class);
+                takeLastPic.putExtra("takepicLast", true);
+                startActivityForResult(takeLastPic, LAST_PICK_CODE);
+            }
+        });
         return view;
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == LAST_PICK_CODE){
+            if(resultCode == Activity.RESULT_OK){
+                final FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.fragment_container, new Preview3PictureFragment(), "NewFragmentTag");
+                ft.commit();
+            }
+        }
     }
 }
