@@ -107,8 +107,8 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
                 Intent intent = ((Activity) getContext()).getIntent();
                 if (intent.hasExtra("takepicLast")) {
                     Intent i = new Intent();
-                    i.putExtra("lastPictImage", filename);
-                    Log.d("lastPickImageFile",filename);
+                    i.putExtra("lastPictImage", photoFile);
+                    Log.d("lastPickImageFile", photoFile);
                     ((Activity) getContext()).setResult(Activity.RESULT_OK, i);
                     ((Activity) getContext()).finish();
                 } else {

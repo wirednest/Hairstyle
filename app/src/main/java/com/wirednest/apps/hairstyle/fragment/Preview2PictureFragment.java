@@ -98,8 +98,14 @@ public class Preview2PictureFragment extends Fragment{
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == LAST_PICK_CODE){
             if(resultCode == Activity.RESULT_OK){
+
+                capture.image3 = data.getStringExtra("lastPictImage");
+                capture.save();
+
                 final FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.fragment_container, new Preview3PictureFragment(), "NewFragmentTag");
+                Preview3PictureFragment dsFragment =  new Preview3PictureFragment(ctx);
+                dsFragment.setArguments(getActivity().getIntent().getExtras());
+                ft.replace(R.id.fragment_container, dsFragment, "NewFragmentTag");
                 ft.commit();
             }
         }
