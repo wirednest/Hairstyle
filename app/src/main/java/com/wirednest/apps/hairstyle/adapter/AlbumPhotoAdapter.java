@@ -28,6 +28,7 @@ import com.facebook.share.widget.ShareDialog;
 import com.wirednest.apps.hairstyle.MainActivity;
 import com.wirednest.apps.hairstyle.R;
 import com.wirednest.apps.hairstyle.ViewPhotoActivity;
+import com.wirednest.apps.hairstyle.activity.PreviewImageActivity;
 import com.wirednest.apps.hairstyle.db.Captures;
 
 import java.io.File;
@@ -83,10 +84,19 @@ public class AlbumPhotoAdapter extends RecyclerView.Adapter<AlbumPhotoAdapter.Vi
                 Log.d("Album", "Album Clicked " + captures.get(i).captureName);
             }
         });
+        viewHolder.buttonView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent previewImage = new Intent(context, PreviewImageActivity.class);
+                previewImage.putExtra("captureId", captures.get(i).getId());
+                context.startActivity(previewImage);
+            }
+        });
         viewHolder.buttonShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("Album", "Facebook" + captures.get(i).captureName);
+
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inPreferredConfig = Bitmap.Config.ARGB_8888;
                 Bitmap bitmap = BitmapFactory.decodeFile(imageDir.getPath() + File.separator + captures.get(i).image2, options);

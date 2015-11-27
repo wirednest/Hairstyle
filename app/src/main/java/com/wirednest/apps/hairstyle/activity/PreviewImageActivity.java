@@ -5,21 +5,42 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Environment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v8.renderscript.Allocation;
 import android.support.v8.renderscript.Element;
 import android.support.v8.renderscript.RenderScript;
 import android.support.v8.renderscript.ScriptIntrinsicBlur;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.wirednest.apps.hairstyle.R;
+import com.wirednest.apps.hairstyle.db.Captures;
+import com.wirednest.apps.hairstyle.fragment.Preview2PictureFragment;
+
+import java.io.File;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 
-public class PreviewImageActivity extends AppCompatActivity {
+public class PreviewImageActivity extends FragmentActivity {
+
+    @Bind(R.id.fragment_container)
+    FrameLayout fragmentContainer;
+    @Bind(R.id.previewImageBackground)
+    ImageView previewImageBackground;
+
+    private long captureId;
+    private Captures capture;
+    final File imageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),"Hairstyle");
+
     @SuppressLint("NewApi")
     public static Bitmap blurRenderScript(Context context,Bitmap smallBitmap, int radius) {
         try {
@@ -68,39 +89,24 @@ public class PreviewImageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preview_image);
-        ImageView background = (ImageView) findViewById(R.id.previewImageBackground);
-        Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.sample1);
+        ButterKnife.bind(this);
+        captureId = getIntent().getLongExtra("captureId", 0);
+        capture = Captures.findById(Captures.class, captureId);
+        Log.d("captureId", "" + captureId);
+        Bitmap largeIcon = BitmapFactory.decodeFile(imageDir.getPath() + File.separator + capture.image1);
         Bitmap blurred = blurRenderScript(this, largeIcon, 25);
-//second parametre is radius
-        background.setImageBitmap(blurred);
 
-        findViewById(R.id.previewImage1).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent image1 = new Intent(PreviewImageActivity.this, FullScreenActivity.class);
-                image1.putExtra("image", R.drawable.sample1);
-                startActivity(image1);
+        previewImageBackground.setImageBitmap(blurred);
+
+        if(fragmentContainer != null){
+            if (savedInstanceState != null) {
+                return;
             }
-        });
-
-        findViewById(R.id.previewImage2).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent image2 = new Intent(PreviewImageActivity.this , FullScreenActivity.class);
-                image2.putExtra("image",R.drawable.sample2);
-                startActivity(image2);
-            }
-        });
-
-
-        findViewById(R.id.takeLastPic).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent takeLastPic = new Intent(PreviewImageActivity.this , CaptureActivity.class);
-                takeLastPic.putExtra("takepicLast", true);
-                startActivity(takeLastPic);
-            }
-        });
+            Preview2PictureFragment dsFragment =  new Preview2PictureFragment(getBaseContext());
+            dsFragment.setArguments(getIntent().getExtras());
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.fragment_container, dsFragment).commit();
+        }
 
     }
 
