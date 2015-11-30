@@ -40,5 +40,15 @@
             android:scaleType="centerCrop" />
 
     </LinearLayout>
-
+    <com.rey.material.widget.Button
+        style="@style/Material.Drawable.Ripple.Wave"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:text="Add to collage"
+        app:rd_enable="true"
+        android:background="@color/pink_dark"
+        android:textColor="@android:color/white"
+        android:id="@+id/addFrame"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp" />
 </LinearLayout>
