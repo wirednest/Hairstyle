@@ -77,7 +77,9 @@ public class CollageActivity extends AppCompatActivity {
                             + error.getMessage());
                 }
 
-//                Intent intent = new Intent(CollageMenuActivity.this , )
+                Intent intent = new Intent(CollageActivity.this , PreviewCollageActivity.class);
+                intent.putExtra("image",filename);
+                startActivity(intent);
             }
         });
 

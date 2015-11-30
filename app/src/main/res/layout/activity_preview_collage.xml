@@ -28,7 +28,7 @@
         <ImageView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:id="@+id/FramePic"
+            android:id="@+id/framePic"
             android:src="@drawable/sample1"/>
 
         <com.rey.material.widget.Button
