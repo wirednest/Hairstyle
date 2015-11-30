@@ -2,6 +2,8 @@ package com.wirednest.apps.hairstyle.db;
 
 import com.orm.SugarRecord;
 
+import java.util.List;
+
 public class Categories extends SugarRecord {
     public int idServer;
     public String categoryName;
@@ -21,5 +23,14 @@ public class Categories extends SugarRecord {
         this.categoryName = category_name;
         this.description = description;
         this.image = image;
+    }
+    public Categories findByServerId(int idServer){
+        List<Categories> categories = Categories.find(Categories.class,
+                "ID_SERVER = ?", "" + idServer);
+        if(categories.size()>0){
+            return categories.get(0);
+        }else{
+            return new Categories();
+        }
     }
 }

@@ -1,10 +1,12 @@
 package com.wirednest.apps.hairstyle.network.service;
 
 
+import com.facebook.stetho.okhttp.StethoInterceptor;
 import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
+import com.wirednest.apps.hairstyle.models.CategoriesObject;
 import com.wirednest.apps.hairstyle.models.HairstylesObject;
 
 import java.io.IOException;
@@ -16,6 +18,7 @@ import retrofit.RxJavaCallAdapterFactory;
 import retrofit.http.GET;
 import retrofit.http.Query;
 import rx.Observable;
+import rx.Observer;
 import rx.functions.Func1;
 
 
@@ -37,6 +40,7 @@ public class APIService {
 
         OkHttpClient client = new OkHttpClient();
         client.interceptors().add(interceptor);
+        client.networkInterceptors().add(new StethoInterceptor());
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(WEB_SERVICE_BASE_URL)
@@ -49,8 +53,11 @@ public class APIService {
     }
 
     public interface APIEndpointInterface {
-        @GET("/hairstyles/rest")
+        @GET("/api/hairstyles")
         Observable<List<HairstylesObject>> getHairstyles(@Query("imei") String imei);
+
+        @GET("/api/categories")
+        Observable<List<CategoriesObject>> getCategories(@Query("imei") String imie);
 
     }
 
@@ -61,6 +68,17 @@ public class APIService {
                     public List<HairstylesObject> call(List<HairstylesObject> hairstyles) {
                         return hairstyles;
                     }
+                });
+
+    }
+    public Observable<List<CategoriesObject>> getCategories(final String imei){
+        return mWebService.getCategories(imei)
+                .map(new Func1<List<CategoriesObject>, List<CategoriesObject>>() {
+                    @Override
+                    public List<CategoriesObject> call(List<CategoriesObject> categories) {
+                        return categories;
+                    }
+
                 });
 
     }
