@@ -1,10 +1,12 @@
 package com.wirednest.apps.hairstyle.activity;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.wirednest.apps.hairstyle.R;
@@ -15,9 +17,18 @@ public class PreviewCollageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preview_collage);
-        String image= getIntent().getStringExtra("image");
+        final String image= getIntent().getStringExtra("image");
         ImageView imageview= (ImageView) findViewById(R.id.framePic);
         imageview.setImageURI(Uri.parse(image));
+
+        imageview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PreviewCollageActivity.this,FullScreenActivity.class);
+                intent.putExtra("image",image);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
