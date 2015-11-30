@@ -61,16 +61,18 @@ public class Preview2PictureFragment extends Fragment{
         capture = Captures.findById(Captures.class, captureId);
         Log.d("captureId", "" + captureId);
         Bitmap image1 = BitmapFactory.decodeFile(imageDir.getPath() + File.separator + capture.image1);
+        final String image1path=imageDir.getPath() + File.separator + capture.image1;
         previewImage1.setImageBitmap(image1);
 
         Bitmap image2 = BitmapFactory.decodeFile(imageDir.getPath() + File.separator + capture.image2);
+        final String image2path=imageDir.getPath() + File.separator + capture.image2;
         previewImage2.setImageBitmap(image2);
 
         previewImage1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent image1 = new Intent(ctx, FullScreenActivity.class);
-                image1.putExtra("image", R.drawable.sample1);
+                image1.putExtra("image", image1path);
                 startActivity(image1);
             }
         });
@@ -79,7 +81,7 @@ public class Preview2PictureFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 Intent image2 = new Intent(ctx, FullScreenActivity.class);
-                image2.putExtra("image", R.drawable.sample2);
+                image2.putExtra("image", image2path);
                 startActivity(image2);
             }
         });
