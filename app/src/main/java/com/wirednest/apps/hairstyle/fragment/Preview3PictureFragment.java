@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import com.rey.material.widget.Button;
 import com.wirednest.apps.hairstyle.R;
 import com.wirednest.apps.hairstyle.activity.CaptureActivity;
+import com.wirednest.apps.hairstyle.activity.CollageMenuActivity;
 import com.wirednest.apps.hairstyle.activity.FullScreenActivity;
 import com.wirednest.apps.hairstyle.db.Captures;
 
@@ -39,6 +40,8 @@ public class Preview3PictureFragment extends Fragment{
     ImageView previewImage2;
     @Bind(R.id.previewImage3)
     ImageView previewImage3;
+    @Bind(R.id.addFrame)
+    Button addFrame;
 
 
     Context ctx;
@@ -61,19 +64,22 @@ public class Preview3PictureFragment extends Fragment{
         capture = Captures.findById(Captures.class, captureId);
         Log.d("captureId", "" + captureId);
         Bitmap image1 = BitmapFactory.decodeFile(imageDir.getPath() + File.separator + capture.image1);
+        final String image1path=imageDir.getPath() + File.separator + capture.image1;
         previewImage1.setImageBitmap(image1);
 
         Bitmap image2 = BitmapFactory.decodeFile(imageDir.getPath() + File.separator + capture.image2);
+        final String image2path=imageDir.getPath() + File.separator + capture.image2;
         previewImage2.setImageBitmap(image2);
 
         Bitmap image3 = BitmapFactory.decodeFile(imageDir.getPath() + File.separator + capture.image3);
+        final String image3path=imageDir.getPath() + File.separator + capture.image3;
         previewImage3.setImageBitmap(image3);
 
         previewImage1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent image1 = new Intent(ctx, FullScreenActivity.class);
-                image1.putExtra("image", R.drawable.sample1);
+                image1.putExtra("image", image1path);
                 startActivity(image1);
             }
         });
@@ -82,7 +88,7 @@ public class Preview3PictureFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 Intent image2 = new Intent(ctx, FullScreenActivity.class);
-                image2.putExtra("image", R.drawable.sample2);
+                image2.putExtra("image", image2path);
                 startActivity(image2);
             }
         });
@@ -90,8 +96,19 @@ public class Preview3PictureFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 Intent image3 = new Intent(ctx, FullScreenActivity.class);
-                image3.putExtra("image", R.drawable.sample2);
+                image3.putExtra("image", image3path);
                 startActivity(image3);
+            }
+        });
+
+        addFrame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent addframe= new Intent(ctx, CollageMenuActivity.class);
+                addframe.putExtra("image1", image1path);
+                addframe.putExtra("image2", image2path);
+                addframe.putExtra("image3", image3path);
+                startActivity(addframe);
             }
         });
         return view;

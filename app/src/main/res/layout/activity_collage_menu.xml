@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/Main">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/content"
+        android:background="@drawable/homescreen_background"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Photo Collage"
+            android:id="@+id/textViewPhotoCollage"
+            android:layout_gravity="center_horizontal"
+            android:textStyle="bold"
+            android:textSize="50dp"
+            android:textColor="#ffffff"
+            android:paddingTop="20dp"
+            android:paddingBottom="100dp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/collage1"
+                android:src="@drawable/frame1"
+                android:adjustViewBounds="false"
+                android:background="@color/pink_dark"
+                android:layout_weight="1" />
+
+
+            <ImageButton
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/collage2"
+                android:src="@drawable/frame2"
+                android:adjustViewBounds="false"
+                android:background="@color/pink_dark"
+                android:layout_weight="1" />
+
+            <ImageButton
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/collage3"
+                android:src="@drawable/frame3"
+                android:adjustViewBounds="false"
+                android:background="@color/pink_dark"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/collage4"
+                android:src="@drawable/frame4"
+                android:adjustViewBounds="false"
+                android:background="@color/pink_dark"
+                android:layout_weight="1" />
+
+            <ImageButton
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/collage5"
+                android:src="@drawable/frame5"
+                android:adjustViewBounds="false"
+                android:background="@color/pink_dark"
+                android:layout_weight="1" />
+
+            <ImageButton
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/collage6"
+                android:src="@drawable/frame6"
+                android:adjustViewBounds="false"
+                android:background="@color/pink_dark"
+                android:layout_weight="1"
+                android:baselineAlignBottom="false" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" >
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

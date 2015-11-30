@@ -35,4 +35,7 @@
     <string name="title2">title2</string>
     <string name="title_activity_preview_full_screen">PreviewFullScreenActivity</string>
     <string name="title_activity_full_screen">FullScreenActivity</string>
+    <string name="title_activity_collage_menu">CollageMenuActivity</string>
+    <string name="title_activity_collage">CollageActivity</string>
+    <string name="title_activity_preview_collage">PreviewCollageActivity</string>
 </resources>

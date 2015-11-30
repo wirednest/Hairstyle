@@ -113,6 +113,18 @@
             android:name=".activity.FullScreenActivity"
             android:label="@string/title_activity_full_screen" >
         </activity>
+        <activity
+            android:name=".activity.CollageMenuActivity"
+            android:label="@string/title_activity_collage_menu" >
+        </activity>
+        <activity
+            android:name=".activity.CollageActivity"
+            android:label="@string/title_activity_collage" >
+        </activity>
+        <activity
+            android:name=".activity.PreviewCollageActivity"
+            android:label="@string/title_activity_preview_collage" >
+        </activity>
     </application>
 
 </manifest>
