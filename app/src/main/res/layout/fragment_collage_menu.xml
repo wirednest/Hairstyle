@@ -6,65 +6,73 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center_horizontal"
+        android:padding="15dp"
         android:layout_weight="1">
 
         <ImageButton
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:id="@+id/collage1"
             android:src="@drawable/frame1"
             android:adjustViewBounds="false"
-            android:background="@color/pink_dark"
-            android:layout_weight="1" />
-
+            android:layout_weight="1"
+            android:background="#001e2be9" />
 
         <ImageButton
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:id="@+id/collage2"
             android:src="@drawable/frame2"
             android:adjustViewBounds="false"
-            android:background="@color/pink_dark"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:background="#001e2be9" />
 
         <ImageButton
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:id="@+id/collage3"
             android:src="@drawable/frame3"
             android:adjustViewBounds="false"
-            android:background="@color/pink_dark"
-            android:layout_weight="1" />
-
-        <ImageButton
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/collage4"
-            android:src="@drawable/frame4"
-            android:adjustViewBounds="false"
-            android:background="@color/pink_dark"
-            android:layout_weight="1" />
-
-        <ImageButton
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/collage5"
-            android:src="@drawable/frame5"
-            android:adjustViewBounds="false"
-            android:background="@color/pink_dark"
-            android:layout_weight="1" />
-
-        <ImageButton
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/collage6"
-            android:src="@drawable/frame6"
-            android:adjustViewBounds="false"
-            android:background="@color/pink_dark"
             android:layout_weight="1"
-            android:baselineAlignBottom="false" />
+            android:background="#001e2be9" />
 
     </LinearLayout>
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:padding="15dp"
+        android:layout_weight="1">
+
+        <ImageButton
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/collage4"
+            android:src="@drawable/frame4"
+            android:adjustViewBounds="false"
+            android:layout_weight="1"
+            android:background="#001e2be9" />
+
+        <ImageButton
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/collage5"
+            android:src="@drawable/frame5"
+            android:adjustViewBounds="false"
+            android:layout_weight="1"
+            android:background="#001e2be9" />
+
+        <ImageButton
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/collage6"
+            android:src="@drawable/frame6"
+            android:adjustViewBounds="false"
+            android:baselineAlignBottom="false"
+            android:layout_weight="1"
+            android:background="#001e2be9" />
+    </LinearLayout>
 </LinearLayout>

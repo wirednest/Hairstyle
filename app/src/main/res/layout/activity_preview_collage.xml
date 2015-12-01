@@ -5,42 +5,37 @@
     xmlns:dragger_layout="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:paddingLeft="24dp"
     android:paddingRight="24dp"
     android:background="@drawable/homescreen_background">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="center_vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Thankyou!"
-            android:id="@+id/textView4"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@android:color/white"
-            android:layout_marginBottom="16dp" />
 
         <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/framePic"
-            android:src="@drawable/sample1"/>
+            android:src="@drawable/sample1"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:layout_marginTop="30dp" />
 
         <com.rey.material.widget.Button
             style="@style/Material.Drawable.Ripple.Wave"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="30dp"
             android:text="Share"
             app:rd_enable="true"
             android:background="@color/pink_dark"
             android:textColor="@android:color/white"
-            android:id="@+id/shareFrame" />
+            android:id="@+id/shareFrame"
+            android:layout_marginBottom="30dp" />
 
     </LinearLayout>
 </FrameLayout>

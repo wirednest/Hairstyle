@@ -2,7 +2,6 @@ package com.wirednest.apps.hairstyle.fragment;
 
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -11,7 +10,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,9 +17,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.rey.material.widget.Button;
+import com.wirednest.apps.hairstyle.activity.CollageActivity;
 import com.wirednest.apps.hairstyle.R;
-import com.wirednest.apps.hairstyle.activity.CaptureActivity;
-import com.wirednest.apps.hairstyle.activity.CollageMenuActivity;
 import com.wirednest.apps.hairstyle.activity.FullScreenActivity;
 import com.wirednest.apps.hairstyle.db.Captures;
 
@@ -104,7 +101,7 @@ public class Preview3PictureFragment extends Fragment{
         addFrame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent addframe= new Intent(ctx, CollageMenuActivity.class);
+                Intent addframe= new Intent(ctx, CollageActivity.class);
                 addframe.putExtra("image1", image1path);
                 addframe.putExtra("image2", image2path);
                 addframe.putExtra("image3", image3path);

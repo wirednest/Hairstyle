@@ -2,49 +2,64 @@ package com.wirednest.apps.hairstyle.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
+import android.support.annotation.Nullable;
+
 
 import com.wirednest.apps.hairstyle.R;
+import com.wirednest.apps.hairstyle.fragment.CollageFragment;
+import com.wirednest.apps.hairstyle.fragment.LayoutCollageFragment;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
-public class CollageActivity extends AppCompatActivity {
+public class CollageActivity extends FragmentActivity {
+
+    @Bind(R.id.fragment_container)
+    FrameLayout fragmentContainer;
+    @Bind(R.id.fragment_container_collage)
+    FrameLayout fragmentContaineCollager;
+    @Bind(R.id.saveFrame)
+    Button saveFrame;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        int collageLayoutId= getIntent().getIntExtra("menu", -1);
-        setContentView(collageLayoutId);
+        setContentView(R.layout.activity_collage);
+        ButterKnife.bind(this);
+        if(fragmentContaineCollager != null){
+            if (savedInstanceState != null) {
+                return;
+            }
+            LayoutCollageFragment dsFragment =  new LayoutCollageFragment(getBaseContext());
+            dsFragment.setArguments(getIntent().getExtras());
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.fragment_container_collage, dsFragment).commit();
+        }
 
-        final LinearLayout layout = (LinearLayout) findViewById(R.id.collageFrame);
+        if(fragmentContainer != null){
+            if (savedInstanceState != null) {
+                return;
+            }
+            CollageFragment dsFragment =  new CollageFragment(getBaseContext());
+            dsFragment.setArguments(getIntent().getExtras());
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.fragment_container, dsFragment).commit();
+        }
 
-        String pathImg1 = getIntent().getStringExtra("image1");
-        String pathImg2 = getIntent().getStringExtra("image2");
-        String pathImg3 = getIntent().getStringExtra("image3");
-
-        ImageView image1 = (ImageView) findViewById(R.id.imageCollage1);
-        ImageView image2 = (ImageView) findViewById(R.id.imageCollage2);
-        ImageView image3 = (ImageView) findViewById(R.id.imageCollage3);
-
-        image1.setImageURI(Uri.parse(pathImg1));
-        image2.setImageURI(Uri.parse(pathImg2));
-        image3.setImageURI(Uri.parse(pathImg3));
-
-        findViewById(R.id.saveFrame).setOnClickListener(new View.OnClickListener() {
+        //Saving
+        saveFrame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 File pictureFileDir = getDir();
@@ -53,10 +68,10 @@ public class CollageActivity extends AppCompatActivity {
                     Log.d("Log", "Can't create directory to save image.");
                     return;
                 }
-                layout.setDrawingCacheEnabled(true);
-                layout.buildDrawingCache(true);
-                Bitmap bitmap = Bitmap.createBitmap(layout.getDrawingCache());
-                layout.setDrawingCacheEnabled(false);
+                fragmentContaineCollager.setDrawingCacheEnabled(true);
+                fragmentContaineCollager.buildDrawingCache(true);
+                Bitmap bitmap = Bitmap.createBitmap(fragmentContaineCollager.getDrawingCache());
+                fragmentContaineCollager.setDrawingCacheEnabled(false);
 
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
                 String date = dateFormat.format(new Date());
@@ -84,32 +99,14 @@ public class CollageActivity extends AppCompatActivity {
         });
 
     }
-
     private File getDir() {
         File sdDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         return new File(sdDir, "Hairstyle");
     }
 
-
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_collage, menu);
-        return true;
+    protected void onPause() {
+        super.onPause();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }

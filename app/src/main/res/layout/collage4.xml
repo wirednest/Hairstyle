@@ -1,69 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/collageFrame"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/imageCollage1"
+        android:src="@drawable/sample1"
+        android:layout_weight="1"
+        android:scaleType="centerCrop"
+        android:layout_marginBottom="2.5dp" />
 
     <LinearLayout
-        android:id="@+id/collageFrame"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#ffffff"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:layout_marginTop="2.5dp">
 
-        <LinearLayout
+        <ImageView
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            android:orientation="horizontal"
-            android:paddingBottom="10dp">
-
-            <ImageView
-                android:id="@+id/imageCollage1"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_gravity="center_vertical"
-                android:paddingBottom="10dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/sample2" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:id="@+id/imageCollage2"
+            android:src="@drawable/sample1"
             android:layout_weight="1"
-            android:orientation="horizontal">
+            android:scaleType="centerCrop"
+            android:layout_marginRight="2.5dp" />
 
-            <ImageView
-                android:id="@+id/imageCollage2"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:paddingRight="5dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/sample2" />
-
-            <ImageView
-                android:id="@+id/imageCollage3"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:paddingLeft="5dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/sample1" />
-
-        </LinearLayout>
-
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/imageCollage3"
+            android:src="@drawable/sample1"
+            android:layout_weight="1"
+            android:scaleType="centerCrop"
+            android:layout_marginLeft="2.5dp" />
     </LinearLayout>
-    <ImageButton
-        android:id="@+id/saveFrame"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:src="@android:drawable/ic_menu_save"
-        android:background="@drawable/fab_selector"
-        tools:ignore="ContentDescription"
-        android:layout_gravity="bottom|center"
-        android:layout_marginBottom="30dp" />
-</FrameLayout>
+
+</LinearLayout>
