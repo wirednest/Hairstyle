@@ -1,6 +1,8 @@
 package com.wirednest.apps.hairstyle.fragment;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,7 +13,10 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.squareup.picasso.Picasso;
 import com.wirednest.apps.hairstyle.R;
+
+import java.io.File;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -48,15 +53,19 @@ public class LayoutCollageFragment extends Fragment {
         String pathImg2 = getActivity().getIntent().getStringExtra("image2");
         String pathImg3 = getActivity().getIntent().getStringExtra("image3");
 
-        image1.setImageURI(Uri.parse(pathImg1));
-        image2.setImageURI(Uri.parse(pathImg2));
-        image3.setImageURI(Uri.parse(pathImg3));
+        Picasso.with(getActivity()).load(Uri.fromFile(new File(pathImg1))).into(image1);
+        Picasso.with(getActivity()).load(Uri.fromFile(new File(pathImg2))).into(image2);
+        Picasso.with(getActivity()).load(Uri.fromFile(new File(pathImg3))).into(image3);
+
+//        image2.setImageURI(Uri.parse(pathImg2));
+//        image1.setImageURI(Uri.parse(pathImg1));
+//        image3.setImageURI(Uri.parse(pathImg3));
         return view;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        //ButterKnife.unbind(this);
     }
 }

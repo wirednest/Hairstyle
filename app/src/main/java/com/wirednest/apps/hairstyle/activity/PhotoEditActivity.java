@@ -192,13 +192,13 @@ public class PhotoEditActivity extends Activity implements View.OnTouchListener 
                 Canvas canvas = new Canvas(newImage);//create canvas
                 canvas.drawBitmap(bitmap, new Rect(0, 0, newImage.getWidth(), newImage.getHeight()), new Rect(0, 0, newImage.getWidth(), newImage.getHeight()), new Paint(Paint.FILTER_BITMAP_FLAG));//gambar background
 
-                //hairstyle overlay
-                Drawable overlay = getResources().getDrawable(idGambiran);
-                Bitmap ovrlyBitmap = ((BitmapDrawable) overlay).getBitmap();
-
-                //hairstyle with matrix
-                Bitmap matrixedOverlay = Bitmap.createBitmap(ovrlyBitmap, 0, 0, ovrlyBitmap.getWidth(), ovrlyBitmap.getHeight(), matrix, true);
-                canvas.drawBitmap(matrixedOverlay, new Rect(0, 0, matrixedOverlay.getWidth(), matrixedOverlay.getHeight()), new Rect(0, 0, matrixedOverlay.getWidth(), matrixedOverlay.getHeight()), new Paint(Paint.FILTER_BITMAP_FLAG));
+//                //hairstyle overlay
+//                Drawable overlay = getResources().getDrawable(idGambiran);
+//                Bitmap ovrlyBitmap = ((BitmapDrawable) overlay).getBitmap();
+//
+//                //hairstyle with matrix
+//                Bitmap matrixedOverlay = Bitmap.createBitmap(ovrlyBitmap, 0, 0, ovrlyBitmap.getWidth(), ovrlyBitmap.getHeight(), matrix, true);
+//                canvas.drawBitmap(matrixedOverlay, new Rect(0, 0, matrixedOverlay.getWidth(), matrixedOverlay.getHeight()), new Rect(0, 0, matrixedOverlay.getWidth(), matrixedOverlay.getHeight()), new Paint(Paint.FILTER_BITMAP_FLAG));
 
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
                 String date = dateFormat.format(new Date());

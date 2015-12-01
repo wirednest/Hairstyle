@@ -38,8 +38,6 @@ public class PreviewImageActivity extends FragmentActivity {
 
     @Bind(R.id.fragment_container)
     FrameLayout fragmentContainer;
-    @Bind(R.id.previewImageBackground)
-    ImageView previewImageBackground;
 
     private long captureId;
     private Captures capture;
@@ -97,10 +95,6 @@ public class PreviewImageActivity extends FragmentActivity {
         captureId = getIntent().getLongExtra("captureId", 0);
         capture = Captures.findById(Captures.class, captureId);
         Log.d("captureId", "" + captureId);
-        Bitmap largeIcon = BitmapFactory.decodeFile(imageDir.getPath() + File.separator + capture.image1);
-        Bitmap blurred = blurRenderScript(this, largeIcon, 25);
-
-        previewImageBackground.setImageBitmap(blurred);
 
         if(fragmentContainer != null){
             if (savedInstanceState != null) {

@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.rey.material.widget.Button;
+import com.squareup.picasso.Picasso;
 import com.wirednest.apps.hairstyle.activity.CollageActivity;
 import com.wirednest.apps.hairstyle.R;
 import com.wirednest.apps.hairstyle.activity.FullScreenActivity;
@@ -59,18 +60,21 @@ public class Preview3PictureFragment extends Fragment{
         ButterKnife.bind(this, view);
         captureId = getActivity().getIntent().getLongExtra("captureId", 0);
         capture = Captures.findById(Captures.class, captureId);
-        Log.d("captureId", "" + captureId);
-        Bitmap image1 = BitmapFactory.decodeFile(imageDir.getPath() + File.separator + capture.image1);
+
+        //Bitmap image1 = BitmapFactory.decodeFile(imageDir.getPath() + File.separator + capture.image1);
         final String image1path=imageDir.getPath() + File.separator + capture.image1;
-        previewImage1.setImageBitmap(image1);
+        Picasso.with(getActivity()).load(new File(image1path)).into(previewImage1);
+        //previewImage1.setImageBitmap(image1);
 
-        Bitmap image2 = BitmapFactory.decodeFile(imageDir.getPath() + File.separator + capture.image2);
+        //Bitmap image2 = BitmapFactory.decodeFile(imageDir.getPath() + File.separator + capture.image2);
         final String image2path=imageDir.getPath() + File.separator + capture.image2;
-        previewImage2.setImageBitmap(image2);
+        Picasso.with(getActivity()).load(new File(image2path)).into(previewImage2);
+        //previewImage2.setImageBitmap(image2);
 
-        Bitmap image3 = BitmapFactory.decodeFile(imageDir.getPath() + File.separator + capture.image3);
+        //Bitmap image3 = BitmapFactory.decodeFile(imageDir.getPath() + File.separator + capture.image3);
         final String image3path=imageDir.getPath() + File.separator + capture.image3;
-        previewImage3.setImageBitmap(image3);
+        Picasso.with(getActivity()).load(new File(image3path)).into(previewImage3);
+        //previewImage3.setImageBitmap(image3);
 
         previewImage1.setOnClickListener(new View.OnClickListener() {
             @Override
