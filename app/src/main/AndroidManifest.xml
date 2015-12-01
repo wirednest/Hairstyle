@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.wirednest.apps.hairstyle">
+    package="com.wirednest.apps.hairstyle" >
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -16,7 +16,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
-        tools:replace="android:icon,android:theme">
+        tools:replace="android:icon,android:theme" >
         <meta-data
             android:name="DATABASE"
             android:value="hairstyle.db" />
@@ -35,7 +35,7 @@
 
         <activity
             android:name=".activity.SplashScreenActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -45,7 +45,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_album"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme" >
             <intent-filter>
                 <action android:name="com.wirednest.apps.hairstyle.MAINACTIVITY" />
 
@@ -55,11 +55,11 @@
         <activity
             android:name=".activity.AlbumActivity"
             android:label="@string/title_activity_album"
-            android:theme="@style/AppThemeDragger"></activity>
+            android:theme="@style/AppThemeDragger" />
         <activity
             android:name=".activity.AlbumPhotoActivity"
             android:label="@string/title_activity_album"
-            android:theme="@style/AppThemeDragger"></activity>
+            android:theme="@style/AppThemeDragger" />
         <activity
             android:name=".activity.AlbumAddActivity"
             android:theme="@style/AppThemeDragger"
@@ -67,25 +67,25 @@
         <activity
             android:name=".activity.CaptureActivity"
             android:label="@string/title_activity_camera"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.CameraActivity"
-            android:label="@string/title_activity_camera"></activity>
+            android:label="@string/title_activity_camera" />
         <activity
             android:name=".activity.PhotoEditActivity"
-            android:label="@string/title_activity_photo_edit"></activity>
+            android:label="@string/title_activity_photo_edit" />
         <activity
             android:name=".ViewPhotoActivity"
-            android:label="@string/title_activity_view_photo"></activity>
+            android:label="@string/title_activity_view_photo" />
         <activity
             android:name=".HairStyleCategoriesActivity"
-            android:label="@string/title_activity_hair_style_categories"></activity>
+            android:label="@string/title_activity_hair_style_categories" />
         <activity
             android:name=".activity.FormPicActivity"
-            android:label="@string/title_activity_form_pic"></activity>
+            android:label="@string/title_activity_form_pic" />
         <activity
             android:name=".activity.PreviewActivity"
-            android:label="@string/title_activity_preview"></activity>
+            android:label="@string/title_activity_preview" />
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -99,20 +99,23 @@
 
         <activity
             android:name=".activity.PreviewImageActivity"
-            android:label="@string/title_activity_preview_image"></activity>
+            android:label="@string/title_activity_preview_image" />
         <activity
             android:name=".activity.FullScreenActivity"
-            android:label="@string/title_activity_full_screen"></activity>
-
+            android:label="@string/title_activity_full_screen" />
         <activity
             android:name=".activity.CollageMenuActivity"
-            android:label="@string/title_activity_collage_menu"></activity>
+            android:label="@string/title_activity_collage_menu" />
         <activity
             android:name=".activity.CollageActivity"
-            android:label="@string/title_activity_collage"></activity>
+            android:label="@string/title_activity_collage" />
         <activity
             android:name=".activity.PreviewCollageActivity"
-            android:label="@string/title_activity_preview_collage"></activity>
+            android:label="@string/title_activity_preview_collage" />
+        <activity
+            android:name=".CollageTestActivity"
+            android:label="@string/title_activity_collage_test" >
+        </activity>
     </application>
 
 </manifest>

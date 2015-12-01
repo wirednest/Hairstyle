@@ -29,7 +29,7 @@ import java.io.File;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class Preview2PictureFragment extends Fragment{
+public class  Preview2PictureFragment extends Fragment{
 
     private final int LAST_PICK_CODE = 21;
 
