@@ -53,6 +53,9 @@ public class PhotoEditActivity extends Activity implements View.OnTouchListener 
     //button
     boolean fliped;
 
+    final File appDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),"Hairstyle");
+    final File imageDir = new File(appDir,"hairstyles-data");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -242,12 +245,13 @@ public class PhotoEditActivity extends Activity implements View.OnTouchListener 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 14045 && resultCode == RESULT_OK) {
-            idGambiran = data.getIntExtra("ID_BUKOT", -1);
+            String image = data.getStringExtra("ID_BUKOT");
 
-            if (idGambiran != -1) {
+            if (!image.isEmpty()) {
                 ImageView imagine = (ImageView) findViewById(R.id.hair);
-                Picasso.with(this).load(idGambiran).into(imagine);
-                imagine.setImageDrawable(getResources().getDrawable(idGambiran));
+                Bitmap imageBitmap = BitmapFactory.decodeFile(imageDir.getPath() + File.separator + image);
+                imagine.setImageBitmap(imageBitmap);
+                //imagine.setImageDrawable(getResources().getDrawable(idGambiran));
             }
         }
     }

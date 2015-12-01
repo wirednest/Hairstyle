@@ -24,7 +24,7 @@ public class Categories extends SugarRecord {
         this.description = description;
         this.image = image;
     }
-    public Categories findByServerId(int idServer){
+    public static Categories findByServerId(int idServer){
         List<Categories> categories = Categories.find(Categories.class,
                 "ID_SERVER = ?", "" + idServer);
         if(categories.size()>0){

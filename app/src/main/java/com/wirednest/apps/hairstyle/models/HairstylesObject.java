@@ -13,7 +13,7 @@ public class HairstylesObject {
     private int hairstyleId;
     @SerializedName("categoryId")
     @Expose
-    private String categoryId;
+    private int categoryId;
     @SerializedName("hairstyleName")
     @Expose
     private String hairstyleName;
@@ -42,7 +42,7 @@ public class HairstylesObject {
      * @param hairsyleDescription
      * @param hairstyleName
      */
-    public HairstylesObject(int hairstyleId, String categoryId, String hairstyleName, String categoryName, String image, String hairsyleDescription, String categoryDescription) {
+    public HairstylesObject(int hairstyleId, int categoryId, String hairstyleName, String categoryName, String image, String hairsyleDescription, String categoryDescription) {
         this.hairstyleId = hairstyleId;
         this.categoryId = categoryId;
         this.hairstyleName = hairstyleName;
@@ -75,7 +75,7 @@ public class HairstylesObject {
      * @return
      * The categoryId
      */
-    public String getCategoryId() {
+    public int getCategoryId() {
         return categoryId;
     }
 
@@ -84,7 +84,7 @@ public class HairstylesObject {
      * @param categoryId
      * The categoryId
      */
-    public void setCategoryId(String categoryId) {
+    public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
     }
 

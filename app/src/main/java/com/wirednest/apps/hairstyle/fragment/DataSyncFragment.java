@@ -218,7 +218,8 @@ public class DataSyncFragment extends Fragment {
                                                 Hairstyles hairstyle = hairstyleList.get(0);
                                                 hairstyle.hairName = data.getHairstyleName();
                                                 hairstyle.description = data.getHairsyleDescription();
-                                                hairstyle.categories = new Categories().findByServerId(data.getHairstyleId());
+                                                hairstyle.categories = Categories.findByServerId(data.getCategoryId());
+                                                Log.d(TAG,"id:"+hairstyle.categories);
                                                 sdcardTarget target = new sdcardTarget(hairstyle.getId()
                                                         + " " + data.getHairstyleName());
                                                 Picasso.with(getContext())
@@ -231,7 +232,7 @@ public class DataSyncFragment extends Fragment {
                                                 hairstyle.idServer = data.getHairstyleId();
                                                 hairstyle.hairName = data.getHairstyleName();
                                                 hairstyle.description = data.getHairsyleDescription();
-                                                hairstyle.categories = new Categories().findByServerId(data.getHairstyleId());
+                                                hairstyle.categories = Categories.findByServerId(data.getHairstyleId());
                                                 hairstyle.save();
                                                 sdcardTarget target = new sdcardTarget(hairstyle.getId()
                                                         + " " + data.getHairstyleName());
