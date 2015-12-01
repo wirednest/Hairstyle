@@ -23,7 +23,7 @@ import rx.functions.Func1;
 
 
 public class APIService {
-    private static final String WEB_SERVICE_BASE_URL = "http://192.168.1.104:8000";
+    private static final String WEB_SERVICE_BASE_URL = "http://hairstyle.dev1.syncplify.com";
     private final APIEndpointInterface mWebService;
 
     public APIService() {

@@ -21,13 +21,10 @@ import android.widget.TextView;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
-import com.facebook.share.model.ShareLinkContent;
-import com.facebook.share.model.SharePhoto;
-import com.facebook.share.model.SharePhotoContent;
-import com.facebook.share.widget.ShareDialog;
-import com.wirednest.apps.hairstyle.MainActivity;
+import com.sromku.simple.fb.SimpleFacebook;
+import com.sromku.simple.fb.entities.Photo;
+import com.sromku.simple.fb.listeners.OnPublishListener;
 import com.wirednest.apps.hairstyle.R;
-import com.wirednest.apps.hairstyle.ViewPhotoActivity;
 import com.wirednest.apps.hairstyle.activity.PreviewImageActivity;
 import com.wirednest.apps.hairstyle.db.Captures;
 
@@ -100,14 +97,18 @@ public class AlbumPhotoAdapter extends RecyclerView.Adapter<AlbumPhotoAdapter.Vi
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inPreferredConfig = Bitmap.Config.ARGB_8888;
                 Bitmap bitmap = BitmapFactory.decodeFile(imageDir.getPath() + File.separator + captures.get(i).image2, options);
-
-                SharePhoto photo = new SharePhoto.Builder()
-                        .setBitmap(bitmap)
+                Photo photo = new Photo.Builder()
+                        .setImage(bitmap)
+                        .setName("Screenshot from #android_simple_facebook sample application")
+                        .setPlace("110619208966868")
                         .build();
-                SharePhotoContent content = new SharePhotoContent.Builder()
-                        .addPhoto(photo)
-                        .build();
-                ShareDialog.show(context,content);
+                OnPublishListener onPublishListener = new OnPublishListener() {
+                    @Override
+                    public void onComplete(String id) {
+                        Log.i("Hairstyle_", "Published successfully. id = " + id);
+                    }
+                };
+                SimpleFacebook.getInstance().publish(photo,true, onPublishListener);
 
             }
         });

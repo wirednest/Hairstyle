@@ -50,8 +50,8 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.0.1'
     compile 'io.reactivex:rxjava:1.0.16'
     compile 'com.squareup.retrofit:adapter-rxjava:2.0.0-beta2'
-    // Android SDK
-    compile 'com.facebook.android:facebook-android-sdk:4.6.0'
+
+    compile 'com.sromku:simple-fb:4.1.1'
 
     compile 'com.github.moondroid.coverflow:library:1.0'
 

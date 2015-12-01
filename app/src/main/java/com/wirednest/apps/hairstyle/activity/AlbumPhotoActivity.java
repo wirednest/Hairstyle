@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 
 import com.facebook.share.widget.ShareDialog;
 import com.melnykov.fab.FloatingActionButton;
+import com.sromku.simple.fb.SimpleFacebook;
 import com.wirednest.apps.hairstyle.R;
 import com.wirednest.apps.hairstyle.adapter.AlbumPhotoAdapter;
 import com.wirednest.apps.hairstyle.db.Captures;
@@ -30,6 +31,7 @@ public class AlbumPhotoActivity extends SwipeBackActivity{
     private SwipeBackLayout mSwipeBackLayout;
     public ShareDialog shareDialog;
     private long albumId;
+    SimpleFacebook mSimpleFacebook;
 
     @Bind(R.id.addAlbumPhoto)
     FloatingActionButton addAlbumPhoto;
@@ -40,7 +42,7 @@ public class AlbumPhotoActivity extends SwipeBackActivity{
 
         setContentView(R.layout.activity_album_photo);
         ButterKnife.bind(this);
-        shareDialog = new ShareDialog(this);
+        mSimpleFacebook = SimpleFacebook.getInstance(this);
         mSwipeBackLayout = getSwipeBackLayout();
         mSwipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT);
 
@@ -83,5 +85,10 @@ public class AlbumPhotoActivity extends SwipeBackActivity{
 
     private void showViews() {
         addAlbumPhoto.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mSimpleFacebook.onActivityResult(requestCode, resultCode, data);
     }
 }

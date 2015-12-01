@@ -97,6 +97,7 @@ public class DataSyncFragment extends Fragment {
             intent.addCategory(Intent.CATEGORY_HOME);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
+            getActivity().finish();
 
         }else{
             final FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -212,25 +213,28 @@ public class DataSyncFragment extends Fragment {
                                         syncStatus.setText("Updating hairstyle data");
                                         for (HairstylesObject data : hairstyles) {
                                             List<Hairstyles> hairstyleList = Hairstyles.find(Hairstyles.class,
-                                                    "ID_SERVER = ?",""+data.getHairstyleId());
-                                            if(hairstyleList.size()>0){
+                                                    "ID_SERVER = ?", "" + data.getHairstyleId());
+                                            if (hairstyleList.size() > 0) {
                                                 Hairstyles hairstyle = hairstyleList.get(0);
                                                 hairstyle.hairName = data.getHairstyleName();
                                                 hairstyle.description = data.getHairsyleDescription();
                                                 hairstyle.categories = new Categories().findByServerId(data.getHairstyleId());
-                                                sdcardTarget target = new sdcardTarget(data.getHairstyleName());
+                                                sdcardTarget target = new sdcardTarget(hairstyle.getId()
+                                                        + " " + data.getHairstyleName());
                                                 Picasso.with(getContext())
                                                         .load(data.getImage())
                                                         .into(target);
                                                 hairstyle.image = target.getFilename();
                                                 hairstyle.save();
-                                            }else{
+                                            } else {
                                                 Hairstyles hairstyle = new Hairstyles();
                                                 hairstyle.idServer = data.getHairstyleId();
                                                 hairstyle.hairName = data.getHairstyleName();
                                                 hairstyle.description = data.getHairsyleDescription();
                                                 hairstyle.categories = new Categories().findByServerId(data.getHairstyleId());
-                                                sdcardTarget target = new sdcardTarget(data.getHairstyleName());
+                                                hairstyle.save();
+                                                sdcardTarget target = new sdcardTarget(hairstyle.getId()
+                                                        + " " + data.getHairstyleName());
                                                 Picasso.with(getContext())
                                                         .load(data.getImage())
                                                         .into(target);
@@ -262,7 +266,7 @@ public class DataSyncFragment extends Fragment {
 
         private String filename;
         public sdcardTarget(String filename) {
-            this.filename = filename.replaceAll(" ", "_").toLowerCase() + ".jpg";
+            this.filename = filename.replaceAll(" ", "_").toLowerCase() + ".png";
         }
         public String getFilename(){
             return this.filename;
@@ -291,7 +295,7 @@ public class DataSyncFragment extends Fragment {
                     if(!image.exists()){
                         image.createNewFile();
                         FileOutputStream ostream = new FileOutputStream(image);
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, ostream);
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 80, ostream);
                         ostream.close();
                     }
 
