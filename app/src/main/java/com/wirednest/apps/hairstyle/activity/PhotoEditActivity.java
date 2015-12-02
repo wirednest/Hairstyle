@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.FaceDetector;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -27,7 +29,9 @@ import com.wirednest.apps.hairstyle.HairStyleCategoriesActivity;
 import com.wirednest.apps.hairstyle.R;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -60,10 +64,10 @@ public class PhotoEditActivity extends Activity implements View.OnTouchListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_edit);
-
+        final int MAX_FACES = 5;
         final String pathImage1 = getIntent().getStringExtra("FILE_AVAGA");
         final String Image1Name = getIntent().getStringExtra("Image1Name");
-        ImageView photo = (ImageView) findViewById(R.id.photo);
+        final ImageView photo = (ImageView) findViewById(R.id.photo);
         photo.setImageURI(Uri.parse(pathImage1));
         findViewById(R.id.chooseHair).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,6 +174,81 @@ public class PhotoEditActivity extends Activity implements View.OnTouchListener 
         findViewById(R.id.flipImg).setOnClickListener(onClick);
         findViewById(R.id.rotateLeftImg).setOnClickListener(onClick);
         findViewById(R.id.rotateRightImg).setOnClickListener(onClick);
+
+        findViewById(R.id.facedetect).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+                Bitmap bitmap = BitmapFactory.decodeFile(pathImage1, options);
+
+
+                int width = bitmap.getWidth();
+                int height = bitmap.getHeight();
+
+                FaceDetector detector = new FaceDetector(width, height,MAX_FACES);
+                FaceDetector.Face[] faces = new FaceDetector.Face[MAX_FACES];
+
+                Bitmap bitmap565 = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+                Paint ditherPaint = new Paint();
+                Paint drawPaint = new Paint();
+
+                ditherPaint.setDither(true);
+                drawPaint.setColor(Color.RED);
+                drawPaint.setStyle(Paint.Style.STROKE);
+                drawPaint.setStrokeWidth(2);
+
+                Canvas canvas = new Canvas();
+                canvas.setBitmap(bitmap565);
+                canvas.drawBitmap(bitmap, 0, 0, ditherPaint);
+
+                int facesFound = detector.findFaces(bitmap565, faces);
+                PointF midPoint = new PointF();
+                float eyeDistance = 0.0f;
+                float confidence = 0.0f;
+
+                Log.i("FaceDetector", "Number of faces found: " + facesFound);
+
+                if(facesFound > 0)
+                {
+                    for(int index=0; index<facesFound; ++index){
+                        faces[index].getMidPoint(midPoint);
+                        eyeDistance = faces[index].eyesDistance();
+                        confidence = faces[index].confidence();
+
+                        Log.i("FaceDetector",
+                                "Confidence: " + confidence +
+                                        ", Eye distance: " + eyeDistance +
+                                        ", Mid Point: (" + midPoint.x + ", " + midPoint.y + ")");
+
+                        canvas.drawRect((int) midPoint.x - eyeDistance,
+                                (int) midPoint.y - eyeDistance,
+                                (int) midPoint.x + eyeDistance,
+                                (int) midPoint.y + eyeDistance, drawPaint);
+
+                        matrix.postTranslate(midPoint.x, midPoint.y);
+//                        matrix.setTranslate(midPoint.x, midPoint.y);
+                    }
+                }
+
+                String filepath = Environment.getExternalStorageDirectory() + "/facedetect" + System.currentTimeMillis() + ".jpg";
+
+                try {
+                    FileOutputStream fos = new FileOutputStream(filepath);
+
+                    bitmap565.compress(Bitmap.CompressFormat.JPEG, 90, fos);
+
+                    fos.flush();
+                    fos.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                photo.setImageBitmap(bitmap565);
+
+            }
+        });
 
 
         findViewById(R.id.savePic2).setOnClickListener(new View.OnClickListener() {
