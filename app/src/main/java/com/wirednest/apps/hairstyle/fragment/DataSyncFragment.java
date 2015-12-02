@@ -5,26 +5,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.transition.Fade;
-import android.transition.Slide;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.rey.material.widget.ProgressView;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 import com.wirednest.apps.hairstyle.MainActivity;
 import com.wirednest.apps.hairstyle.R;
 import com.wirednest.apps.hairstyle.db.Categories;
@@ -35,23 +33,22 @@ import com.wirednest.apps.hairstyle.network.service.APIService;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
-import rx.functions.Func2;
-import rx.subscriptions.CompositeSubscription;
-import rx.schedulers.Schedulers;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 
 public class DataSyncFragment extends Fragment {
     private static final String PREF = "Hairstyle";
     private static final String TAG = "hairstyle_";
-
+    private static final int    MIN_DISK_CACHE_SIZE = 512 * 1024 * 102;
     private Subscription subscription;
     private CompositeSubscription mCompositeSubscription;
     private APIService apiService;
@@ -86,7 +83,6 @@ public class DataSyncFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mCompositeSubscription = new CompositeSubscription();
         apiService = new APIService();
-
     }
 
     private void startActivity(){
@@ -148,7 +144,7 @@ public class DataSyncFragment extends Fragment {
 
                             @Override
                             public void onError(Throwable e) {
-                                startActivity();
+                                updateHairstyles();
                             }
 
                             @Override
@@ -200,7 +196,7 @@ public class DataSyncFragment extends Fragment {
 
                             @Override
                             public void onError(Throwable e) {
-                                startActivity();
+                                //startActivity();
                             }
 
                             @Override
@@ -211,41 +207,53 @@ public class DataSyncFragment extends Fragment {
                                 handler.post(new Runnable() {
                                     public void run() {
                                         syncStatus.setText("Updating hairstyle data");
-                                        for (HairstylesObject data : hairstyles) {
-                                            List<Hairstyles> hairstyleList = Hairstyles.find(Hairstyles.class,
-                                                    "ID_SERVER = ?", "" + data.getHairstyleId());
-                                            if (hairstyleList.size() > 0) {
-                                                Hairstyles hairstyle = hairstyleList.get(0);
-                                                hairstyle.hairName = data.getHairstyleName();
-                                                hairstyle.description = data.getHairsyleDescription();
-                                                hairstyle.categories = Categories.findByServerId(data.getCategoryId());
-                                                Log.d(TAG,"id:"+hairstyle.categories);
-                                                sdcardTarget target = new sdcardTarget(hairstyle.getId()
-                                                        + " " + data.getHairstyleName());
-                                                Picasso.with(ctx.getApplicationContext())
-                                                        .load(data.getImage())
-                                                        .into(target);
-                                                hairstyle.image = target.getFilename();
-                                                hairstyle.save();
-                                            } else {
-                                                Hairstyles hairstyle = new Hairstyles();
-                                                hairstyle.idServer = data.getHairstyleId();
-                                                hairstyle.hairName = data.getHairstyleName();
-                                                hairstyle.description = data.getHairsyleDescription();
-                                                hairstyle.categories = Categories.findByServerId(data.getHairstyleId());
-                                                hairstyle.save();
-                                                sdcardTarget target = new sdcardTarget(hairstyle.getId()
-                                                        + " " + data.getHairstyleName());
-                                                Picasso.with(ctx.getApplicationContext())
-                                                        .load(data.getImage())
-                                                        .into(target);
-                                                hairstyle.image = target.getFilename();
-                                                hairstyle.save();
-                                            }
-                                        }
-                                        startActivity();
                                     }
                                 });
+                                for (HairstylesObject data : hairstyles) {
+                                    List<Hairstyles> hairstyleList = Hairstyles.find(Hairstyles.class,
+                                            "ID_SERVER = ?", "" + data.getHairstyleId());
+                                    if (hairstyleList.size() > 0) {
+                                        Hairstyles hairstyle = hairstyleList.get(0);
+                                        hairstyle.hairName = data.getHairstyleName();
+                                        hairstyle.description = data.getHairsyleDescription();
+                                        hairstyle.categories = Categories.findByServerId(data.getCategoryId());
+
+//                                        sdcardTarget target = new sdcardTarget(hairstyle.getId()
+//                                                + " " + data.getHairstyleName());
+//                                        mBuilder.load(data.getImage())
+//                                                .into(target);
+                                        downloadImage download = new downloadImage(
+                                                data.getImage(),
+                                                hairstyle.getId()
+                                                        + " " + data.getHairstyleName()
+                                        );
+                                        download.download();
+                                        hairstyle.image = download.getFilename();
+                                        hairstyle.save();
+                                    } else {
+                                        Hairstyles hairstyle = new Hairstyles();
+                                        hairstyle.idServer = data.getHairstyleId();
+                                        hairstyle.hairName = data.getHairstyleName();
+                                        hairstyle.description = data.getHairsyleDescription();
+                                        hairstyle.categories = Categories.findByServerId(data.getHairstyleId());
+                                        hairstyle.save();
+//                                        sdcardTarget target = new sdcardTarget(hairstyle.getId()
+//                                                + " " + data.getHairstyleName());
+//
+//                                        mBuilder.load(data.getImage())
+//                                                .into(target);
+                                        downloadImage download = new downloadImage(
+                                                data.getImage(),
+                                                hairstyle.getId()
+                                                + " " + data.getHairstyleName()
+                                        );
+                                        download.download();
+                                        hairstyle.image = download.getFilename();
+                                        hairstyle.save();
+                                    }
+                                }
+                                startActivity();
+
 
 
 
@@ -263,11 +271,13 @@ public class DataSyncFragment extends Fragment {
         return view;
     }
 
-    private class sdcardTarget implements Target{
-
+    private class downloadImage{
         private String filename;
         private File imageDir;
-        public sdcardTarget(String filename) {
+        private File fileForImage;
+        private String url;
+        public downloadImage(String url,String filename) {
+            this.url=url;
             this.filename = filename.replaceAll(" ", "_").toLowerCase() + ".png";
             File pictureFileDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
             File appDir = new File(pictureFileDir,"Hairstyle");
@@ -280,29 +290,45 @@ public class DataSyncFragment extends Fragment {
             if (!imageDir.exists() && !imageDir.mkdirs()) {
                 Log.d("Log", "Can't create directory to save image.");
             }
+            Log.d("Hairstyle_","Target acc "+this.filename);
+            fileForImage = new File(imageDir + File.separator + this.filename);
         }
-        public String getFilename(){
-            return this.filename;
-        }
-        @Override
-            public void onPrepareLoad(Drawable arg0) {
-                return;
-            }
-
-            @Override
-            public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom arg1) {
-                new Thread(new Runnable() {
+        public void download(){
+            Log.d("Hairstyle_","Target start "+this.filename);
+            InputStream sourceStream;
+            //File cachedImage = ImageLoader.getInstance().getDiskCache().get(this.url);
+            try {
+                ImageLoader imageLoader = ImageLoader.getInstance();
+                imageLoader.loadImage(this.url, new ImageLoadingListener() {
                     @Override
-                    public void run() {
+                    public void onLoadingStarted(String imageUri, View view) {
+
+                    }
+
+                    @Override
+                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+
+                    }
+
+                    @Override
+                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                         try {
 
-                            File image = new File(imageDir + File.separator + filename);
-                            if (!image.exists()) {
-                                image.createNewFile();
-                                FileOutputStream ostream = new FileOutputStream(image);
-                                bitmap.compress(Bitmap.CompressFormat.PNG, 80, ostream);
-                                ostream.close();
+
+                            if (!fileForImage.exists()) {
                                 Log.d("Hairstyle_download",filename+" downloaded");
+                                if(fileForImage.createNewFile()){
+                                    FileOutputStream ostream = new FileOutputStream(fileForImage);
+                                    loadedImage.compress(Bitmap.CompressFormat.PNG, 80, ostream);
+                                    ostream.close();
+                                    Log.d("Hairstyle_download", filename + " file created");
+                                }else{
+                                    Log.d("Hairstyle_download", filename + " file not created");
+                                }
+
+
+                            }else{
+                                Log.d("Hairstyle_download",filename+" exist");
                             }
 
 
@@ -310,15 +336,24 @@ public class DataSyncFragment extends Fragment {
                             e.printStackTrace();
                         }
                     }
-                }).start();
+
+                    @Override
+                    public void onLoadingCancelled(String imageUri, View view) {
+
+                    }
+                });
+            } catch (Exception e) {
+                Log.e("Hairstyle_","Target downloaded error "+e.getMessage());
+                e.printStackTrace();
             }
 
-            @Override
-            public void onBitmapFailed(Drawable arg0) {
-                return;
-            }
 
-
+        }
+        public String getFilename(){
+            return this.filename;
+        }
     }
+
+
 
 }

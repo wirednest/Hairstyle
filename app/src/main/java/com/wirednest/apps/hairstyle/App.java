@@ -8,6 +8,9 @@ import android.util.Base64;
 import android.util.Log;
 
 import com.facebook.stetho.Stetho;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.orm.SugarContext;
 import com.sromku.simple.fb.Permission;
 import com.sromku.simple.fb.SimpleFacebook;
@@ -49,6 +52,15 @@ public class App extends Application {
         } catch (NoSuchAlgorithmException e) {
 
         }
+
+        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
+            .cacheInMemory(true)
+            .cacheOnDisk(true)
+            .build();
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
+            .defaultDisplayImageOptions(defaultOptions)
+            .build();
+        ImageLoader.getInstance().init(config);
     }
 
     @Override
