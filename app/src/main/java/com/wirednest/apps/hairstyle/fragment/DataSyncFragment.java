@@ -222,7 +222,7 @@ public class DataSyncFragment extends Fragment {
                                                 Log.d(TAG,"id:"+hairstyle.categories);
                                                 sdcardTarget target = new sdcardTarget(hairstyle.getId()
                                                         + " " + data.getHairstyleName());
-                                                Picasso.with(getContext())
+                                                Picasso.with(ctx.getApplicationContext())
                                                         .load(data.getImage())
                                                         .into(target);
                                                 hairstyle.image = target.getFilename();
@@ -236,7 +236,7 @@ public class DataSyncFragment extends Fragment {
                                                 hairstyle.save();
                                                 sdcardTarget target = new sdcardTarget(hairstyle.getId()
                                                         + " " + data.getHairstyleName());
-                                                Picasso.with(getContext())
+                                                Picasso.with(ctx.getApplicationContext())
                                                         .load(data.getImage())
                                                         .into(target);
                                                 hairstyle.image = target.getFilename();
@@ -290,22 +290,27 @@ public class DataSyncFragment extends Fragment {
             }
 
             @Override
-            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom arg1) {
+            public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom arg1) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
 
-                try {
+                            File image = new File(imageDir + File.separator + filename);
+                            if (!image.exists()) {
+                                image.createNewFile();
+                                FileOutputStream ostream = new FileOutputStream(image);
+                                bitmap.compress(Bitmap.CompressFormat.PNG, 80, ostream);
+                                ostream.close();
+                                Log.d("Hairstyle_download",filename+" downloaded");
+                            }
 
-                    File image = new File(imageDir + File.separator + filename );
-                    if(!image.exists()){
-                        image.createNewFile();
-                        FileOutputStream ostream = new FileOutputStream(image);
-                        bitmap.compress(Bitmap.CompressFormat.PNG, 80, ostream);
-                        ostream.close();
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
-
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                }).start();
             }
 
             @Override
