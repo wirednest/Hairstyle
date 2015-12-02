@@ -9,6 +9,8 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.RectF;
 import android.hardware.Camera;
+import android.media.ThumbnailUtils;
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -83,6 +85,8 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
                 Canvas canvas = new Canvas(newImage);
 
                 canvas.drawBitmap(rotatedBitmap, 0f, 0f, null);
+
+                newImage = ThumbnailUtils.extractThumbnail(newImage, mPreviewSize.height , mPreviewSize.width);
 
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
                 String date = dateFormat.format(new Date());
@@ -167,9 +171,42 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
 //            }
 //
 //            public void onFinish() {
-                actions.takePicture(EasyCamera.Callbacks.create().withJpegCallback(callback).withRestartPreviewAfterCallbacks(true));
+        //actions.takePicture(EasyCamera.Callbacks.create().withJpegCallback(callback).withRestartPreviewAfterCallbacks(true));
+        TakePictureTask takePictureTask = new TakePictureTask();
+        takePictureTask.execute();
 //            }
 //        }.start();
+    }
+
+    private class TakePictureTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPostExecute(Void result) {
+            // This returns the preview back to the live camera feed
+            try {
+                //when the surface is created, we can set the camera to draw images in this surfaceholder
+                actions = mCamera.startPreview(mHolder);
+            } catch (IOException e) {
+                Log.d("ERROR", "Camera error on surfaceCreated " + e.getMessage());
+            }
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            actions.takePicture(EasyCamera.Callbacks.create().withJpegCallback(callback).withRestartPreviewAfterCallbacks(true));
+
+            // Sleep for however long, you could store this in a variable and
+            // have it updated by a menu item which the user selects.
+            try {
+                Thread.sleep(3000); // 3 second preview
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
     }
 
     @Override

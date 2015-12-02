@@ -1,5 +1,7 @@
 package com.wirednest.apps.hairstyle.activity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
@@ -21,8 +23,11 @@ import java.io.IOException;
 
 
 public class CaptureActivity extends AppCompatActivity {
+    private static final String PREF = "Hairstyle";
     private EasyCamera mCamera = null;
     private EasyCameraView mCameraView = null;
+    private SharedPreferences preference;
+    private SharedPreferences.Editor editor;
     SurfaceView surfaceView;
     SurfaceHolder surfaceHolder;
 
@@ -34,8 +39,9 @@ public class CaptureActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_capture);
+        preference = getSharedPreferences(PREF, Context.MODE_PRIVATE);
 
-        mCamera = DefaultEasyCamera.open();
+        mCamera = DefaultEasyCamera.open(preference.getInt("cameraId",0));
         if (mCamera != null) {
             mCameraView = new EasyCameraView(this, mCamera);//create a SurfaceView to show camera data
 
