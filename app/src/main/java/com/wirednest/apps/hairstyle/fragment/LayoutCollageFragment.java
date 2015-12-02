@@ -8,10 +8,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.squareup.picasso.Picasso;
 import com.wirednest.apps.hairstyle.R;
@@ -48,6 +50,8 @@ public class LayoutCollageFragment extends Fragment {
         }
 
         ButterKnife.bind(this, view);
+        final int windowwidth = view.getWidth();
+        final int windowheight = view.getHeight();
 
         String pathImg1 = getActivity().getIntent().getStringExtra("image1");
         String pathImg2 = getActivity().getIntent().getStringExtra("image2");
@@ -57,6 +61,37 @@ public class LayoutCollageFragment extends Fragment {
         Picasso.with(getActivity()).load(Uri.fromFile(new File(pathImg2))).into(image2);
         Picasso.with(getActivity()).load(Uri.fromFile(new File(pathImg3))).into(image3);
 
+//        image1.setOnTouchListener(new View.OnTouchListener() {
+//
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) v
+//                        .getLayoutParams();
+//                switch (event.getAction()) {
+//                    case MotionEvent.ACTION_DOWN:
+//                        break;
+//                    case MotionEvent.ACTION_MOVE:
+//                        int x_cord = (int) event.getRawX();
+//                        int y_cord = (int) event.getRawY();
+//
+//                        if (x_cord > windowwidth) {
+//                            x_cord = windowwidth;
+//                        }
+//                        if (y_cord > windowheight) {
+//                            y_cord = windowheight;
+//                        }
+//
+//                        layoutParams.leftMargin = x_cord - 25;
+//                        layoutParams.topMargin = y_cord - 75;
+//
+//                        v.setLayoutParams(layoutParams);
+//                        break;
+//                    default:
+//                        break;
+//                }
+//                return true;
+//            }
+//        });
 //        image2.setImageURI(Uri.parse(pathImg2));
 //        image1.setImageURI(Uri.parse(pathImg1));
 //        image3.setImageURI(Uri.parse(pathImg3));

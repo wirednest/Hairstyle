@@ -266,8 +266,20 @@ public class DataSyncFragment extends Fragment {
     private class sdcardTarget implements Target{
 
         private String filename;
+        private File imageDir;
         public sdcardTarget(String filename) {
             this.filename = filename.replaceAll(" ", "_").toLowerCase() + ".png";
+            File pictureFileDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+            File appDir = new File(pictureFileDir,"Hairstyle");
+
+            if (!appDir.exists() && !appDir.mkdirs()) {
+                Log.d("Log", "Can't create directory to save image.");
+
+            }
+            imageDir = new File(appDir,"hairstyles-data");
+            if (!imageDir.exists() && !imageDir.mkdirs()) {
+                Log.d("Log", "Can't create directory to save image.");
+            }
         }
         public String getFilename(){
             return this.filename;
@@ -281,17 +293,7 @@ public class DataSyncFragment extends Fragment {
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom arg1) {
 
                 try {
-                    File file = null;
-                    final File appDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),"Hairstyle");
-                    if (!appDir.exists() && !appDir.mkdirs()) {
-                        Log.d("Log", "Can't create directory to save image.");
-                        return;
-                    }
-                    File imageDir = new File(appDir,"hairstyles-data");
-                    if (!imageDir.exists() && !imageDir.mkdirs()) {
-                        Log.d("Log", "Can't create directory to save image.");
-                        return;
-                    }
+
                     File image = new File(imageDir + File.separator + filename );
                     if(!image.exists()){
                         image.createNewFile();

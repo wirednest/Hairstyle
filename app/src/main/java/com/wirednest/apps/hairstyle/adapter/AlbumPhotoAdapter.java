@@ -99,8 +99,6 @@ public class AlbumPhotoAdapter extends RecyclerView.Adapter<AlbumPhotoAdapter.Vi
                 Bitmap bitmap = BitmapFactory.decodeFile(imageDir.getPath() + File.separator + captures.get(i).image2, options);
                 Photo photo = new Photo.Builder()
                         .setImage(bitmap)
-                        .setName("Screenshot from #android_simple_facebook sample application")
-                        .setPlace("110619208966868")
                         .build();
                 OnPublishListener onPublishListener = new OnPublishListener() {
                     @Override
@@ -109,6 +107,7 @@ public class AlbumPhotoAdapter extends RecyclerView.Adapter<AlbumPhotoAdapter.Vi
                     }
                 };
                 SimpleFacebook.getInstance().publish(photo,true, onPublishListener);
+                bitmap.recycle();
 
             }
         });

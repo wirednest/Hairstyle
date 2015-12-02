@@ -171,9 +171,9 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
 //            }
 //
 //            public void onFinish() {
-        //actions.takePicture(EasyCamera.Callbacks.create().withJpegCallback(callback).withRestartPreviewAfterCallbacks(true));
-        TakePictureTask takePictureTask = new TakePictureTask();
-        takePictureTask.execute();
+        actions.takePicture(EasyCamera.Callbacks.create().withJpegCallback(callback).withRestartPreviewAfterCallbacks(true));
+//        TakePictureTask takePictureTask = new TakePictureTask();
+//        takePictureTask.execute();
 //            }
 //        }.start();
     }
