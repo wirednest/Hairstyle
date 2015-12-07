@@ -229,8 +229,9 @@ public class PhotoEditActivity extends Activity implements View.OnTouchListener 
                                 (int) midPoint.x + eyeDistance,
                                 (int) midPoint.y + eyeDistance, drawPaint);
 
-                        matrix.postTranslate(midPoint.x, midPoint.y);
-//                        matrix.setTranslate(midPoint.x, midPoint.y);
+//                        matrix.postTranslate(midPoint.x, midPoint.y);
+                        matrix.setTranslate(midPoint.x, midPoint.y+eyeDistance);
+                        savedMatrix.set(matrix);
                     }
                 }
 

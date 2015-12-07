@@ -113,6 +113,10 @@
             android:name=".activity.CollageActivity"
             android:label="@string/title_activity_collage_test" >
         </activity>
+        <activity
+            android:name=".activity.CameraFaceDetectionActivity"
+            android:label="@string/title_activity_camera_face_detection" >
+        </activity>
     </application>
 
 </manifest>

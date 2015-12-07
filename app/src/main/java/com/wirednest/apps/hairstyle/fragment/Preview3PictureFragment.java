@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.rey.material.widget.Button;
 import com.squareup.picasso.Picasso;
@@ -38,6 +39,8 @@ public class Preview3PictureFragment extends Fragment{
     ImageView previewImage2;
     @Bind(R.id.previewImage3)
     ImageView previewImage3;
+    @Bind(R.id.description)
+    TextView description;
     @Bind(R.id.addFrame)
     Button addFrame;
 
@@ -60,6 +63,7 @@ public class Preview3PictureFragment extends Fragment{
         ButterKnife.bind(this, view);
         captureId = getActivity().getIntent().getLongExtra("captureId", 0);
         capture = Captures.findById(Captures.class, captureId);
+        description.setText(capture.description);
 
         //Bitmap image1 = BitmapFactory.decodeFile(imageDir.getPath() + File.separator + capture.image1);
         final String image1path=imageDir.getPath() + File.separator + capture.image1;

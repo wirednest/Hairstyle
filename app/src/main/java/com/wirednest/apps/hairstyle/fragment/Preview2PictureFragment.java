@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.rey.material.widget.Button;
 import com.wirednest.apps.hairstyle.R;
@@ -37,6 +38,8 @@ public class  Preview2PictureFragment extends Fragment{
     ImageView previewImage1;
     @Bind(R.id.previewImage2)
     ImageView previewImage2;
+    @Bind(R.id.description)
+    TextView description;
     @Bind(R.id.takeLastPic)
     Button takeLastPic;
 
@@ -59,6 +62,7 @@ public class  Preview2PictureFragment extends Fragment{
         ButterKnife.bind(this, view);
         captureId = getActivity().getIntent().getLongExtra("captureId", 0);
         capture = Captures.findById(Captures.class, captureId);
+        description.setText(capture.description);
         Log.d("captureId", "" + captureId);
         Bitmap image1 = BitmapFactory.decodeFile(imageDir.getPath() + File.separator + capture.image1);
         final String image1path=imageDir.getPath() + File.separator + capture.image1;
