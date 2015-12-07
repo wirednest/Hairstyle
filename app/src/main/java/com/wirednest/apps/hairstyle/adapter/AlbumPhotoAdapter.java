@@ -2,21 +2,23 @@ package com.wirednest.apps.hairstyle.adapter;
 
 
 import android.app.Activity;
-import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Environment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
@@ -34,23 +36,32 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class AlbumPhotoAdapter extends RecyclerView.Adapter<AlbumPhotoAdapter.ViewHolder>{
+public class AlbumPhotoAdapter extends RecyclerView.Adapter<AlbumPhotoAdapter.ViewHolder> {
     private Activity context;
     List<Captures> captures;
+    EditText password;
+    AlertDialog alertDialog;
+    AlertDialog.Builder alertDialogBuilder;
 
-    public AlbumPhotoAdapter(Activity context,List<Captures> captures){
+    public AlbumPhotoAdapter(final Activity context, List<Captures> captures) {
         this.context = context;
         this.captures = captures;
+        alertDialogBuilder = new AlertDialog.Builder(context);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.cv) CardView cv;
+        @Bind(R.id.cv)
+        CardView cv;
         @Bind(R.id.slider)
         SliderLayout sliderShow;
-        @Bind(R.id.photoName) TextView photoName;
-        @Bind(R.id.photoPerson) TextView photoPerson;
-        @Bind(R.id.buttonView) Button buttonView;
-        @Bind(R.id.buttonShare) Button buttonShare;
+        @Bind(R.id.photoName)
+        TextView photoName;
+        @Bind(R.id.photoPerson)
+        TextView photoPerson;
+        @Bind(R.id.buttonView)
+        Button buttonView;
+        @Bind(R.id.buttonShare)
+        Button buttonShare;
         //@Bind(R.id.album_name) TextView albumName;
 
         ViewHolder(View itemView) {
@@ -60,20 +71,55 @@ public class AlbumPhotoAdapter extends RecyclerView.Adapter<AlbumPhotoAdapter.Vi
             sliderShow.setPresetTransformer(SliderLayout.Transformer.Fade);
         }
     }
+
     @Override
     public int getItemCount() {
         return captures.size();
     }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.fragment_card_album_photo, viewGroup, false);
         ViewHolder pvh = new ViewHolder(v);
         return pvh;
     }
-    @Override
-    public void onBindViewHolder(final ViewHolder viewHolder,final int i) {
 
-        final File imageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),"Hairstyle");
+    @Override
+    public void onBindViewHolder(final ViewHolder viewHolder, final int i) {
+
+        alertDialogBuilder.setTitle("Password");
+        alertDialogBuilder.setMessage("Please Input Password");
+        password = new EditText(context);
+        password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        alertDialogBuilder.setView(password);
+        alertDialogBuilder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String inputPass = password.getText().toString();
+                String userPassword = captures.get(i).capturePassword.toString();
+                if (inputPass.equals(userPassword)) {
+                    Intent previewImage = new Intent(context, PreviewImageActivity.class);
+                    previewImage.putExtra("captureId", captures.get(i).getId());
+                    context.startActivity(previewImage);
+                } else {
+                    Toast.makeText(context, "Password Wrong",
+                            Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                    password.setText("");
+                }
+            }
+        });
+
+        alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        alertDialog = alertDialogBuilder.create();
+
+        final File imageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Hairstyle");
 
         viewHolder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,12 +127,10 @@ public class AlbumPhotoAdapter extends RecyclerView.Adapter<AlbumPhotoAdapter.Vi
                 Log.d("Album", "Album Clicked " + captures.get(i).captureName);
             }
         });
-        viewHolder.buttonView.setOnClickListener(new View.OnClickListener(){
+        viewHolder.buttonView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent previewImage = new Intent(context, PreviewImageActivity.class);
-                previewImage.putExtra("captureId", captures.get(i).getId());
-                context.startActivity(previewImage);
+                alertDialog.show();
             }
         });
         viewHolder.buttonShare.setOnClickListener(new View.OnClickListener() {
@@ -106,7 +150,7 @@ public class AlbumPhotoAdapter extends RecyclerView.Adapter<AlbumPhotoAdapter.Vi
                         Log.i("Hairstyle_", "Published successfully. id = " + id);
                     }
                 };
-                SimpleFacebook.getInstance().publish(photo,true, onPublishListener);
+                SimpleFacebook.getInstance().publish(photo, true, onPublishListener);
                 bitmap.recycle();
 
             }
@@ -115,30 +159,31 @@ public class AlbumPhotoAdapter extends RecyclerView.Adapter<AlbumPhotoAdapter.Vi
 
         DefaultSliderView image1 = new DefaultSliderView(context);
         image1
-            .image(new File(imageDir.getPath() + File.separator + captures.get(i).image1))
-            .setScaleType(BaseSliderView.ScaleType.CenterCrop);
+                .image(new File(imageDir.getPath() + File.separator + captures.get(i).image1))
+                .setScaleType(BaseSliderView.ScaleType.CenterCrop);
 
         viewHolder.sliderShow.addSlider(image1);
 
         DefaultSliderView image2 = new DefaultSliderView(context);
         image2
-            .image(new File(imageDir.getPath() + File.separator + captures.get(i).image2))
-            .setScaleType(BaseSliderView.ScaleType.CenterCrop);
+                .image(new File(imageDir.getPath() + File.separator + captures.get(i).image2))
+                .setScaleType(BaseSliderView.ScaleType.CenterCrop);
 
         viewHolder.sliderShow.addSlider(image2);
 
-        if(captures.get(i).image3 != null && !captures.get(i).image3.isEmpty()) {
+        if (captures.get(i).image3 != null && !captures.get(i).image3.isEmpty()) {
             DefaultSliderView image3 = new DefaultSliderView(context);
             image3
-                .image(new File(imageDir.getPath() + File.separator + captures.get(i).image3))
-                .setScaleType(BaseSliderView.ScaleType.CenterCrop);
+                    .image(new File(imageDir.getPath() + File.separator + captures.get(i).image3))
+                    .setScaleType(BaseSliderView.ScaleType.CenterCrop);
 
             viewHolder.sliderShow.addSlider(image3);
         }
         viewHolder.photoName.setText(captures.get(i).captureName);
-        viewHolder.photoPerson.setText("by "+captures.get(i).person);
+        viewHolder.photoPerson.setText("by " + captures.get(i).person);
         //personViewHolder.captureImage.setImageResource(captures.get(i).captureImage);
     }
+
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
