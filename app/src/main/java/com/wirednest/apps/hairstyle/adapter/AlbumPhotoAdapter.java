@@ -104,7 +104,7 @@ public class AlbumPhotoAdapter extends RecyclerView.Adapter<AlbumPhotoAdapter.Vi
                     context.startActivity(previewImage);
                     password.setText("");
                 } else {
-                    Toast.makeText(context, "Password Wrong",
+                    Toast.makeText(context, "Incorrect Password Please Try Again!",
                             Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                     password.setText("");
