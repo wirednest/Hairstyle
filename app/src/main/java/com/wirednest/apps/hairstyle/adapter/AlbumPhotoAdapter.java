@@ -101,6 +101,7 @@ public class AlbumPhotoAdapter extends RecyclerView.Adapter<AlbumPhotoAdapter.Vi
                     Intent previewImage = new Intent(context, PreviewImageActivity.class);
                     previewImage.putExtra("captureId", captures.get(i).getId());
                     context.startActivity(previewImage);
+                    password.setText("");
                 } else {
                     Toast.makeText(context, "Password Wrong",
                             Toast.LENGTH_SHORT).show();
