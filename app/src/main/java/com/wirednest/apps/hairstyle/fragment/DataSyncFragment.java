@@ -196,7 +196,7 @@ public class DataSyncFragment extends Fragment {
 
                             @Override
                             public void onError(Throwable e) {
-                                //startActivity();
+                                startActivity();
                             }
 
                             @Override
@@ -217,11 +217,6 @@ public class DataSyncFragment extends Fragment {
                                         hairstyle.hairName = data.getHairstyleName();
                                         hairstyle.description = data.getHairsyleDescription();
                                         hairstyle.categories = Categories.findByServerId(data.getCategoryId());
-
-//                                        sdcardTarget target = new sdcardTarget(hairstyle.getId()
-//                                                + " " + data.getHairstyleName());
-//                                        mBuilder.load(data.getImage())
-//                                                .into(target);
                                         downloadImage download = new downloadImage(
                                                 data.getImage(),
                                                 hairstyle.getId()
@@ -237,11 +232,6 @@ public class DataSyncFragment extends Fragment {
                                         hairstyle.description = data.getHairsyleDescription();
                                         hairstyle.categories = Categories.findByServerId(data.getHairstyleId());
                                         hairstyle.save();
-//                                        sdcardTarget target = new sdcardTarget(hairstyle.getId()
-//                                                + " " + data.getHairstyleName());
-//
-//                                        mBuilder.load(data.getImage())
-//                                                .into(target);
                                         downloadImage download = new downloadImage(
                                                 data.getImage(),
                                                 hairstyle.getId()
@@ -295,8 +285,6 @@ public class DataSyncFragment extends Fragment {
         }
         public void download(){
             Log.d("Hairstyle_","Target start "+this.filename);
-            InputStream sourceStream;
-            //File cachedImage = ImageLoader.getInstance().getDiskCache().get(this.url);
             try {
                 ImageLoader imageLoader = ImageLoader.getInstance();
                 imageLoader.loadImage(this.url, new ImageLoadingListener() {
