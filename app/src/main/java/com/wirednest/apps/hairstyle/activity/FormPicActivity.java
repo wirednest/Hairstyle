@@ -54,7 +54,7 @@ public class FormPicActivity extends AppCompatActivity {
                 captures.save();
 
                     Intent intent = new Intent(FormPicActivity.this, AlbumActivity.class);
-                    startActivity(intent);
+                    startActivityForResult(intent,3);
 
                 Log.d("Hairstyle.DB", "New Captured 1 Saved");}
                 catch (Exception error){

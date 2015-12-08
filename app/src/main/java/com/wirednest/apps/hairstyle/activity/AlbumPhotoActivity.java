@@ -38,6 +38,7 @@ public class AlbumPhotoActivity extends SwipeBackActivity {
 
     int requestCodeCapture = 1;
     int requestCodeEditPhoto = 2;
+    int requestCodeEditForm = 3;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -99,7 +100,7 @@ public class AlbumPhotoActivity extends SwipeBackActivity {
         super.onActivityResult(requestCode, resultCode, data);
         mSimpleFacebook.onActivityResult(requestCode, resultCode, data);
 
-        if (data.hasExtra("FILE_AVAGA") && data.hasExtra("Image1Name")) {
+        if (requestCode == requestCodeCapture && resultCode == RESULT_OK) {
             Intent i = new Intent(this, PhotoEditActivity.class);
             String imagePath = data.getStringExtra("FILE_AVAGA");
             String imageName = data.getStringExtra("Image1Name");
@@ -108,13 +109,18 @@ public class AlbumPhotoActivity extends SwipeBackActivity {
             startActivityForResult(i, requestCodeEditPhoto);
         }
 
-        else if (data.hasExtra("Image1Name") && data.hasExtra("Image2Name")) {
+        else if (requestCode == requestCodeEditPhoto && resultCode == RESULT_OK) {
             Intent i = new Intent(this, FormPicActivity.class);
             String imagePath1 = data.getStringExtra("Image1Name");
             String imagePath2 = data.getStringExtra("Image2Name");
             i.putExtra("Image1Name", imagePath1);
             i.putExtra("Image2Name", imagePath2);
             i.putExtra("ALBUMID", albumId);
+            startActivityForResult(i, requestCodeEditForm);
+        }
+
+        else if (requestCode == requestCodeEditPhoto && resultCode == RESULT_OK) {
+            Intent i = new Intent(this, AlbumPhotoActivity.class);
             startActivity(i);
         }
     }
