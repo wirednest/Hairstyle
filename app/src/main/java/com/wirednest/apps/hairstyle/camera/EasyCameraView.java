@@ -116,10 +116,11 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
                     ((Activity) getContext()).setResult(Activity.RESULT_OK, i);
                     ((Activity) getContext()).finish();
                 } else {
-                    Intent i = new Intent(getContext(), PhotoEditActivity.class);
+                    Intent i = new Intent();
                     i.putExtra("FILE_AVAGA", filename);
                     i.putExtra("Image1Name", photoFile);
-                    getContext().startActivity(i);
+                    ((Activity) getContext()).setResult(Activity.RESULT_OK, i);
+                    ((Activity) getContext()).finish();
                 }
             }
         };

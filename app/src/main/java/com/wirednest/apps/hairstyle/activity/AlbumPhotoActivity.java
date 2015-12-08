@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
 import me.imid.swipebacklayout.lib.SwipeBackLayout;
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
-public class AlbumPhotoActivity extends SwipeBackActivity{
+public class AlbumPhotoActivity extends SwipeBackActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -35,6 +35,9 @@ public class AlbumPhotoActivity extends SwipeBackActivity{
 
     @Bind(R.id.addAlbumPhoto)
     FloatingActionButton addAlbumPhoto;
+
+    int requestCodeCapture = 1;
+    int requestCodeEditPhoto = 2;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,7 +50,8 @@ public class AlbumPhotoActivity extends SwipeBackActivity{
         mSwipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT);
 
         Intent intent = getIntent();
-        albumId = intent.getLongExtra("ALBUMID",0);
+
+        albumId = intent.getLongExtra("ALBUMID", 0);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.rv);
         mRecyclerView.setHasFixedSize(true);
@@ -56,7 +60,7 @@ public class AlbumPhotoActivity extends SwipeBackActivity{
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new AlbumPhotoAdapter(this,Captures.find(Captures.class, "ALBUM = ?", String.valueOf(albumId)));
+        mAdapter = new AlbumPhotoAdapter(this, Captures.find(Captures.class, "ALBUM = ?", String.valueOf(albumId)));
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setOnScrollListener(new HidingScrollListener() {
             @Override
@@ -72,23 +76,45 @@ public class AlbumPhotoActivity extends SwipeBackActivity{
         addAlbumPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AlbumPhotoActivity.this,CaptureActivity.class);
-                startActivity(intent);
+                Intent intent = new Intent(AlbumPhotoActivity.this, CaptureActivity.class);
+                startActivityForResult(intent, requestCodeCapture);
             }
         });
+
+
     }
+
     private void hideViews() {
         FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) addAlbumPhoto.getLayoutParams();
         int fabBottomMargin = lp.bottomMargin;
-        addAlbumPhoto.animate().translationY(addAlbumPhoto.getHeight()+fabBottomMargin).setInterpolator(new AccelerateInterpolator(2)).start();
+        addAlbumPhoto.animate().translationY(addAlbumPhoto.getHeight() + fabBottomMargin).setInterpolator(new AccelerateInterpolator(2)).start();
     }
 
     private void showViews() {
         addAlbumPhoto.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         mSimpleFacebook.onActivityResult(requestCode, resultCode, data);
+
+        if (data.hasExtra("FILE_AVAGA") && data.hasExtra("Image1Name")) {
+            Intent i = new Intent(this, PhotoEditActivity.class);
+            String imagePath = data.getStringExtra("FILE_AVAGA");
+            String imageName = data.getStringExtra("Image1Name");
+            i.putExtra("FILE_AVAGA", imagePath);
+            i.putExtra("Image1Name", imageName);
+            startActivityForResult(i, requestCodeEditPhoto);
+        }
+
+        else if (data.hasExtra("Image1Name") && data.hasExtra("Image2Name")) {
+            Intent i = new Intent(this, FormPicActivity.class);
+            String imagePath1 = data.getStringExtra("Image1Name");
+            String imagePath2 = data.getStringExtra("Image2Name");
+            i.putExtra("Image1Name", imagePath1);
+            i.putExtra("Image2Name", imagePath2);
+            startActivity(i);
+        }
     }
 }
