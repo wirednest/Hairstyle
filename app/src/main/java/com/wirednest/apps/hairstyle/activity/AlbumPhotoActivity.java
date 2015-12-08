@@ -114,6 +114,7 @@ public class AlbumPhotoActivity extends SwipeBackActivity {
             String imagePath2 = data.getStringExtra("Image2Name");
             i.putExtra("Image1Name", imagePath1);
             i.putExtra("Image2Name", imagePath2);
+            i.putExtra("ALBUMID", albumId);
             startActivity(i);
         }
     }
