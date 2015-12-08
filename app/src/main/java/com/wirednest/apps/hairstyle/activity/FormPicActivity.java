@@ -1,5 +1,6 @@
 package com.wirednest.apps.hairstyle.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -53,8 +54,9 @@ public class FormPicActivity extends AppCompatActivity {
                         album);
                 captures.save();
 
-                    Intent intent = new Intent(FormPicActivity.this, AlbumActivity.class);
-                    startActivityForResult(intent,3);
+                    Intent intent = new Intent();
+                    FormPicActivity.this.setResult(Activity.RESULT_OK, intent);
+                    FormPicActivity.this.finish();
 
                 Log.d("Hairstyle.DB", "New Captured 1 Saved");}
                 catch (Exception error){

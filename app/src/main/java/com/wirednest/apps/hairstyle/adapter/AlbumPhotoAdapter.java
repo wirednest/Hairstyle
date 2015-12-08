@@ -100,7 +100,7 @@ public class AlbumPhotoAdapter extends RecyclerView.Adapter<AlbumPhotoAdapter.Vi
                 String userPassword = captures.get(i).capturePassword.toString();
                 if (inputPass.equals(userPassword)) {
                     Intent previewImage = new Intent(context, PreviewImageActivity.class);
-                    previewImage.putExtra("captureId",previewId);
+                    previewImage.putExtra("captureId", previewId);
                     context.startActivity(previewImage);
                     password.setText("");
                 } else {
@@ -116,6 +116,7 @@ public class AlbumPhotoAdapter extends RecyclerView.Adapter<AlbumPhotoAdapter.Vi
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+                password.setText("");
             }
         });
 
@@ -132,8 +133,15 @@ public class AlbumPhotoAdapter extends RecyclerView.Adapter<AlbumPhotoAdapter.Vi
         viewHolder.buttonView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                previewId = captures.get(i).getId();
-                alertDialog.show();
+                String userPassword = captures.get(i).capturePassword.toString();
+                if (userPassword.equalsIgnoreCase(null)) {
+                    Intent previewImage = new Intent(context, PreviewImageActivity.class);
+                    previewImage.putExtra("captureId", captures.get(i).getId());
+                    context.startActivity(previewImage);
+                } else {
+                    previewId = captures.get(i).getId();
+                    alertDialog.show();
+                }
             }
         });
         viewHolder.buttonShare.setOnClickListener(new View.OnClickListener() {

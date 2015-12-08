@@ -119,7 +119,7 @@ public class AlbumPhotoActivity extends SwipeBackActivity {
         }
 
         else if (requestCode == requestCodeForm && resultCode == RESULT_OK) {
-            Intent i = new Intent(this, AlbumPhotoActivity.class);
+            Intent i = new Intent(this, AlbumActivity.class);
             startActivity(i);
         }
     }
