@@ -144,6 +144,7 @@ public class DataSyncFragment extends Fragment {
 
                             @Override
                             public void onError(Throwable e) {
+                                Log.e(TAG,e.getMessage());
                                 updateHairstyles();
                             }
 
@@ -196,6 +197,7 @@ public class DataSyncFragment extends Fragment {
 
                             @Override
                             public void onError(Throwable e) {
+                                Log.e(TAG,"error "+e.getMessage());
                                 startActivity();
                             }
 
@@ -203,7 +205,7 @@ public class DataSyncFragment extends Fragment {
                             public void onNext(final List<HairstylesObject> hairstyles) {
                                 i = 0;
                                 final int hairstyleNum = hairstyles.size();
-
+                                Log.d(TAG,"enter "+hairstyleNum );
                                 handler.post(new Runnable() {
                                     public void run() {
                                         syncStatus.setText("Updating hairstyle data");
@@ -217,6 +219,9 @@ public class DataSyncFragment extends Fragment {
                                         hairstyle.hairName = data.getHairstyleName();
                                         hairstyle.description = data.getHairsyleDescription();
                                         hairstyle.categories = Categories.findByServerId(data.getCategoryId());
+                                        Log.d(TAG,"x : "+data.getXPoint()+" y : "+data.getYPoint());
+                                        hairstyle.xpoint = data.getXPoint();
+                                        hairstyle.ypoint = data.getYPoint();
                                         downloadImage download = new downloadImage(
                                                 data.getImage(),
                                                 hairstyle.getId()
@@ -231,6 +236,9 @@ public class DataSyncFragment extends Fragment {
                                         hairstyle.hairName = data.getHairstyleName();
                                         hairstyle.description = data.getHairsyleDescription();
                                         hairstyle.categories = Categories.findByServerId(data.getHairstyleId());
+                                        Log.d(TAG,"x : "+data.getXPoint()+" y : "+data.getYPoint());
+                                        hairstyle.xpoint = data.getXPoint();
+                                        hairstyle.ypoint = data.getYPoint();
                                         hairstyle.save();
                                         downloadImage download = new downloadImage(
                                                 data.getImage(),
