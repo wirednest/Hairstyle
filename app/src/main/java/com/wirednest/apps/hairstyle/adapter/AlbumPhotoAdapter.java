@@ -42,6 +42,7 @@ public class AlbumPhotoAdapter extends RecyclerView.Adapter<AlbumPhotoAdapter.Vi
     EditText password;
     AlertDialog alertDialog;
     AlertDialog.Builder alertDialogBuilder;
+    Long previewId = null;
 
     public AlbumPhotoAdapter(final Activity context, List<Captures> captures) {
         this.context = context;
@@ -99,11 +100,11 @@ public class AlbumPhotoAdapter extends RecyclerView.Adapter<AlbumPhotoAdapter.Vi
                 String userPassword = captures.get(i).capturePassword.toString();
                 if (inputPass.equals(userPassword)) {
                     Intent previewImage = new Intent(context, PreviewImageActivity.class);
-                    previewImage.putExtra("captureId", captures.get(i).getId());
+                    previewImage.putExtra("captureId",previewId);
                     context.startActivity(previewImage);
                     password.setText("");
                 } else {
-                    Toast.makeText(context, "Password Wrong",
+                    Toast.makeText(context, "Incorrect Password Please Try Again!",
                             Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                     password.setText("");
@@ -131,6 +132,7 @@ public class AlbumPhotoAdapter extends RecyclerView.Adapter<AlbumPhotoAdapter.Vi
         viewHolder.buttonView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                previewId = captures.get(i).getId();
                 alertDialog.show();
             }
         });

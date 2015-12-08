@@ -304,10 +304,11 @@ public class PhotoEditActivity extends Activity implements View.OnTouchListener 
                     Log.d("Log", "File" + filename + "not saved: "
                             + error.getMessage());
                 }
-                Intent intent = new Intent(PhotoEditActivity.this, FormPicActivity.class);
+                Intent intent = new Intent();
                 intent.putExtra("Image1Name", Image1Name);
                 intent.putExtra("Image2Name", photoFile);
-                startActivity(intent);
+                PhotoEditActivity.this.setResult(Activity.RESULT_OK, intent);
+                PhotoEditActivity.this.finish();
             }
         });
     }
