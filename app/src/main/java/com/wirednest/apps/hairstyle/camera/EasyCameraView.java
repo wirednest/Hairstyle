@@ -40,6 +40,7 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
 
     public List<Camera.Size> mSupportedPreviewSizes;
     private Camera.Size mPreviewSize;
+    Camera.Face[] detectedFaces;
 
     private EasyCamera.CameraActions actions;
     private PictureCallback callback;
@@ -187,6 +188,7 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
             try {
                 //when the surface is created, we can set the camera to draw images in this surfaceholder
                 actions = mCamera.startPreview(mHolder);
+                mCamera.startFaceDetection();
             } catch (IOException e) {
                 Log.d("ERROR", "Camera error on surfaceCreated " + e.getMessage());
             }
@@ -213,8 +215,9 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
         try {
-            //when the surface is created, we can set the camera to draw images in this surfaceholder
+            //when the surface is created, we can set the camera to draw images in this
             actions = mCamera.startPreview(mHolder);
+            mCamera.setFaceDetectionListener(faceDetectionListener);
         } catch (IOException e) {
             Log.d("ERROR", "Camera error on surfaceCreated " + e.getMessage());
         }
@@ -228,6 +231,7 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
             return;
 
         try {
+            mCamera.stopFaceDetection();
             mCamera.stopPreview();
         } catch (Exception e) {
             //this will happen when you are trying the camera if it's not running
@@ -245,6 +249,7 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
             mCamera.setParameters(parameters);
             mCamera.setDisplayOrientation(90);
             mCamera.startPreview(mHolder);
+            mCamera.startFaceDetection();
         } catch (IOException e) {
             Log.d("ERROR", "Camera error on surfaceChanged " + e.getMessage());
         }
@@ -254,6 +259,7 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
         //our app has only one screen, so we'll destroy the camera in the surface
         //if you are unsing with more screens, please move this code your activity
+        mCamera.stopFaceDetection();
         mCamera.stopPreview();
         mCamera.close();
     }
@@ -293,6 +299,20 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
             Log.e(TAG, mPreviewSize.width + " | " + mPreviewSize.height + " | ratio - " + ratio + " | A_width - " + (width) + " | A_height - " + newCamHeight);
         }
     }
+
+    Camera.FaceDetectionListener faceDetectionListener
+            = new Camera.FaceDetectionListener(){
+
+        @Override
+        public void onFaceDetection(Camera.Face[] faces, Camera camera) {
+
+            if (faces.length == 0){
+                Log.d("Face", " No Face Detected! ");
+            }else{
+                Log.d("Face",String.valueOf(faces.length) + " Face Detected :) ");
+                detectedFaces = faces;
+            }
+        }};
 
     public Camera.Size getOptimalPreviewSize(List<Camera.Size> sizes, int w, int h) {
         final double ASPECT_TOLERANCE = 0.1;
