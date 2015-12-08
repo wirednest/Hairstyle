@@ -3,7 +3,6 @@ package com.wirednest.apps.hairstyle.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -38,7 +37,7 @@ public class AlbumPhotoActivity extends SwipeBackActivity {
 
     int requestCodeCapture = 1;
     int requestCodeEditPhoto = 2;
-    int requestCodeEditForm = 3;
+    int requestCodeForm = 3;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -116,10 +115,10 @@ public class AlbumPhotoActivity extends SwipeBackActivity {
             i.putExtra("Image1Name", imagePath1);
             i.putExtra("Image2Name", imagePath2);
             i.putExtra("ALBUMID", albumId);
-            startActivityForResult(i, requestCodeEditForm);
+            startActivityForResult(i, requestCodeForm);
         }
 
-        else if (requestCode == requestCodeEditPhoto && resultCode == RESULT_OK) {
+        else if (requestCode == requestCodeForm && resultCode == RESULT_OK) {
             Intent i = new Intent(this, AlbumPhotoActivity.class);
             startActivity(i);
         }
