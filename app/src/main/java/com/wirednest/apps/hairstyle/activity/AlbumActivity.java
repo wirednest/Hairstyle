@@ -3,6 +3,7 @@ package com.wirednest.apps.hairstyle.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,6 +13,7 @@ import com.melnykov.fab.FloatingActionButton;
 import com.wirednest.apps.hairstyle.R;
 import com.wirednest.apps.hairstyle.adapter.AlbumAdapter;
 import com.wirednest.apps.hairstyle.db.Albums;
+import com.wirednest.apps.hairstyle.util.GridSpacingItemDecoration;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -47,7 +49,9 @@ public class AlbumActivity extends SwipeBackActivity {
 
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        //mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(2,20,true));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
         mAdapter = new AlbumAdapter(this,Albums.find(Albums.class, "ALBUM_TYPE != ?", "hidden"));
         mRecyclerView.setAdapter(mAdapter);

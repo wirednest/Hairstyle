@@ -18,11 +18,12 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 android:id="@+id/photo" />
-            <ImageView
+            <com.alexvasilkov.gestures.views.GestureImageView
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:id="@+id/hair"
-                android:scaleType="matrix"/>
+                android:scaleType="matrix"
+                android:layout_gravity="center" />
 
         </FrameLayout>
 

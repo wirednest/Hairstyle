@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.alexvasilkov.gestures.views.GestureImageView;
 import com.squareup.picasso.Picasso;
 import com.wirednest.apps.hairstyle.HairStyleCategoriesActivity;
 import com.wirednest.apps.hairstyle.R;
@@ -77,7 +78,9 @@ public class PhotoEditActivity extends Activity implements View.OnTouchListener 
             }
         });
 
-        final ImageView view = (ImageView) findViewById(R.id.hair);
+        final GestureImageView view = (GestureImageView) findViewById(R.id.hair);
+//        view.getController().getSettings()
+//                .setRotationEnabled(true);
         view.setOnTouchListener(this);
 
         View.OnClickListener onClick = new View.OnClickListener() {

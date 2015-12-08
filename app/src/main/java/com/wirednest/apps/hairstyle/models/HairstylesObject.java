@@ -29,6 +29,12 @@ public class HairstylesObject {
     @SerializedName("categoryDescription")
     @Expose
     private String categoryDescription;
+    @SerializedName("xPoint")
+    @Expose
+    private double xPoint;
+    @SerializedName("yPoint")
+    @Expose
+    private double yPoint;
 
 
 
@@ -42,7 +48,7 @@ public class HairstylesObject {
      * @param hairsyleDescription
      * @param hairstyleName
      */
-    public HairstylesObject(int hairstyleId, int categoryId, String hairstyleName, String categoryName, String image, String hairsyleDescription, String categoryDescription) {
+    public HairstylesObject(int hairstyleId, int categoryId, String hairstyleName, String categoryName, String image, String hairsyleDescription, String categoryDescription, float xPoint, float yPoint) {
         this.hairstyleId = hairstyleId;
         this.categoryId = categoryId;
         this.hairstyleName = hairstyleName;
@@ -50,6 +56,8 @@ public class HairstylesObject {
         this.image = image;
         this.hairsyleDescription = hairsyleDescription;
         this.categoryDescription = categoryDescription;
+        this.xPoint = xPoint;
+        this.yPoint = yPoint;
     }
 
     /**
@@ -176,6 +184,42 @@ public class HairstylesObject {
      */
     public void setCategoryDescription(String categoryDescription) {
         this.categoryDescription = categoryDescription;
+    }
+
+    /**
+     *
+     * @return
+     * The xPoint
+     */
+    public double getXPoint() {
+        return xPoint;
+    }
+
+    /**
+     *
+     * @param xPoint
+     * The xPoint
+     */
+    public void setXPoint(double xPoint) {
+        this.xPoint = xPoint;
+    }
+
+    /**
+     *
+     * @return
+     * The yPoint
+     */
+    public double getYPoint() {
+        return yPoint;
+    }
+
+    /**
+     *
+     * @param yPoint
+     * The yPoint
+     */
+    public void setYPoint(double yPoint) {
+        this.yPoint= yPoint;
     }
 
 }

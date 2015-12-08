@@ -49,33 +49,6 @@ public class CaptureActivity extends AppCompatActivity {
 
             camera_view.addView(mCameraView);//add the SurfaceView to the layout
         }
-//
-//        new CountDownTimer(5000, 1000) {
-//
-//            public void onTick(long millisUntilFinished) {
-//                timer.setText("seconds remaining: " + millisUntilFinished / 1000);
-//            }
-//
-//            public void onFinish() {
-//                timer.setText("done!");
-//            }
-//        }.start();
-
-//        if (camera != null) {
-//            mCameraView = new EasyCameraView(this, camera);//create a SurfaceView to show camera data
-//
-//            FrameLayout camera_view = (FrameLayout) findViewById(R.id.camera_view);
-//            camera_view.addView(mCameraView);//add the SurfaceView to the layout
-//        }
-
-
-
-//        ImageButton capture = (ImageButton) findViewById(R.id.imgCapture);
-//        capture.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                mCameraView.captureImage();
-//            }
-//        });
     }
 
 }

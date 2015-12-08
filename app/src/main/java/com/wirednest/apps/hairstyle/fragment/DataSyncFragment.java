@@ -144,6 +144,7 @@ public class DataSyncFragment extends Fragment {
 
                             @Override
                             public void onError(Throwable e) {
+                                Log.e(TAG,e.getMessage());
                                 updateHairstyles();
                             }
 
@@ -196,14 +197,15 @@ public class DataSyncFragment extends Fragment {
 
                             @Override
                             public void onError(Throwable e) {
-                                //startActivity();
+                                Log.e(TAG,"error "+e.getMessage());
+                                startActivity();
                             }
 
                             @Override
                             public void onNext(final List<HairstylesObject> hairstyles) {
                                 i = 0;
                                 final int hairstyleNum = hairstyles.size();
-
+                                Log.d(TAG,"enter "+hairstyleNum );
                                 handler.post(new Runnable() {
                                     public void run() {
                                         syncStatus.setText("Updating hairstyle data");
@@ -217,11 +219,9 @@ public class DataSyncFragment extends Fragment {
                                         hairstyle.hairName = data.getHairstyleName();
                                         hairstyle.description = data.getHairsyleDescription();
                                         hairstyle.categories = Categories.findByServerId(data.getCategoryId());
-
-//                                        sdcardTarget target = new sdcardTarget(hairstyle.getId()
-//                                                + " " + data.getHairstyleName());
-//                                        mBuilder.load(data.getImage())
-//                                                .into(target);
+                                        Log.d(TAG,"x : "+data.getXPoint()+" y : "+data.getYPoint());
+                                        hairstyle.xpoint = data.getXPoint();
+                                        hairstyle.ypoint = data.getYPoint();
                                         downloadImage download = new downloadImage(
                                                 data.getImage(),
                                                 hairstyle.getId()
@@ -236,12 +236,10 @@ public class DataSyncFragment extends Fragment {
                                         hairstyle.hairName = data.getHairstyleName();
                                         hairstyle.description = data.getHairsyleDescription();
                                         hairstyle.categories = Categories.findByServerId(data.getHairstyleId());
+                                        Log.d(TAG,"x : "+data.getXPoint()+" y : "+data.getYPoint());
+                                        hairstyle.xpoint = data.getXPoint();
+                                        hairstyle.ypoint = data.getYPoint();
                                         hairstyle.save();
-//                                        sdcardTarget target = new sdcardTarget(hairstyle.getId()
-//                                                + " " + data.getHairstyleName());
-//
-//                                        mBuilder.load(data.getImage())
-//                                                .into(target);
                                         downloadImage download = new downloadImage(
                                                 data.getImage(),
                                                 hairstyle.getId()
@@ -295,8 +293,6 @@ public class DataSyncFragment extends Fragment {
         }
         public void download(){
             Log.d("Hairstyle_","Target start "+this.filename);
-            InputStream sourceStream;
-            //File cachedImage = ImageLoader.getInstance().getDiskCache().get(this.url);
             try {
                 ImageLoader imageLoader = ImageLoader.getInstance();
                 imageLoader.loadImage(this.url, new ImageLoadingListener() {

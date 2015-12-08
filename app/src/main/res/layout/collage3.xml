@@ -15,7 +15,7 @@
         android:layout_weight="1"
         android:layout_marginBottom="2.5dp">
 
-        <ImageView
+        <com.alexvasilkov.gestures.views.GestureImageView
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:id="@+id/imageCollage1"
@@ -24,7 +24,7 @@
             android:scaleType="centerCrop"
             android:layout_marginRight="2.5dp" />
 
-        <ImageView
+        <com.alexvasilkov.gestures.views.GestureImageView
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:id="@+id/imageCollage2"
@@ -34,7 +34,7 @@
             android:layout_marginLeft="2.5dp" />
     </LinearLayout>
 
-    <ImageView
+    <com.alexvasilkov.gestures.views.GestureImageView
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:id="@+id/imageCollage3"
