@@ -134,12 +134,12 @@ public class AlbumPhotoAdapter extends RecyclerView.Adapter<AlbumPhotoAdapter.Vi
             @Override
             public void onClick(View v) {
                 String userPassword = captures.get(i).capturePassword.toString();
-                if (userPassword.equalsIgnoreCase(null)) {
+                previewId = captures.get(i).getId();
+                if (userPassword.equals("")) {
                     Intent previewImage = new Intent(context, PreviewImageActivity.class);
                     previewImage.putExtra("captureId", captures.get(i).getId());
                     context.startActivity(previewImage);
                 } else {
-                    previewId = captures.get(i).getId();
                     alertDialog.show();
                 }
             }

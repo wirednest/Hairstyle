@@ -35,14 +35,14 @@ public class FormPicActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_pic);
         ButterKnife.bind(this);
-        final Albums album = new Albums();
+
         savePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String Image1Name= getIntent().getStringExtra("Image1Name");
                 String Image2Name= getIntent().getStringExtra("Image2Name");
                 Long albumId= getIntent().getLongExtra("ALBUMID", 0);
-                album.setId(albumId);
+                Albums album = Albums.findById(Albums.class, albumId);
                 try{
                 Captures captures = new Captures(
                         picName.getText().toString(),
