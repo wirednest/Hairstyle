@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.RectF;
 import android.hardware.Camera;
 import android.media.ThumbnailUtils;
@@ -16,6 +18,7 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.wirednest.apps.hairstyle.R;
@@ -40,7 +43,8 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
 
     public List<Camera.Size> mSupportedPreviewSizes;
     private Camera.Size mPreviewSize;
-    Camera.Face[] detectedFaces;
+//    Camera.Face[] detectedFaces;
+//    DrawingView drawingView;
 
     private EasyCamera.CameraActions actions;
     private PictureCallback callback;
@@ -60,6 +64,14 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
         mHolder = getHolder();
         mHolder.addCallback(this);
         mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+/*
+
+        drawingView = new DrawingView(context);
+        ViewGroup.LayoutParams layoutParamsDrawing
+                = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
+                ViewGroup.LayoutParams.FILL_PARENT);
+        ((Activity)getContext()).addContentView(drawingView, layoutParamsDrawing);
+*/
 
 
         callback = new PictureCallback() {
@@ -188,7 +200,7 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
             try {
                 //when the surface is created, we can set the camera to draw images in this surfaceholder
                 actions = mCamera.startPreview(mHolder);
-                mCamera.startFaceDetection();
+//                mCamera.startFaceDetection();
             } catch (IOException e) {
                 Log.d("ERROR", "Camera error on surfaceCreated " + e.getMessage());
             }
@@ -217,7 +229,7 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
         try {
             //when the surface is created, we can set the camera to draw images in this
             actions = mCamera.startPreview(mHolder);
-            mCamera.setFaceDetectionListener(faceDetectionListener);
+//            mCamera.setFaceDetectionListener(faceDetectionListener);
         } catch (IOException e) {
             Log.d("ERROR", "Camera error on surfaceCreated " + e.getMessage());
         }
@@ -231,7 +243,7 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
             return;
 
         try {
-            mCamera.stopFaceDetection();
+//            mCamera.stopFaceDetection();
             mCamera.stopPreview();
         } catch (Exception e) {
             //this will happen when you are trying the camera if it's not running
@@ -249,7 +261,7 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
             mCamera.setParameters(parameters);
             mCamera.setDisplayOrientation(90);
             mCamera.startPreview(mHolder);
-            mCamera.startFaceDetection();
+//            mCamera.startFaceDetection();
         } catch (IOException e) {
             Log.d("ERROR", "Camera error on surfaceChanged " + e.getMessage());
         }
@@ -259,7 +271,7 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
         //our app has only one screen, so we'll destroy the camera in the surface
         //if you are unsing with more screens, please move this code your activity
-        mCamera.stopFaceDetection();
+//        mCamera.stopFaceDetection();
         mCamera.stopPreview();
         mCamera.close();
     }
@@ -300,6 +312,7 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
         }
     }
 
+/*
     Camera.FaceDetectionListener faceDetectionListener
             = new Camera.FaceDetectionListener(){
 
@@ -308,11 +321,15 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
 
             if (faces.length == 0){
                 Log.d("Face", " No Face Detected! ");
+                drawingView.setHaveFace(false);
             }else{
                 Log.d("Face",String.valueOf(faces.length) + " Face Detected :) ");
+                drawingView.setHaveFace(true);
                 detectedFaces = faces;
             }
+            drawingView.invalidate();
         }};
+*/
 
     public Camera.Size getOptimalPreviewSize(List<Camera.Size> sizes, int w, int h) {
         final double ASPECT_TOLERANCE = 0.1;
@@ -349,4 +366,54 @@ public class EasyCameraView extends SurfaceView implements SurfaceHolder.Callbac
 
         return optimalSize;
     }
+
+/*    private class DrawingView extends View{
+
+        boolean haveFace;
+        Paint drawingPaint;
+
+        public DrawingView(Context context) {
+            super(context);
+            haveFace = false;
+            drawingPaint = new Paint();
+            drawingPaint.setColor(Color.GREEN);
+            drawingPaint.setStyle(Paint.Style.STROKE);
+            drawingPaint.setStrokeWidth(2);
+        }
+
+        public void setHaveFace(boolean h){
+            haveFace = h;
+        }
+
+        @Override
+        protected void onDraw(Canvas canvas) {
+            // TODO Auto-generated method stub
+            if(haveFace){
+
+                // Camera driver coordinates range from (-1000, -1000) to (1000, 1000).
+                // UI coordinates range from (0, 0) to (width, height).
+
+                int vWidth = getWidth();
+                int vHeight = getHeight();
+
+                for(int i=0; i<detectedFaces.length; i++){
+
+                    int l = detectedFaces[i].rect.left;
+                    int t = detectedFaces[i].rect.top;
+                    int r = detectedFaces[i].rect.right;
+                    int b = detectedFaces[i].rect.bottom;
+                    int left	= (l+1000) * vWidth/2000;
+                    int top		= (t+1000) * vHeight/2000;
+                    int right	= (r+1000) * vWidth/2000;
+                    int bottom	= (b+1000) * vHeight/2000;
+                    canvas.drawRect(
+                            left, top, right, bottom,
+                            drawingPaint);
+                }
+            }else{
+                canvas.drawColor(Color.TRANSPARENT);
+            }
+        }
+
+    }*/
 }
