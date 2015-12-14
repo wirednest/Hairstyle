@@ -49,3 +49,8 @@ Thumbs.db
 
 # Log Files
 *.log
+
+*.setup
+gbdserver
+app/src/main/obj/
+app/src/main/libs/
