@@ -26,7 +26,7 @@ repositories {
     }
 }
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile "com.android.support:appcompat-v7:${android_support_lib_version}"
     compile "com.android.support:cardview-v7:${android_support_lib_version}"
     compile "com.android.support:design:${android_support_lib_version}"
@@ -50,17 +50,12 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.0.1'
     compile 'io.reactivex:rxjava:1.0.16'
     compile 'com.squareup.retrofit:adapter-rxjava:2.0.0-beta2'
-
     compile 'com.sromku:simple-fb:4.1.1'
-
     compile 'com.github.moondroid.coverflow:library:1.0'
-
     compile 'com.facebook.stetho:stetho:1.2.0'
     compile 'com.facebook.stetho:stetho-okhttp:1.2.0'
-
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
-
     compile 'com.alexvasilkov:gesture-views:2.0.3'
     compile 'com.intuit.sdp:sdp-android:1.0.2'
-
+    compile project(':opencv:library')
 }

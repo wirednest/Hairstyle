@@ -1,1 +1,1 @@
-include ':app',":sugarorm:library"
+include ':app',":sugarorm:library",':opencv:library'
