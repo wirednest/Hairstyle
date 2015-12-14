@@ -117,6 +117,10 @@
             android:name=".activity.CameraFaceDetectionActivity"
             android:label="@string/title_activity_camera_face_detection" >
         </activity>
+        <activity
+            android:name=".activity.FdActivity"
+            android:label="@string/title_activity_Fd" >
+        </activity>
     </application>
 
 </manifest>

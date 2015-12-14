@@ -40,4 +40,5 @@
     <string name="title_activity_preview_collage">PreviewCollageActivity</string>
     <string name="title_activity_collage_test">CollageTestActivity</string>
     <string name="title_activity_camera_face_detection">CameraFaceDetectionActivity</string>
+    <string name="title_activity_Fd">CameraFaceDetectionActivity</string>
 </resources>
