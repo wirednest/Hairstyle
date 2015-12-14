@@ -15,6 +15,7 @@ import com.wirednest.apps.hairstyle.activity.AlbumActivity;
 import com.wirednest.apps.hairstyle.activity.CameraActivity;
 import com.wirednest.apps.hairstyle.activity.CameraFaceDetectionActivity;
 import com.wirednest.apps.hairstyle.activity.CaptureActivity;
+import com.wirednest.apps.hairstyle.activity.FdActivity;
 import com.wirednest.apps.hairstyle.activity.PreviewActivity;
 import com.wirednest.apps.hairstyle.activity.PreviewImageActivity;
 import com.wirednest.apps.hairstyle.activity.SettingActivity;
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.funButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,CameraFaceDetectionActivity.class);
+                Intent intent = new Intent(MainActivity.this,FdActivity.class);
                 startActivity(intent);
             }
         });
