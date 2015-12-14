@@ -50,7 +50,7 @@ public class AlbumActivity extends SwipeBackActivity {
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
         //mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(2,20,true));
+        mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(2,12,true));
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
         mAdapter = new AlbumAdapter(this,Albums.find(Albums.class, "ALBUM_TYPE != ?", "hidden"));

@@ -4,6 +4,7 @@ package com.wirednest.apps.hairstyle;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,7 +19,18 @@ import com.wirednest.apps.hairstyle.activity.PreviewActivity;
 import com.wirednest.apps.hairstyle.activity.PreviewImageActivity;
 import com.wirednest.apps.hairstyle.activity.SettingActivity;
 
+import org.opencv.android.OpenCVLoader;
+
 public class MainActivity extends AppCompatActivity {
+
+    static {
+        if(!OpenCVLoader.initDebug()){
+            Log.i("opencv","opencv init failed");
+        }else{
+            Log.i("opencv","opencv init success");
+        }
+    }
+
     @Override
     protected void onResume() {
         super.onResume();

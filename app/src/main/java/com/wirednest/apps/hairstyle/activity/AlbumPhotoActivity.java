@@ -3,6 +3,7 @@ package com.wirednest.apps.hairstyle.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.sromku.simple.fb.SimpleFacebook;
 import com.wirednest.apps.hairstyle.R;
 import com.wirednest.apps.hairstyle.adapter.AlbumPhotoAdapter;
 import com.wirednest.apps.hairstyle.db.Captures;
+import com.wirednest.apps.hairstyle.util.GridSpacingItemDecoration;
 import com.wirednest.apps.hairstyle.util.HidingScrollListener;
 
 import butterknife.Bind;
@@ -58,7 +60,9 @@ public class AlbumPhotoActivity extends SwipeBackActivity {
 
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        //mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(2,12,true));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
         mAdapter = new AlbumPhotoAdapter(this, Captures.find(Captures.class, "ALBUM = ?", String.valueOf(albumId)));
         mRecyclerView.setAdapter(mAdapter);

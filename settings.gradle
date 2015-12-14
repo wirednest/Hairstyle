@@ -1,1 +1,2 @@
-include ':app',":sugarorm:library",':opencv:library'
+include ':app', ":sugarorm:library", ':ocv'
+project(':ocv').projectDir = new File('opencv/ocv')
