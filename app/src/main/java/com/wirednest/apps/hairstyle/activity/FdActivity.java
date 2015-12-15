@@ -1,16 +1,23 @@
 package com.wirednest.apps.hairstyle.activity;
 
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
+import org.opencv.android.Utils;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfRect;
 import org.opencv.core.Rect;
@@ -18,14 +25,19 @@ import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
+import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.objdetect.CascadeClassifier;
 import org.opencv.imgproc.Imgproc;
 
 import android.content.Context;
+import android.os.Environment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 
 import com.wirednest.apps.hairstyle.R;
 
@@ -126,8 +138,46 @@ public class FdActivity extends AppCompatActivity implements CvCameraViewListene
 		setContentView(R.layout.face_detect_surface_view);
 
 		mOpenCvCameraView = (CameraBridgeViewBase) findViewById(R.id.fd_activity_surface_view);
+//        mOpenCvCameraView.setCameraIndex(99);
 		mOpenCvCameraView.setCvCameraViewListener(this);
+
+        findViewById(R.id.imgCapture).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                File pictureFileDir = getDir();
+                if (!pictureFileDir.exists() && !pictureFileDir.mkdirs()) {
+
+                    Log.d("Log", "Can't create directory to save image.");
+                    return;
+                }
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
+                String date = dateFormat.format(new Date());
+                String photoFile = "Picture_" + date + ".jpg";
+                String filename = pictureFileDir.getPath() + File.separator + photoFile;
+                File pictureFile = new File(filename);
+
+                Bitmap bitmap = mOpenCvCameraView.takePic();
+
+                try {
+                    FileOutputStream fos = new FileOutputStream(pictureFile);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 80, fos);
+                    fos.flush();
+                    fos.close();
+                    Log.d("Log", "New Image saved:" + filename);
+                } catch (Exception error) {
+                    Log.d("Log", "File" + filename + "not saved: "
+                            + error.getMessage());
+                }
+
+
+            }
+        });
 	}
+
+    private File getDir() {
+        File sdDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        return new File(sdDir, "Hairstyle");
+    }
 
 	@Override
 	public void onPause()
@@ -192,11 +242,19 @@ public class FdActivity extends AppCompatActivity implements CvCameraViewListene
 		else {
 			Log.e(TAG, "Detection method is not selected!");
 		}
+        Drawable overlay = getResources().getDrawable(R.drawable.hairstyle_1);
+        Bitmap ovrlyBitmap = ((BitmapDrawable) overlay).getBitmap();
+        Mat avaga = new Mat();
+        Utils.bitmapToMat(ovrlyBitmap,avaga);
 
 		Rect[] facesArray = faces.toArray();
-		for (int i = 0; i < facesArray.length; i++)
+		for (int i = 0; i < facesArray.length; i++){
 			Imgproc.rectangle(mRgba, facesArray[i].tl(), facesArray[i].br(), FACE_RECT_COLOR, 3);
 
+            Canvas canvas = mOpenCvCameraView.getHolder().lockCanvas();
+            canvas.drawBitmap(ovrlyBitmap,new android.graphics.Rect(0,0,ovrlyBitmap.getWidth(),ovrlyBitmap.getHeight()),new android.graphics.Rect(facesArray[i].x,facesArray[i].y,facesArray[i].width,facesArray[i].height),new Paint(0));
+            mOpenCvCameraView.getHolder().unlockCanvasAndPost(canvas);
+        }
 		return mRgba;
 	}
 

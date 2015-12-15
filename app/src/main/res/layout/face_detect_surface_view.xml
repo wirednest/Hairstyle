@@ -1,11 +1,10 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:opencv="http://schemas.android.com/apk/res-auto"
 
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1">
+    xmlns:fab="http://schemas.android.com/apk/res-auto">
 
     <org.opencv.android.JavaCameraView
         android:layout_width="fill_parent"
@@ -13,9 +12,17 @@
         android:id="@+id/fd_activity_surface_view"
         opencv:camera_id="front"/>
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:id="@+id/my_textview"/>
+    <com.melnykov.fab.FloatingActionButton
+        android:id="@+id/imgCapture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/ic_menu_camera"
+        fab:fab_colorNormal="#e91e62"
+        fab:fab_colorPressed="#ba0c50"
+        fab:fab_colorRipple="#ba0c50"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom|center"
+        android:onClick="captureImage"
+        android:layout_margin="20dp" />
 
-</LinearLayout>
+</FrameLayout>
